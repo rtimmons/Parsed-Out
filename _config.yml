@@ -1,0 +1,10 @@
+auto:       true
+server:     true
+pygments:   true
+lsi:        true
+paginate:   5
+maruku:
+  use_tex:    true
+  use_divs:   true
+  png_dir:    images/latex
+  png_url:    /images/latex
