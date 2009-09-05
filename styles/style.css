@@ -10,6 +10,7 @@ br.clear {
 h1 a, h2 a, h3 a {
     text-decoration: none;
     color: inherit;
+    display: block;
 }
 
 /* Header stuff */
