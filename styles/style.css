@@ -1,0 +1,43 @@
+
+body {
+    width: 60em;
+}
+
+br.clear {
+    clear: both;
+}
+
+h1 a, h2 a, h3 a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Header stuff */
+
+#header {
+    margin-bottom: 1em;
+}
+#header .description {
+    margin: 1.5em 0 3em 0;
+}
+
+body.sidebar #content {
+    width: 40em;
+    margin-right: 5em;
+}
+
+
+
+.post .date {
+    margin-left: -0.75em;
+    font-size: smaller;
+    font-style: italic;
+}
+
+div.post {
+    margin-bottom: 2.5em;
+}
+
+img.avatar {
+    display: none;
+}

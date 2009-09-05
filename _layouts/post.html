@@ -1,8 +1,20 @@
 ---
 layout: default
+sidebar: false
 ---
-<div id="post" clas="post">
+
+<div id="post" class="post">
+<div class="meta">
+    <h2><a href="{{post.url}}">{{ page.title }}</a></h2>
+    <div class="date">
+        {{ page.date | date_to_string }}
+    </div><!--.date-->
+</div><!--.meta-->
+
+<div class="content">
 {{ content }}
+</div><!--.content-->
+
 </div><!--#post.post-->
 
 <div id="related">
