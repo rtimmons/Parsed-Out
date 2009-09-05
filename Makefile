@@ -2,15 +2,15 @@ DOCSTYLE_SRC=http://releases.ganon.com/docstyle.tar.gz
 
 .PHONY: vendors clean
 
-vendors: vendor/docstyle
+vendors: _vendor/docstyle
 
-vendor/docstyle: vendor/docstyle.tar.gz
-	mkdir -p vendor/docstyle
-	tar xzf vendor/docstyle.tar.gz -C vendor/docstyle
+vendor/docstyle: _vendor/docstyle.tar.gz
+	mkdir -p _vendor
+	tar xzf _vendor/docstyle.tar.gz -C _vendor
 
 vendor/docstyle.tar.gz:
-	mkdir -p vendor/docstyle
-	wget ${DOCSTYLE_SRC} -O vendor/docstyle.tar.gz
+	mkdir -p _vendor
+	wget ${DOCSTYLE_SRC} -O _vendor/docstyle.tar.gz
 
 clean:
-	rm -rf vendor/*
+	rm -rf _vendor/*
