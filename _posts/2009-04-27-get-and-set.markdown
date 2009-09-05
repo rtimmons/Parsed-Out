@@ -21,37 +21,43 @@ This is less verbose and more in-line with what happen "nowadays" with the more 
 
 The old way:
 
-    Document d = new Document();
-    String oldTitle = d.getTitle();
-    d.setTitle("New Title");
+{% highlight java %}
+Document d = new Document();
+String oldTitle = d.getTitle();
+d.setTitle("New Title");
+{% endhighlight %}
 
 The new way:
 
-    Document d = new Document();
-    String oldTitle = d.title();
-    d.title("New Title");
+{% highlight java %}
+Document d = new Document();
+String oldTitle = d.title();
+d.title("New Title");
+{% endhighlight %}
 
 And here is a sample POJO *"Plain Old Java Object"* that utilizes this:
 
-    class MyDocument
+{% highlight java %}
+class MyDocument
+{
+
+    private String title;
+
+    public MyDocument()
     {
-    
-        private String title;
-    
-        public MyDocument()
-        {
-        }
-    
-        public String title()
-        {
-            return title;
-        }
-    
-        public void title(String t)
-        {
-            this.title = t;
-        }
-    
     }
+
+    public String title()
+    {
+        return title;
+    }
+
+    public void title(String t)
+    {
+        this.title = t;
+    }
+
+}
+{% endhighlight %}
 
 Just my $0.02.

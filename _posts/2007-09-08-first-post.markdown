@@ -6,8 +6,10 @@ title: Finally Post Number One
 Welcome to my new blog. The name, `$ parsed | out.com`, is supposed to be a
 bit of a pun and a bit of a (BaSH) code joke, &agrave; la
 
-    $  parsed | out
-    .com
+{% highlight bash %}
+$  parsed | out
+.com
+{% endhighlight %}
 
 I decided that it was better than "allparsedout.com" and
 "implicitlydiffed.com", which I also registered. I've had this domain for a
