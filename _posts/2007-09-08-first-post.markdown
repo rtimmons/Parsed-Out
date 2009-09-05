@@ -1,3 +1,8 @@
+---
+layout: post
+title: Finally Post Number One
+---
+
 Welcome to my new blog. The name, `$ parsed | out.com`, is supposed to be a
 bit of a pun and a bit of a (BaSH) code joke, &agrave; la
 
