@@ -3,7 +3,8 @@ auto:       true
 server:     true
 pygments:   true
 lsi:        true
-paginate:   5
+paginate:   3
+markdown:   maruku
 maruku:
   use_divs:   true
   png_engine: blahtex

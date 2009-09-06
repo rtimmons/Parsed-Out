@@ -42,3 +42,22 @@ div.post {
 img.avatar {
     display: none;
 }
+
+/* Pagination */
+#pagination {
+    margin: 1em auto;
+    text-align: center;
+}
+#pagination ul {
+    margin: 0;
+    padding: 0;
+}
+#pagination ul li {
+    list-style-type: none;
+}
+#pagination li.back {
+    float: left;
+}
+#pagination li.forward {
+    float: right;
+}
