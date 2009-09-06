@@ -2,6 +2,7 @@
 layout: post
 title: Lambda
 permalink: /featured/lambda.html
+category: coding
 ---
 
 [PHP][1] has been in dire need of some new features for some time. PHP 5.3 plans to add a [slew of new features][2], *finally* adding lambdas a/k/a *anonymous functions* to the language.

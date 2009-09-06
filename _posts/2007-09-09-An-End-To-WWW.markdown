@@ -1,6 +1,7 @@
 ---
 layout: post
 title: An End to WWW
+category: commentary
 ---
 
 One of the problems I've always had with URLs is, well, they're hard to say or

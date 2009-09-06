@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Finally Post Number One
+category: meta
 ---
 
 Welcome to my new blog. The name, `$ parsed | out.com`, is supposed to be a

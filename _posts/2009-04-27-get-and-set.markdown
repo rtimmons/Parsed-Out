@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Get and Set
+category: coding
 ---
 
 Although I work with Java on a regular basis at work, I've long been scared
@@ -17,7 +18,8 @@ property. When called with *no* arguments, the method serves as the *getter*,
 and when called *with* a single argument, the method serves as a *setter* -
 setting the value to the indicated argument.
 
-This is less verbose and more in-line with what happen "nowadays" with the more scripting-inclined languages like Ruby and PHP.
+This is less verbose and more in-line with what happen "nowadays" with the
+more scripting-inclined languages like Ruby and PHP.
 
 The old way:
 

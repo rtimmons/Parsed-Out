@@ -1,5 +1,8 @@
 
 body {
+    width: 45em;
+}
+body.sidebar {
     width: 60em;
 }
 
@@ -28,11 +31,13 @@ body.sidebar #content {
 }
 
 
+.date {
+    font-size: smaller;
+    font-style: italic;    
+}
 
 .post .date {
     margin-left: -0.75em;
-    font-size: smaller;
-    font-style: italic;
 }
 
 div.post {
@@ -60,4 +65,21 @@ img.avatar {
 }
 #pagination li.forward {
     float: right;
+}
+
+
+/* Sidebar */
+div#sidebar {
+    float: right;
+    width: 15em;
+}
+div#sidebar div.first h2 {
+    margin-top: 0;
+}
+div#sidebar ul {
+    margin: 0;
+    padding: 0;
+}
+div#sidebar div ul li {
+    margin-bottom: 0.5em;
 }

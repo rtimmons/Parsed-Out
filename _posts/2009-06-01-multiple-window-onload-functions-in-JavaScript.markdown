@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Multiple window.onload functions in JavaScript
+category: coding
 ---
 
 Writing in JavaScript often requires triggering code to execute *after* the

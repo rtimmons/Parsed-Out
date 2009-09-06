@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Installing Pubcookie 3.3 on Ubuntu 7.10 with Apache 2
+category: coding
 ---
 
 I recently had the wonderful experience of configuring UW's Pubcookie for use
