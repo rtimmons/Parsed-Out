@@ -44,8 +44,8 @@ div.post {
     margin-bottom: 2.5em;
 }
 
-img.avatar {
-    display: none;
+div.maruku-equation {
+    text-align: center;
 }
 
 /* Pagination */
