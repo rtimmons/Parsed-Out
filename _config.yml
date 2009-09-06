@@ -1,6 +1,6 @@
 title:      ParsedOut.com
-auto:       true
-server:     true
+auto:       false
+server:     false
 pygments:   true
 lsi:        true
 paginate:   3

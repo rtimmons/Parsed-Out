@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+rm -rf _site && \
+     rjekyll && rsync -avz \
+                 --delete \
+                 _site/ \
+                 ganon.com:/home/rtimmons/public_html/parsedout.com
