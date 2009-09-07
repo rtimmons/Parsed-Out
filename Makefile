@@ -1,8 +1,21 @@
 DOCSTYLE_SRC=http://releases.ganon.com/docstyle.tar.gz
+VENDORS=_vendor/docstyle
 
-.PHONY: vendors clean
+.PHONY: vendors clean_vendors clean_site site
 
-vendors: _vendor/docstyle
+site: clean_site
+	rjekyll
+
+clean_site:
+	rm -rf _site
+
+
+# Vendors
+
+vendors: ${VENDORS}
+
+clean_vendors:
+	rm -rf _vendor/*
 
 _vendor/docstyle: _vendor/docstyle.tar.gz
 	mkdir -p _vendor
@@ -11,6 +24,3 @@ _vendor/docstyle: _vendor/docstyle.tar.gz
 _vendor/docstyle.tar.gz:
 	mkdir -p _vendor
 	wget ${DOCSTYLE_SRC} -O _vendor/docstyle.tar.gz
-
-clean:
-	rm -rf _vendor/*

@@ -1,0 +1,20 @@
+ParsedOut Readme
+=====================
+
+ParsedOut uses the [Docstyle][] project by Ryan Timmons to provide baseline
+CSS and JavaScript support. It uses [rjekyll][] (a slight fork of Jekyll) to
+generate a static site based on these files.
+
+To get this site up and going:
+
+ 1. Make sure `blahtex` is on your PATH.
+
+ 2. Run `make` to get the Docstyle dependency
+
+     a. Run `make` inside the `_vendor/docstyle` directory
+        to make Docstyle.  (TODO: this should be automated
+        by the main Makefile.)
+
+ 3. Run `rjekyll` which will generate the `_site` directory.
+
+
