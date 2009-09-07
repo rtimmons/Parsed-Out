@@ -10,16 +10,16 @@ require 'fileutils'
 extension = '.markdown'
 
 puts("Post Title:")
-title=gets()
+title=gets().strip
 
-argv=title.trim.split(/\s+/)
+argv=title.split(/\s+/)
 
 args=argv.collect{ |a|
         a.downcase.gsub(/\./,'')
       }.reduce("") { |a,b|
         if "" == a
           b
-        elsif a.length < 15
+        elsif a.length < 30
           a + '-' + b
         else
           a
@@ -35,6 +35,7 @@ contents = [
   "---",
   "layout: post",
   "title: #{title}",
+  "published: false",
   "---"
 ].collect {|a| a + "\n"}
 
