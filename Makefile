@@ -18,7 +18,7 @@ stage: site
 	./_tasks/stage
 
 deploy: site
-	./_tasks/site
+	./_tasks/deploy
 
 new:
 	./_tasks/new
