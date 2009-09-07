@@ -3,8 +3,7 @@
 <div class="first section recents">
     <h2>Recent Articles</h2>
     <ul>{% for post in site.posts limit:5 %}
-        <li><a href="{{post.url}}">{{post.title}}</a></li>
-        {% endfor %}
+        <li><a href="{{post.url}}">{{post.title}}</a></li>{% endfor %}
     </ul>
     </ul>
 </div><!--.first.section.recents-->
