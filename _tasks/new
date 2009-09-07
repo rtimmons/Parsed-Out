@@ -1,0 +1,43 @@
+#!/usr/bin/env /usr/bin/ruby
+
+#
+# Creates a new post file with today's date
+# 
+
+require 'date'
+require 'fileutils'
+
+extension = '.markdown'
+
+title=ARGV.join " "
+args=ARGV.collect{ |a|
+        a.downcase.gsub(/\./,'')
+      }.reduce("") { |a,b|
+        if "" == a
+          b
+        elsif a.length < 15
+          a + '-' + b
+        else
+          a
+        end
+      }
+
+date = Date.today
+fmt = date.strftime '%Y-%m-%d'
+
+fname="#{fmt}-#{args}#{extension}"
+
+contents = [ 
+  "---",
+  "layout: post",
+  "title: #{title}",
+  "---"
+].collect {|a| a + "\n"}
+
+path = File.join("_posts", fname)
+
+File.open(path, "w+") do |f|
+  contents.each { |line| f.write line }
+end
+
+`mate "#{path}"`
