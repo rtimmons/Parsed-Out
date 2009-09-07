@@ -33,6 +33,13 @@ layout: nil
 </div><!--#content-->
 
 <div id="footer">
+    <hr />
+{% if page.mtime || post.mtime %}
+    <div class="meta updated">
+    {% if page.mtime %}<p>Last modified <span class="date">{{ page.mtime }}</p>
+    {% else %}<p>Last modified <span class="date">{{ post.mtime }}</p>{% endif %}
+    </div><!--.meta.updated-->
+{% endif %}
 </div><!--#footer-->
 
 </body>

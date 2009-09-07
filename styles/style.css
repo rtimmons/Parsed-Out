@@ -83,3 +83,9 @@ div#sidebar ul {
 div#sidebar div ul li {
     margin-bottom: 0.5em;
 }
+
+
+/* Footer */
+div#footer {
+    clear: both;
+}
