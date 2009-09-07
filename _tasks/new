@@ -9,8 +9,12 @@ require 'fileutils'
 
 extension = '.markdown'
 
-title=ARGV.join " "
-args=ARGV.collect{ |a|
+puts("Post Title:")
+title=gets()
+
+argv=title.trim.split(/\s+/)
+
+args=argv.collect{ |a|
         a.downcase.gsub(/\./,'')
       }.reduce("") { |a,b|
         if "" == a
