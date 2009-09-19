@@ -1,0 +1,144 @@
+===
+
+# Rails Workshop Lesson Plan
+
+This accompanies the [rails notes](./rails_notes.html) page.
+
+ 1. What is Rails discussion.
+
+ 2. Download/install InstantRails
+
+     1. Unzip InstantRails and move the `InstantRails` folder to
+        the C:/ folder.
+
+     2. Instant Rails will detect that it is being started from a
+        new directory and ask if you want to have it update the
+        paths in the all of the configuration files... Just say
+        yes.
+
+     3. Click on the I button to drop down the main menu and select
+        Configure > Windows Hosts file.
+
+     4. In the editor that pops up, add this line to the end of the
+        file:
+
+            127.0.0.1   blogr.com
+
+     5. Save the change and exit the editor.
+
+     6. In the main menu, select Rails Applications > Manage Rails
+        Applications...
+
+ 3. Run `rails blogr` from command line and enter the
+    newly-created **blogr** directory with `cd blogr`.
+
+ 4. Start local mysql server and create the three local databases,
+    * blogr_development
+    * blogr_test
+    * blogr_production
+
+    In MySQL language, this is
+
+        {{lang:sql}}
+        CREATE DATABASE blogr_development;
+        CREATE DATABASE blogr_test;
+        CREATE DATABASE blogr_production;
+
+ 5. Modify **blogr/config/database.yml** to reflect the new local
+    server. E.g.,
+
+        development:
+          adapter: mysql
+          database: blogr_development
+          socket: /Applications/MAMP/tmp/mysql/mysql.sock
+          user: root
+          password: root
+
+ 6. Run `ruby script/server` to start the local WEBRick server
+
+ 7. Navigate to **http://localhost:3000** and make sure everything
+    checks out: click the "About your application’s environment" link and
+    ensure you don't get any warnings.
+
+ 8. Stop the WEBRick server by going to the console where you started
+    it and hitting Control+C.
+
+ 9. MVC Discussion
+
+10. Schema discussion:
+
+        stories:            authors:
+            id              +-> id
+            title           |   title
+            slug            |   email
+            story           |   password
+            created_at      |   created_at
+            updated_at      |
+            author_id <-----+
+
+
+11. Generate the scaffolding for stories by running
+
+        ruby script/generate scaffold Story     \
+            title:string                        \
+            slug:string                         \
+            story:text                          \
+            author_id:integer
+
+    Note that id, created\_at, and updated\_at are free.
+
+
+12. Migrations discussion
+
+13. Run the migration to add in the new stories columns by running
+    `rake db:migrate`.
+
+14. Scaffolding discussion
+
+15. Navigate to **http://localhost:3000/stories** to ensure you get a
+    "Listing stories" page
+
+16. Add a missing column, *rating* by using Migrations. Run `ruby
+    script/generate migration add_story_rating`. Modify this Migration,
+    **blogr/db/migrate/002\_add\_story\_rating.rb**, to be
+
+        {{lang:ruby}}
+        class AddStoryRating < ActiveRecord::Migration
+          def self.up
+            add_column :stories, :rating, :integer, :default => 3
+          end
+
+          def self.down
+            remvoe_column :stories, :rating
+          end
+        end
+
+17. Migrate the database by running `rake db:migrate`.
+
+18. Model association discussions:
+
+     *  has\_many
+     *  belongs\_to
+     *  has\_and\_belongs\_to\_many
+
+    Also discuss the columns that are added to the tables as a result of these
+    relationships.
+
+19. Update the models
+
+    **blogr/app/models/story.rb** becomes
+
+        {{lang:ruby}}
+        class Story < ActiveRecord::Base
+          belongs_to :author
+        end
+
+    **blogr/app/models/author.rb** becomes
+
+        {{lang:ruby}}
+        class Author < ActiveRecord::Base
+          has_many :stories
+        end
+
+20. Generate scaffolding for authors
+

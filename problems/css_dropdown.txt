@@ -1,0 +1,32 @@
+
+# CSS Pop-Up Menu Example
+
+Our goal in this writeup is to complete a simple horizontal pop-up
+menu using only HTML and CSS. An example of one would be:
+
+<div id="finished">
+    <ul>
+        <li><a href="home">Home</a></li>
+        <li><a href="about">About</a>
+            <ul>
+                <li><a href="mission">Mission</a></li>
+                <li><a href="profile">Profile</a></li>
+            </ul></li>
+        <li><a href="about">Contact</a>
+            <ul>
+                <li><a href="phone">Phone</a></li>
+                <li><a href="email">Email</a></li>
+            </ul></li>
+        <li><a href="legal">Legal</a></li>
+    </ul>
+</div>
+
+Traditionally this was done via complicated JavaScript. Even using a
+framework like [jQuery](http://jquery.com/), it's still not trivial to
+accomplish this.
+
+What is crucial to this example is to use the proper CSS selectors.
+Crucial to using proper CSS selectors is making sure our HTML is up to
+snuff. As such, we first focus on the HTML and then iteratively add
+the necessary CSS.
+

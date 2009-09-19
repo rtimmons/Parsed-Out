@@ -1,0 +1,140 @@
+# Sample Blogr Data
+
+
+## Getting Started Database Rows
+
+    {{lang:php}}
+    $users = array(
+        array(
+            'id'    => 1,
+            'title' => 'Ranger Rick',
+            'email' => 'rickr@gmail.com'
+        ),array(
+            'id'    => 2,
+            'title' => 'Yogi Bear',
+            'email' => 'yogi@picinicbaskets.com'
+        ),array(
+                // note that anakin here has no stories in $stories
+            'id'    => 3,
+            'title' => 'Anakin Sywalker',
+            'email' => 'isdarthvader@deathstar.gov'
+        ),array(
+                // note the absense of user with id=4
+            'id'    => 5,
+            'title' => 'Captain Planet',
+            'email' => 'me@yourpowerscombined.co.uk'
+        )
+    );
+    $stories = array(
+        array(
+            'id'         => 1,
+            'user_id'    => 1,
+            'title'      => 'It\'s a great day in the forest',
+            'created_at' => '2008-01-24 13:30:00',
+            'text'       => 'Man, I love the forest.  It\'s super awesome.',
+        ),array(
+            'id'         => 2,
+            'user_id'    => 1,
+            'title'      => 'I think I just saw Sasquatch',
+            'created_at' => '2008-01-24 13:30:45',
+            'text'       => 'Okay, so, I think this forest life is getting to me.  Weird stuff.'
+        ),array(
+            'id'         => 3,
+            'user_id'    => 2, 
+            'title'      => 'That Ranger Rick sure is crazy',
+            'created_at' => '2008-01-24 13:34:00',
+            'text'       => 'I was like "roar," and he was like "ah!"'
+        ),array(
+            'id'         => 4,
+            'user_id'    => 1,
+            'title'      => 'I\'m Hunting Sasquatches.  And men in skirts.',
+            'created_at' => '2008-01-25 04:30:00',
+            'text'       => 'I\'ll show that Sasquatch to sport his Irish heritage \'round here!'
+        ),array(
+            'id'         => 5,
+            'user_id'    => 5,
+            'title'      => 'On Morals',
+            'created_at' => '2008-01-25 04:33:00',
+            'text'       => 'Over half our world\'s landfills are filled with Sasquatch kilts.'
+        )
+    );
+    $categories = array(
+        array(
+            'id'    => 1,
+            'title' => 'Business'
+        ),array(
+            'id'    => 2,
+            'title' => 'World'
+        ),array(
+            'id'    => 4,
+            'title' => 'Sasquatches'
+        )
+    );
+    $stories_categories = array(
+        array(
+            'category_id' => 4,
+            'story_id'    => 2
+        ),array(
+            'category_id' => 2,
+            'story_id'    => 2
+        )
+    );
+
+
+## Sample Database `blogr` SQL
+
+    {{lang:sql}}
+    CREATE DATABASE IF NOT EXISTS `blogr`;
+    USE `blogr`;
+    DROP TABLE IF EXISTS `users`;
+    CREATE TABLE `users` (
+        `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY
+    ,   `title` VARCHAR( 200 ) NOT NULL
+    ,   `email` VARCHAR( 200 ) NOT NULL
+    );
+    INSERT INTO `users` 
+        (`id`,`title`,`email`) 
+    VALUES 
+        ('1','Ranger Rick','rickr@gmail.com')
+    ,   ('2','Yogi Bear','yogi@picinicbaskets.com')
+    ,   ('3','Anakin Sywalker','isdarthvader@deathstar.gov')
+    ,   ('5','Captain Planet','me@yourpowerscombined.co.uk')
+    ;
+    DROP TABLE IF EXISTS `stories`;
+    CREATE TABLE `stories` (
+        `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY
+    ,   `user_id` INT NOT NULL
+    ,   `title` VARCHAR( 200 ) NOT NULL
+    ,   `created_at` DATETIME NOT NULL
+    ,   `text` TEXT NOT NULL
+    );
+    INSERT INTO `stories` 
+        (`id`,`user_id`,`title`,`created_at`,`text` )
+    VALUES 
+        ('1', '1', 'It\'s a great day in the forest', '2008-01-24 13:30:00', 'Man, I love the forest. It\'s super awesome.')
+    ,   ('2', '1', 'I think I just saw Sasquatch', '2008-01-24 13:30:45', 'Okay, so, I think this forest life is getting to me. Weird stuff.')
+    ,   ('3', '2', 'That Ranger Rick sure is crazy', '2008-01-24 13:34:00', 'I was like \"roar,\" and he was like \"ah!\"')
+    ,   ('4', '1', 'I\'m Hunting Sasquatches. And men in skirts.', '2008-01-25 04:30:00', 'I\'ll show that Sasquatch to sport his Irish heritage \'round here!')
+    ,   ('5', '5', 'On Morals', '2008-01-25 04:33:00', 'Over half our world\'s landfills are filled with Sasquatch kilts.')
+    ;
+    DROP TABLE IF EXISTS `categories`;
+    CREATE TABLE `categories` (
+        `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY
+    ,   `title` VARCHAR( 200 ) NOT NULL
+    );
+    INSERT INTO `categories`
+        (`id`,`title`)
+    VALUES
+        (1,'Business'), (2,'World'), (4,'Sasquatches')
+    ;
+    DROP TABLE IF EXISTS `categories_stories`;
+    CREATE TABLE `categories_stories` (
+        `category_id` INT NOT NULL
+    ,   `story_id` INT NOT NULL
+    );
+    INSERT INTO `categories_stories`
+        (`category_id`,`story_id`)
+    VALUES
+        (4,2), (2,2)
+    ;
+

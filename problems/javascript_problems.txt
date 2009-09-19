@@ -1,0 +1,1434 @@
+===
+
+# Javascript Practice Problems
+
+Remember that JavaScript and PHP (and Ruby and COBOL and Python and pretty
+much everything else) are very different: you can still use the same
+problem-solving approaches, but the syntax and how functions are managed and
+called is completely different. Try not to get them confused!
+
+## A Quick Side Note
+
+I've gone through and indicated the difficulty of each problem on a 5-<@>
+scale. One <@> is easy while five <@>s is tough.
+
+Also of note, almost all of these problems use [the jQuery framework][j] to
+make them considerably more tractable. Once you've downloaded the jQuery
+framework file, you should rename it to `jquery.js` and put it in the same
+folder as your HTML document. You might then have the following as your
+"sandbox" document:
+
+    {{lang:html}}
+    <html><head><title>Sandbox</title>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript">
+    
+        // YOUR JAVASCRIPT GOES HERE
+    
+    </script><body>
+    
+        <!-- YOUR HTML CODE GOES HERE -->
+    
+    </body></html>
+
+[j]:http://jquery.com/
+
+I've done my best to show a wide variety of possible solution types: in some
+cases I replace an HTML element with another one, and in other cases I add a
+new element before/after it after first hiding it. There are some definite
+speed/efficiency trade-offs to both of these approaches, but I opted to
+neglect these issues and to instead focus on the solution I thought was the
+easiest to understand.
+
+Let the fun begin! (I play fast and loose with my usage of the word "fun.")
+
+
+## Random Array Element <@><@>
+
+`Math.random()` can be used to generate a random number between 0 and 1
+(inclusive), and `Math.round(n)` can be used to find the integer closest to
+`n`.
+
+Using this information, make a function `random_elt( arr )` that takes an
+array as its argument and returns a random element from that array.
+
+{hidden}
+
+    {{lang:javascript}}
+    var random_elt = function(arr)
+    {
+        var len = arr.length;
+        var r   = len * Math.random();
+        r       = Math.round(r);
+        // now r is in the range 0 to len (inclusive)
+        return arr[r];
+    };
+
+Or the shorter, one-line version:
+
+    {{lang:javascript}}
+    var random_elt = function(a)
+    {
+        return a[Math.round(Math.random()*a.length)];
+    };
+
+{/hidden}
+
+## Implementing Some of jQuery ##
+
+Using anonymous functions can be confusing, and that's only compounded by the difficulty of learning jQuery.
+
+So this code can be confusing for a beginner:
+
+    {{lang:javascript}}
+    $('#f').click(function(){
+        alert(this.href);
+        return false;
+    });
+
+This code simply takes a link like `<a id="f" href="foo">Link</a>` the following
+and alerts the `href` attribute when it's clicked on.
+
+    var e = document.getElementById('f');
+    e.click = function(f){ this.onclick = f; };
+    
+    e.click(function(){
+        alert(this.href);
+    });
+
+
+## Objects in JavaScript <@>
+
+This is not a problem, just a necessary explanation.
+
+An object is simply a collection of functions and variables that work together
+to accomplish a task. We call functions that belong to an object **methods**
+and variables that belong to an object **properties**.
+
+An object is created simply in the manner of
+
+    {{lang:javascript}}
+    var my_new_object = {};
+
+and then we use a "dot syntax" to address the properties or values
+pertaining to our object. The "dot syntax" is best illustrated by an
+example:
+
+    {{lang:javascript}}
+    var family      = {};
+    family.name     = 'Flinstone';
+    family.mother   = 'Wilma';
+    family.father   = 'Fred';
+    family.children = ['Pebbles', 'Bam Bam'];
+
+So `family` is the object that we're talking about, and `name`, in the
+first example, is the *property of `family`* that we're changing.
+You'll also notice that we didn't say `var family.name` because we're
+not declaring a new variable called `family.name`: we're modifying the
+existing `family` object. That is, we're changing its `name` property.
+
+An object can also perform actions on its properties. Maybe we want
+our `family` object to have a method `toString` that returns the
+string
+
+    We're Fred and Wilma Flinstone.  Our children are Pebbles and Bam Bam.
+
+We could do this in a few ways, starting at the most naive:
+
+ 1. The simplest way is to simply create a function that returns the
+    string:
+
+        {{lang:javascript}}
+        family.toString = function()
+        {
+            return  "We're Fred and Wilma Flinstone.  "
+                 +  "Our children are Pebbles and Bam Bam.";
+        }
+ 
+ 2. A better way is to use the `family` object's properties:
+ 
+        {{lang:javascript}}
+        family.toString = function()
+        {
+            return  "We're " + family.father 
+                 + " and " + family.mother + " " + family.name + ".  "
+                 +  "Our children are "
+                 +  family.children[0] + " and "
+                 +  family.children[1] + ".";
+        }
+
+ 3. The *best* way is to use the `this` keyword that **refers back to the
+    owner of the property.**  This is a more generalized way of the previous
+    way.
+    
+        {{lang:javascript}}
+        family.toString = function()
+        {
+            return  "We're " + this.father 
+                 + " and " + this.mother + " " + this.name + ".  "
+                 +  "Our children are "
+                 +  this.children[0] + " and "
+                 +  this.children[1] + ".";
+        }
+
+Here is an example of an object being used:
+
+    {{lang:javascript}}
+    // create the variable and declare it as an object:
+    var mycounter       = {};
+    // create a `count` property and set its contents to 0
+    mycounter.count     = 0;
+    // give the object the ability to increment its value property
+    mycounter.increment = function(){ this.count++ }
+
+If you have any familiarity with the more popular Object-Oriented programming
+languages such as Java, C++, or Ruby, then JavaScript's handling of objects
+might be a bit surprising to you.
+
+In particular, there is no such thing as different "types" of objects in
+JavaScript: all objects are arrays, and all arrays are objects.
+
+So the following are actually equivalent:
+
+ *  **The array syntax**:
+ 
+        {{lang:javascript}}
+        var thefamily       = [];
+        thefamily['mother'] = "Wilma";
+        thefamily['father'] = "Fred";
+
+ *  **The object syntax**:
+ 
+        {{lang:javascript}}
+        var thefamily    = {};
+        thefamily.mother = "Wilma";
+        thefamily.father = "Fred";
+
+Notice that we didn't surround `mother` or `father` in quotes in the second
+case: if you are treating the object as though it's an object (as opposed to
+treating it like it's an array like the first example) then what comes after
+the dot, (e.g., `mother`) is *always* considered a string.  
+
+## Top 5 Most Useful Selectors:
+
+ 1. `#id` selects a single element with the given id:
+
+        $('#menu').hide();
+
+ 2. `element` selects all `<element>` tags:
+ 
+        $('ul').addClass('a_list');
+    
+ 3. `ancestor descendant` selects all `<descendant>` elements inside of any
+    `<ancestor>` elements
+    
+        $('ul li').css('color','blue');
+    
+ 4. `:first` matches the first selected element (similar is `:last`)
+ 
+        $('body h1:first').css('font-weight','bold');
+    
+ 5. `:even` matches even elements, zero-indexed (similar is `:odd`)
+ 
+        $('table tr:even').addClass('oddTableRow');
+
+Also:
+
+ *  `parent > child`
+ *  `prev + next`
+ *  `prev ~ siblings`
+ *  `:not(selector)`
+ *  `:eq(index)`
+ *  `:gt(index)` (greater-than)
+ *  `:lt(index)` (less-than)
+ *  `:header` (any `<h1>`, `<h2>`, etc.)
+ *  `:hidden` matches if the element has been hidden with e.g., `.hide()`
+ *  `:visible` matches if the element *hasn't* been hidden
+ *  `[attribute=value]`, e.g. `$('img[src="foo.jpg"]').css('border','1px');`
+
+## Classy <@>
+
+Imagine you have the following document structure
+
+    {{lang:html}}
+    <body>
+        <div id="nav">
+            <ul>    <li><a href="1">Home</a></li>
+                    <li><a href="2">About</a></li>
+                    <li><a href="3">Contact</a></li>    </ul>
+        </div><div id="content">
+            <h1>Header</h1>
+            <p>This is text</p>
+        </div>
+    </body>
+
+Then what is the jQuery to...
+
+ 1. Select the `<div id="content">`?
+    
+    {hidden}
+    
+        {{lang:javascript}}
+        $('#content')
+    
+    {/hidden}
+    
+ 2. Change the color of the `<div id="content">` to red?
+    
+    {hidden}
+    
+        {{lang:javascript}}
+        $('#content').css('color','red')
+    
+    {/hidden}
+
+
+ 3. Select the "Home" link?
+    
+    {hidden}
+    
+    Either of the following would work:
+    
+        {{lang:javascript}}
+        $('#menu ul li:first a')
+        $('#menu ul li a[href="1"]')
+    
+    {/hidden}
+
+
+## Document Title <@><@>
+
+Not tough if you do it right:  research the [jQuery selectors][sel].
+
+Set the document's title (normally set within the `<title>` tag) to
+the contents of the first `<h1>` tag on the page. You can set the
+document's title by modifying the `document` object's `title`
+property.
+
+{hidden}
+
+    {{lang:javascript}}
+    $(document).ready(function(){
+        document.title = $("h1:first").html();
+    });
+
+{/hidden}
+
+[sel]:http://docs.jquery.com/Selectors
+
+
+## Table Striping <@><@>
+
+This one's easy if you use the right [selectors][sel].
+
+Imagine you have an HTML table (of class `stripe`) on your page,
+
+    {{lang:html}}
+    <table class="stripe">
+        [...]
+    </table>
+
+and you want to make the even `<tr>`s have a class `even` (which could
+perhaps make those rows have a different background color) and the odd
+`<tr>`s have a class `odd`.
+
+What is the jQuery to do this?
+
+{hidden}
+
+    {{lang:javascript}}
+    $(document).ready(function(){
+        $('table.stripe tr:even').addClass('even');
+        $('table.stripe tr:odd').addClass('odd');
+    });
+
+{/hidden}
+
+
+## Column Hover <@><@><@><@>
+
+You can make a whole row of a table change when the mouse is over it
+very easily using some simple CSS:
+
+    {{lang:css}}
+    tr:hover { background-color: gray; }
+
+What is more difficult, however, is making a whole **column** highlight when
+the mouse is over it. (This is, of course, due to the fact that HTML tables
+aren't structured by columns, so all the cells in a column aren't really
+related to each other in a simple way like cells in a row are.)
+
+The key here is that the `<td>`s in a column are all the indexed the same.
+That is, the `<td>` that comprise the first "column" are simply those `<td>`s
+that are the first children of the table's `<tr>`s. Similarly, the `<td>`s
+that comprise the second "column" are simply all the **second** children (in
+order) of the table's `<tr>`s. This isn't the case when you allow for `<td>`s
+with `colspan`, but we won't touch that issue.
+
+Given that the following HTML table is on your page,
+
+    {{lang:html}}
+    <table class="colhover">
+        <tr>  <th>Item</th>     <th>Price</th>   </tr>
+        <tr>  <td>Chapeau</td>  <td>$23.34</td>  </tr>
+        <tr>  <td>Chemise</td>  <td>$89.93</td>  </tr>
+    </table>
+
+add the jQuery to make a whole column's background-color change when the mouse
+is over it. So when the mouse is over "Item", the background-color of "Item,"
+"Chapeau," and "Chemise" changes. The same would apply for moving your mouse
+over "Chapeau" or "Chemise" as well--the whole column is visually affected.
+
+The trick here is to use the `each` method of your `jQuery` (`$`) object and
+to realize that the function you specify as the argument to `each` is passed
+the index of the current item. For example,
+
+    {{lang:html}}
+    <ul id="somelist">
+        <li>Item <span></span></li>
+        <li>Item <span></span></li>
+    </ul>
+
+when combined with the following jQuery,
+
+    {{lang:javascript}}
+    $(document).ready(function(){
+        // notice the `i` in `function(i)`:
+        $("#somelist li").each(function(i){
+            $(this).children('span').html('Number ' + i);
+        });
+    });
+
+results in the following HTML on the page:
+
+    {{lang:html}}
+    <ul id="somelist">
+        <li>Item <span>Number 0</span></li>
+        <li>Item <span>Number 1</span></li>
+    </ul>
+
+
+So your solution might do something like:
+
+ 1. Find all the rows in the table, then
+ 2. Find all the `<td>`s in the row, then
+ 3. Add a class like `td0` for the first `<td>`s in a row or `td1` for
+    the second `<td>` in a row, then
+ 4. Make the `mouseover` function trigger all `<td>`s of that class
+    to have a different text color and the `mouseout` function revert
+    the effect.
+
+{hidden}
+
+    {{lang:javascript}}
+    $(document).ready(function(){
+        $("table.colhover tr").each(function(){
+            $(this).children("td").each(function(td_index){
+                var added_class = 'td' + td_index;
+                $(this).addClass(added_class)
+                       .mouseover(function(){
+                           $('td.'+added_class).css('color','red');
+                       })
+                       .mouseout(function(){
+                           $('td.'+added_class).css('color','');
+                       })
+                ;
+            });
+        });
+    });
+
+Remember how chaining works with jQuery. We could have written the above as
+
+    {{lang:javascript}}
+    $(document).ready(function(){
+        $("table.colhover tr").each(function(){
+            $(this).children("td").each(function(td_index){
+                var added_class = 'td' + td_index;
+                $(this).addClass(added_class);
+                $(this).mouseover(function(){
+                            $('td.'+added_class).css('color','red');
+                        });
+                $(this).mouseout(function(){
+                            $('td.'+added_class).css('color','');
+                        });
+            });
+        });
+    });
+
+Notice how in the second version we continuously call in the manner of
+
+    {{lang:javascript}}
+    $(this).some_function();
+    $(this).some_other_function();
+
+while in the first version this same thing is written as
+
+    {{lang:javascript}}
+    $(this).some_function() // notice there isn't a semicolon here!
+           .some_other_function();
+
+The first version is much faster though.
+
+What's going on here is that jQuery is performing some operation
+(`some_function`) on the matched elements (`$(this)`) and is then returning
+them back.
+
+Consider the following example that is outside of jQuery:
+
+    {{lang:javascript}}
+    var numbers     = {};
+    numbers.thedata = [1,2,3,4]
+    numbers.add_one = function()
+    {
+        for ( key in this.thedata )
+        { 
+            this.thedata[key] += 1;
+        }
+        return this;  // THIS IS CRITICAL!!
+    };
+    numbers.add_one().add_one().add_one();
+    // now `numbers` is [4,5,6,7]
+
+{/hidden}
+
+
+## Toggle Both <@><@>
+
+This is an easy one.
+
+Make a function `toggleboth` that takes two arguments and toggles both
+of their *visibility* attributes.
+
+{hidden}
+
+    {{lang:javascript}}
+    var toggleboth = function(a, b)
+    {
+        $('#'+a).toggle();
+        $('#'+b).toggle();
+    };
+
+Or this slightly shorter but harder to read version:
+
+    {{lang:javascript}}
+    var toggleboth = function(a, b)
+    {
+        $('#'+a+', #'+b).toggle();
+    };
+
+{/hidden}
+
+
+## Textarea Character Limit <@><@><@>
+
+Imagine you have a textarea on your page such as 
+
+    {{lang:html}}
+    <textarea name="comments" class="limit"></textarea>
+
+and you want to limit it (and all `<textarea>`s of class `limit`) to
+having **255 characters or less**. Moreover, you want to give the user
+an idea as to how many characters s/he has left in a `<div>` after the
+`<textarea>`.
+
+What jQuery would you need to insert to accomplish letting the user
+know how many characters are left? You don't need to take care of
+actually enforcing the limit (although it's not hard to do).
+
+{hidden}
+
+This is another one of those times when there are quite a large number
+of ways to solve the problem. 
+
+    {{lang:javascript}}
+    $(document).ready(function(){
+        var c_limit        = 255;
+        var current_length = 0;
+        var update_val = function(context)
+        {
+            var chars_left = c_limit - current_length;
+            $(context).next()
+                      .html( chars_left
+                         +    ' characters left' );
+        };
+        $('textarea.limit').each(function(){
+            $(this).after('<div></div>')
+                   .keypress(function(){
+                        current_length = $(this).val().length;
+                        update_val(this);
+                    })
+                    // this takes care of an issue where the user
+                    // could reload the page and an old value could
+                    // still be in the field:
+                    .keypress();
+            update_val(this);
+        })
+    });
+
+{/hidden}
+
+## Checkboxes:  Select All, None, and Inverse <@><@><@><@>
+
+Imagine you have a bunch of check boxes on your page because you're
+really fancy and like check boxes. You used to, when you were a kid,
+check and uncheck all your checkboxes by hand. Arduous labor, that is.
+
+You've started growing up, though, and now you want the ability to
+check all the checkboxes at the same time. Not willing to stop there,
+you also want the ability to turn them all off and "invert" them:
+those that were checked are now unchecked and those that were
+unchecked are now checked after hitting your magical "Invert" button.
+
+
+So you're given that the following is on your page
+
+    {{lang:html}}
+    <form method="get" action="./">
+    <div class="checkbox_controls">
+        <input name="foo" value="foo" type="checkbox" />
+        <input name="foo" value="bar" type="checkbox" />
+        <input name="foo" value="baz" type="checkbox" />
+        <input name="foo" value="bat" type="checkbox" />
+    </div>
+    </form>
+
+and after running your jQuery runs, this will become
+
+    {{lang:html}}
+    <form method="get" action="./">
+    <a href="">All</a>  <a href="">None</a>  <a href="">Inverse</a>
+    <div class="checkbox_controls">
+        <input name="foo" value="foo" type="checkbox" />
+        <input name="foo" value="bar" type="checkbox" />
+        <input name="foo" value="baz" type="checkbox" />
+        <input name="foo" value="bat" type="checkbox" />
+    </div>
+    </form>
+
+And clicking on "All" checks all the checkboxes, clicking "None"
+unchecks all of them, and clicking "Inverse" checks those that are
+unchecked and unchecks those that are unchecked.
+
+Note that you can check a checkbox by setting its `checked` attribute
+to `checked`, e.g.,
+
+    {{lang:html}}
+    <input type="checkbox" name="kittens" checked="checked" />
+
+{hidden}
+
+    {{lang:javascript}}
+    $(document).ready(function(){
+        $('.checkbox_controls').each(function(){
+            $(this)
+                .before('<a href="">All</a>')
+                .prev()
+                .click(function(){
+                    $('input:checkbox',$(this).next().next().next())
+                        .attr('checked','checked');
+                    return false;
+                })
+                .end()
+                
+                .before('  <a href="">None</a>')
+                .prev()
+                .click(function(){
+                    $('input:checkbox',$(this).next().next())
+                        .attr('checked','');
+                    return false;
+                })
+                .end()
+                
+                .before('  <a href="">Inverse</a>')
+                .prev()
+                .click(function(){
+                    var checked = $('input:checked',$(this).next());
+                    var notchec = $('input:not(:checked)',$(this).next());
+                    checked.attr('checked','');
+                    notchec.attr('checked','checked');
+                    return false;
+                })
+            ;
+        });
+    });
+
+{/hidden}
+
+## Alt Captions <@><@><@>
+
+Add the jQuery to put all your document's images' captions (their
+`alt` attributes) after them in a `<span>` of class "caption".
+
+So if you had the following in your document
+
+    {{lang:html}}
+    <p><img src="1.jpg" alt="A puppy named Bruce" /></p>
+
+it would become
+
+    {{lang:html}}
+    <p><img src="1.jpg" alt="A puppy named Bruce" />
+       <span class="caption">A puppy named Bruce</span></p>
+
+{hidden}
+
+    {{lang:javascript}}
+    $(document).ready(function(){
+       $('img').each(function(){
+           var alt  = $(this).attr('alt');
+           var span = '<span class="caption">'+alt+'</span>';
+           $(this).after(span);
+       });
+    });
+
+{/hidden}
+
+
+## Tabbed Interface <@><@><@>
+
+(Note that this one does not yet have a solution.)
+
+Imagine your document is structured like
+
+    {{lang:html}}
+    <body>
+        <div class="tab">
+            <h1>Tab 0 Title</h1>
+            <p>Tab 0 text</p>
+            <p>Tab 0 text</p>
+            [...]
+        </div>
+        <div class="tab">
+            <h1>Tab 1 Title</h1>
+            <p>Tab 1 text</p>
+            <p>Tab 1 text</p>
+            [...]
+        </div>
+        <div class="tab">
+            <h1>Tab 2 Title</h1>
+            <p>Tab 2 text</p>
+            <p>Tab 2 text</p>
+            [...]
+        </div>
+    </body>
+
+You now want to make this a "tabbed" interface: above the set of
+`<div>`s, there should be an unordered list of links to toggle which of
+the `<div>`s is currently visible. When the page first loads, the first
+`<div>` should be visible and all the others should be hidden.
+
+So above the first `<div>`, your jQuery should insert something like:
+
+    {{lang:html}}
+    <ul>
+        <li><a href="">Tab 0 Title</a></li>
+        <li><a href="">Tab 1 Title</a></li>
+        <li><a href="">Tab 2 Title</a></li>
+    </ul>
+
+and clicking on the links should show the respective `<div>`s while
+hiding the others.
+
+Insert the jQuery to make this happen.
+
+**Solution left as an exercise**
+
+
+## Click-To-Change <@><@><@>
+
+A bit of trickery involved with this to get it right, but not too
+tough.
+
+Facebook has an interesting feature that lets you change your status
+by clicking on your current status. So the page has something like
+
+    {{lang:html}}
+    Ryan <span class="updater" title="status">conquered the
+        world</span>.
+
+and then when you click on "conquered the world", the text appears
+inside a one-line text box. I.e., the above `<span>` is replaced by
+something like
+
+    {{lang:html}}
+    <input type="text" name="status" value="conquered the world" />
+
+Implement this feature such that when the user clicks on the text
+inside of a `<span class="updater">`, the span is replaced by an
+`<input type="text" />`.
+
+The generated input's `name` attribute is the old `<span>`'s `title`
+attribute. As soon as the new input is generated, it should take focus
+(using the DOM `focus()` method), and as soon as it loses focus, it
+should alert the new value and replace the generated input with a
+`<span>` like the one before only now containing the contents the user
+submitted. You can use jQuery's `blur()` function that takes a
+callback as an attribute that will be executed when the element loses
+focus.
+
+{hidden}
+
+    {{lang:javascript}}
+    // note that we're creating this as its own function
+    // rather than having it be an anonymous function parameter
+    // to `$(document).ready()`.  This is so we can have it call
+    // itself.  More on this in the comments.
+    var replace_updaters = function(){
+        $('span.updater').click(function(){
+            var title = $(this).attr('title');
+            var inner = $(this).html();
+            // generate the new `<input />`:
+            $(this)
+                .replaceWith(
+                  '<input type="text" name="'
+                  // notice the id:
+                  +title+'" id="curr" value="'+inner+'" />'
+                );
+            // now change what we just inserted, based on that id
+            $("#curr")
+                .focus() // tell the cursor to go here
+                // and now assign what to trigger when 
+                // the cursor leaves here:
+                .blur(function(){ 
+                    alert($(this).val());
+                    $(this).replaceWith(
+                          '<span class="updater" title="'
+                          +title+'">'+$(this).val()+'</span>'
+                        );
+                    // make sure the new `<span class="updater">`
+                    // has the same click-to-change properties:
+                    replace_updaters();
+                });
+        })
+        // not part of the original assigment, but still
+        // a good touch:  apply a 'hover' visual style:
+        .mouseover(function(){
+            $(this).css('color','blue')
+                   .css('cursor','pointer');
+        })
+        .mouseout(function(){
+            $(this).css('color','');
+        })
+        ;
+    };
+    $(document).ready(replace_updaters);
+
+{/hidden}
+
+
+## Email Replacer <@><@>
+
+This one's pretty easy once you're in the "jQuery Mindset."
+
+Good web practices say to *never* put your email address on a web
+site. Why? Because spam robots will see it while crawling the web, and
+all of a sudden your inbox will flood with offers for "the next best
+medical cures." So unless you're interested in discount libido
+medications, don't publish your email address without first mangling
+it.
+
+The spam robots are pretty simple: they mindlessly browse the web
+following link after link after link looking for anything that matches
+a very simple pattern,
+
+    username@domain
+
+where `username` is some combination of letters, numbers, dots, and
+underscores and `domain` is some combination of letters, numbers, and
+dots. (It's slightly more complicated than this, of course--see ["The
+Clbuttic Mistake"][cl]--but that's the idea of what's going on.)
+
+What a lot of people do is put something like
+
+    {{lang:html}}
+    <p>Email me at abelincoln[at-sign-here]hotmail.com</p>
+
+on their web site instead of the traditional
+
+    {{lang:html}}
+    <p>Email me at abelincoln@hotmail.com</p>
+
+to trick (most) spam bots into not recognizing the email address.
+
+Let's say that now we want to "undo" this on our pages: revert this
+text back to the usual text most users are expecting. We'll do this
+with JavaScript, so the spambots (which are automated--they don't have
+JavaScript turned on) can't see the fixed results
+
+Given the following block of HTML,
+
+    {{lang:html}}
+    <span class="email">
+        <span class="uname">abelincoln
+        <span class="atsign">[at]</span>
+        <span class="domain">hotmail.com</span>
+    </span>
+
+write the jQuery to replace this with the following HTML as soon as the
+page is loaded:
+
+    {{lang:html}}
+    <a href="mailto:abelincoln@hotmail.com">
+        abelincoln@hotmail.com</a>
+
+[cl]:http://forums.thedailywtf.com/forums/t/5552.aspx
+
+{hidden}
+
+    {{lang:javascript}}
+    $(document).ready(function(){
+        $('span.email').each(function(){
+            var uname    = $(this).children('.uname').html();
+            var domain   = $(this).children('.domain').html();
+            var email    = uname + '@' + domain;
+            var linktext = '<a href="mailto:'
+                           + email + '">' 
+                           + email + '</a>';
+            $(this).after(linktext)
+                   .remove()
+            ;
+        });
+    });
+
+{/hidden}
+
+
+### Microformats:  A Quick Aside
+
+As an interesting aside, be sure to check out the increasingly-popular
+web markup concept called [Microformats][mf]. These simple HTML
+additions allow your content to be read easily by computers. All it
+really is, though, is a set of standardized class names for tags.
+
+[mf]:http://microformats.org/about/
+
+Here is a bit of HTML with Microformats embedded:
+
+    {{lang:html}}
+    <div class="vcard">
+        <a class="fn org url" href="http://www.commerce.net/">CommerceNet</a>
+        <div class="adr">
+            <span class="type">Work</span>:
+            <div class="street-address">169 University Avenue</div>
+            <span class="locality">Palo Alto</span>,  
+            <abbr class="region" title="California">CA</abbr>  
+            <span class="postal-code">94301</span>
+            <div class="country-name">USA</div>
+        </div>
+        <div class="tel">
+            <span class="type">Work</span> +1-650-289-4040
+        </div>
+        <div class="tel">
+            <span class="type">Fax</span> +1-650-289-4041
+        </div>
+        <div>Email: 
+            <span class="email">info@commerce.net</span>
+        </div>
+    </div>
+
+(this via the [hcard microformat page][hcard].)
+
+[hcard]:http://microformats.org/wiki/hcard
+
+
+## ShowHide <@><@><@>
+
+Say you have bunch of `<div>`s on the page like
+
+    {{lang:html}}
+    <div class="showhide" title="Solution">
+        <p>The solution</p>
+    </div>
+
+and you want to hide them all when the user first loads the page but
+then provide links to show/hide the elements in their place. The text
+of the link should include the `div`'s `title` attribute. So the above
+`div` should be "replaced" by a link "Show Solution" that shows the
+`div` and simultaneously changes the link's text to "Hide Solution".
+
+{hidden}
+
+    {{lang:javascript}}
+    $(document).ready(function(){
+        // hopefully get a unique id:
+        var prefix = 'sol'+(new Date()).getTime();
+        // ensure uniquness:
+        while ( $('#'+prefix).length )
+            prefix += 'd';
+        var lastid = 0; // the suffix to the prefix of 
+                        // the last-inserted DOM elt
+        $('.showhide').each(function(){
+            var divid      = prefix + lastid++;
+            var showlinkid = prefix + lastid++;
+            var hidelinkid = prefix + lastid++;
+            var linktitle  = $(this).attr('title');
+            $(this)
+                .attr('id',divid)
+                .before('<p><a href="javascript:;" id="'
+                            + showlinkid
+                            + '"><big>+</big> Show '
+                            + linktitle + '</a></p>')
+                .prepend('<p><a href="javascript:;" id="'
+                            + hidelinkid
+                            + '"><big>-</big> Hide '
+                            + linktitle + '</a></p>')
+                .toggle()
+                ;
+            $('#'+showlinkid).click(function(){
+                toggleboth(showlinkid,divid);
+            });
+            $('#'+hidelinkid).click(function(){
+                toggleboth(showlinkid,divid);
+            });
+        });
+
+{/hidden}
+
+
+## Font Size <@><@>
+
+If done properly, this one's not too bad.
+
+Given the following HTML on the page, insert links to dynamically
+change the body's font size.
+
+    {{lang:html}}
+    <div id="font"></div>
+
+{hidden}
+
+    {{lang:javascript}}
+    var change_body_font_size = function(delta)
+    {
+        var body     = $('body');
+        // grab either the current font-size or assume
+        // it's 12 if it's not set:
+        var currsize = body.css('font-size') || 12;
+        currsize     = parseInt(currsize);
+        var newsize  = currsize + delta;
+        // make it into a valid CSS value by 
+        // appending the string 'px' to it:
+        newsize      = newsize + 'px';
+        // now actually set the size:
+        body.css('font-size',newsize);
+    };
+    var decrease = function()
+    {
+        change_body_font_size(-2);
+    };
+    var increase = function()
+    {
+        change_body_font_size(2);
+    };
+    $(document).ready(function(){
+        $('#font')
+            .after('<a href="">Larger</a>')
+	        // move to the link we just created:
+            .next()
+                .click(function(){
+                    increase();
+                    // return false so the browser won't
+                    // redirect
+                    return false;
+                })
+	        // create yet another link:
+            .after('<a href="">Smaller</a>')
+	        // again, now, move to it:
+            .next()
+                .click(function(){
+                    decrease();
+                    return false;
+                })
+        ;
+    });
+
+{/hidden}
+
+
+## External Links In New Windows <@><@>
+
+Make all links to external sites open in a new window by changing
+their `target` attributes to `_blank`. We define external links as
+those that have a `://` as part of their `href` attribute.
+
+You should not change a link's target if it has been set manually in
+the code.
+
+You'll probably want to take take advantage of JavaScript's built-in
+`indexOf()` function to see whether or not a link is external.
+
+{hidden}
+
+    {{lang:javascript}}
+    $(document).ready(function(){
+        $("a").each(function(){
+            var target = $(this).attr('target');
+            $(this)
+                .attr('target', 
+                    target ? target 
+                           : $(this).attr('href')
+                                .indexOf('://') > 0
+                                ? '_blank' 
+                                : '_self'
+                    )
+            ;
+        });
+    });
+
+Note the use of the ternary operator (what with the `?` and `:`
+floating around). More information [here][].
+
+[here]:http://en.wikipedia.org/wiki/%3F:
+
+{/hidden}
+
+
+## Easy Rollovers <@><@><@>
+
+This one can be implemented in a huge number of ways, some being very
+easy. My solution is designed for efficiency and clarity.
+
+Allow for image rollovers to be defined in HTML with the following
+syntax:
+
+    {{lang:html}}
+    <img src="1.jpg"
+         alt="2.jpg" />
+
+Where the `alt` attribute specifies what image to change to when the
+mouse is over the image.
+
+{hidden}
+
+    {{lang:javascript}}
+    $(document).ready(function(){
+        $("img").each(function(){
+            // only do rollovers for images
+            // that have alt attributes
+            if ( $(this).attr('alt') )
+            {
+                $(this)
+                    .after('<img src="' 
+                            + $(this).attr('alt')
+                            + '" style="display:'
+                            + ' none;" />')
+                    .next() //  move to the img we just created
+                    .mouseout(function(){
+                            $(this).hide().prev().show();
+		    	            })
+                    .end() // go back to our original image
+                    .mouseover(function(){
+                        $(this).show().next().hide();
+                        })
+                ;
+            }
+        });
+    });
+
+{/hidden}
+
+Note that this is proof-of-concept; you shouldn't go around
+re-purposing the use of the `alt` attribute. Some would resort to
+using a non-existent class name for this.
+
+
+## Slideshow <@><@><@>
+
+This one's tough but a lot easier if you know the jQuery selectors.
+
+Given the following HTML, make a slideshow displaying only one image
+at a time with back/forward buttons to let the user advance the
+images. Clicking on an image should advance the slideshow to the next
+picture.
+
+    {{lang:html}}
+    <ul class="slideshow">
+        <li><img src="1.jpg" alt="picture 1" /></li>
+        <li><img src="2.jpg" alt="picture 2" /></li>
+        <li><img src="3.jpg" alt="picture 3" /></li>
+        <li><img src="4.jpg" alt="picture 4" /></li>
+        <li><img src="5.jpg" alt="picture 5" /></li>
+    </ul>
+
+Handle the general case first and then come back to what to do to make
+the solution "wrap around" so clicking on the last image loops back to
+show the first image.
+
+{hidden Starter Solution}
+
+    {{lang:javascript}}
+    $(document).ready(function(){
+        $('.slideshow').each(function(){
+            // the `$(this)` here tells jQuery
+            // to start the CSS selector in the 
+            // context of the matched `.slideshow`
+            // selector
+            $('img',$(this)).each(function(){
+                // now the `$(this)` refers to
+                // the image, since we're inside
+                // of this little anonymous function
+                $(this)
+                    .hide()
+                    .click(function(){
+                        $(this)
+                            .fadeOut()
+                            .parent().next()
+                            .children().each(function(){
+                                $(this).fadeIn();
+                                return false;
+                                });
+                        })
+                ;
+            });
+            // notice jQuery's advanced pseudo-selectors,
+            // e.g., `:first`, `:last`.  We could get
+            // these other ways, but this makes our life
+            // a lot easier
+            $('img:first',$(this)).show();
+            $('img:last',$(this)).click(function(){
+                $(this)
+                    .parent().parent()
+                    .find('li:first img')
+                    .fadeIn()
+                ;
+                return false;
+            })
+        });
+    });
+
+{/hidden}
+
+
+## Accordion Menu <@><@>
+
+This one's pretty easy.
+
+Make all "accordion" `ul`s of the below form have "expanding" submenu items.
+That is, none of the submenus should be visible initially but they should
+expand down (using an animation effect) when the "parent" link is clicked.
+Only one submenu should be visible at any given time.
+
+    {{lang:html}}
+    <ul class="accordian">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="contact.html">Contact Us</a>
+            <ul>
+                <li><a href="email.html">Via Email</a></li>
+                <li><a href="fax.html">Via Fax</a></li>
+            </ul>
+        </li>
+        <li><a href="about.html">About Us</a>
+            <ul>
+                <a href="mission.html">Mission
+                    Statement</a></li>
+                <a href="goals.html">Company Goals</a></li>
+            </ul>
+        </li>
+        <li><a href="affiliates.html">Our Affiliates</a>
+            <ul>
+                <li><a href="sony.html">Sony</a></li>
+                <li><a href="universal.html">Universal</a></li>
+            </ul>
+        </li>
+    </ul>
+
+{hidden}
+
+    {{lang:javascript}}
+    $(document).ready(function(){
+        $('ul li ul').hide();
+        $('ul li a').click(function(){
+            $('ul li ul:visible').slideUp();
+            $(this).next().slideDown(); 
+	        return false; // this stops the browser from redirecting
+        });
+    });
+
+{/hidden}
+
+
+## Live AJAX Visitor Counter <@><@><@><@><@>
+
+Assume you have the following HTML code on your page
+
+    {{lang:html}}
+    <div id="counter">
+        <span>100</span> Visitors
+    </div>
+
+and that there is a script on your server called *counter.php* that
+takes parameters
+
+ *  `id`, the (integer) ID for a counter (this is arbitrary and just
+    so you can have this script run on multiple pages),
+ *  `update`, either "true" or "false", that specifies whether or
+    not to increment the counter, and
+ *  `reset`, either "true" or "false", that specifies whether or not
+    to reset the counter.
+
+These parameters are passed via the query string in the usual **HTTP
+GET** fashion (i.e., you can complete this using the `$.get` method
+from jQuery).
+
+Your assignment is to make this visitor counter be "live" on the page.
+It should contact the server every 5 seconds and get the newest
+counter value and should turn red to alert the visitor when the number
+increments.
+
+### Hints
+
+Be careful that you don't count the visitors multiple times (so then
+when you check the new value of the counter you send the `update`
+parameter as `false`.
+
+You should look into JavaScript's `setTimeout` function that takes a
+callback and an integer number of milliseconds to wait before calling
+the callback.
+
+{hidden}
+
+    {{lang:javascript}}
+    var url     = 'counter.php'; // where to poll for user counters
+    var id      = 50; // this is arbitrary:  ensure that all your
+                      // pages have a unique id
+    var lastval = false; // this will keep track of the last value
+                         // received from the server so we can see
+                         // if more visitors have arrived since our
+                         // last check.
+    var flash_update = function(color)
+    {
+        $("#counter > span").css('color',color);
+    };
+    var update_count = function(update)
+    {
+        $.get(url,{
+                    id:     id,
+                    update: update,
+                    reset:  false
+                },function(data){
+                    // This lambda needs some serious refactoring to
+                    // be "good", but this works and is at least
+                    // readable.
+                    if ( !lastval )
+                    {
+                        $("#counter > span").html(data);
+                    } else if ( lastval != data.toString() )
+                    {
+                        flash_update('red');
+                        $("#counter > span").html(data);
+                    } else
+                    {
+                        flash_update('black');
+                    }
+                    lastval = data;
+                });
+    };
+    var continual_update = function(update,contin)
+    {
+        update_count(update,reset);
+        if ( contin )
+        {
+            setTimeout(function(){
+                continual_update(update,contin);
+                },5000);
+        }
+    };
+    $(document).ready(function(){
+        update_count(true,false);
+        continual_update(false,false,true);
+    });
+
+{/hidden}
+
+### XSS Remarks
+
+I would have set up a sample counter script file, but JavaScript won't
+allow requests to be made on other servers. Think about what it would
+mean if it did allow for this. This would allow for what's called
+"Cross-Site Scripting" (XSS).
+
+More information on XSS [here][w].
+
+[w]:http://en.wikipedia.org/wiki/Cross-site_scripting
+
+### An AJAX-Ready Counter Script
+
+If you're at all curious, you could use the following PHP script
+as the server-side script to respond as the above.
+
+{hidden Counter Script}
+
+    {{lang:php}}
+    <?php
+    /* 
+        SQL statement to initialize the database:
+       
+            CREATE TABLE IF NOT EXISTS `counter` 
+            (
+                `id`    int(11) NOT NULL auto_increment,
+                `count` int(11) NOT NULL,
+                PRIMARY KEY (`id`)
+            )
+            ENGINE=MyISAM
+            ;
+       
+        No guarantees or anything on this: use at your own risk.
+        Not for resale or commercial use. Copyright (C) 2008 by
+        Ryan Timmons of the UW Catalyst Instructor Team,
+        <http://uwwebpub.com/>.
+    */
+    
+    
+    if ( !$_GET or !isset($_GET['id']) )
+    {
+        die('No ID Given');
+    }
+    
+    // CONFIG
+    $host   = 'localhost';
+    $datab  = 'ajax';
+    $user   = 'root';
+    $pass   = 'root';
+    
+    // BOOK KEEPING
+    $id     = (int)$_GET['id'];
+    $update = isset($_GET['update']) && $_GET['update'] == 'true';
+    $reset  = isset($_GET['reset' ]) && $_GET['reset' ] == 'true';
+    // we have to do string comparison (=='true') because 'false'
+    // as a string is considered a non-false value.
+    
+    // CONNECT
+    $link   = mysql_connect($host,$user,$pass)
+                or die(mysql_error());
+    mysql_select_db($datab);
+    
+    // CLEAN DATA
+    $id     = mysql_real_escape_string($id);
+    
+    // GET CURRENT
+    $q      = "SELECT `count` FROM `counter` WHERE `id`='$id' LIMIT 1";
+    $r      = mysql_query($q) or die(mysql_error());
+    $row    = mysql_fetch_array($r,MYSQL_ASSOC);
+    $create = $row == null;
+    $curr   = ($create || $reset) ? 0 : (int)$row['count'];
+    
+    // UPDATE
+    $curr++;
+    
+    // SAVE BACK
+    if ( $update || $reset )
+    {
+        $q = $create 
+            ? "INSERT INTO `counter` (`id`,`count`) VALUES ('$id','$curr')"
+            : "UPDATE `counter` SET `count`='$curr' WHERE `id`='$id' LIMIT 1"
+            ;
+        $r = mysql_query($q) or die(mysql_error());            
+    }
+    
+    // OUTPUT
+    echo $curr;
+    
+    // FIN
+    ?>
+
+{/hidden}

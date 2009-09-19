@@ -1,0 +1,189 @@
+# CSS Day One Take-Home Assignment
+
+This assignment is designed to test your comprehension of the basic
+CSS selectors we talked about in day one,
+
+ *  Tag selectors, e.g.,
+    
+        h1 { ... }
+    
+ *  Class and ID selectors, e.g.,
+    
+        div#header { ... }
+        p.warning  { ... }
+
+    and
+    
+ *  Descendant selectors, e.g.,
+    
+        div#menu ul { ... }
+    
+
+as well as some of the basic properties and values. This will be done
+by modifying the [CSS Zen Garden][zengarden]'s CSS code.
+
+Note that this quiz is designed to be completed *in
+order*.
+
+[zengarden]: http://csszengarden.com
+
+## Getting Started
+
+Navigate to the [CSS Zen Garden][zengarden] and download the sample
+HTML file. (Or you can download it by right-clicking [this
+link][sample].) Open the file in a text editor (refer to [the uwwebpub
+programs page][programs] for information on how to download Notepad++)
+and notice the following HTML:
+
+    <style type="text/css" media="all">
+        @import "sample.css";
+    </style>
+
+(Note that in CSS day one we had something like
+
+    <style type="text/css" media="all">
+    <!--
+        @import "sample.css";
+    -->
+    </style>
+
+which is "more proper" but is essentially the same.)
+
+Thus, create a file called *sample.css* and save it in the same folder
+as the HTML file.
+
+[sample]: http://csszengarden.com/zengarden-sample.html
+[programs]: http://uwwebpub.com/programs
+
+
+## Part One:  The Body
+
+Modify the properties of the body such that
+
+ 1. The main text color is `#2A2A2A`,
+ 2. The background color is `#EBE5DC`,
+ 3. The body's font is Helvetica (reverting to Times New Roman if
+    Helvetica is not available and to a serif font if neither of those
+    is available),
+ 4. *All* headers in the document have a background color of `#A79E8C`
+    and a text color of `#8C0B0B` and are *centered*, and
+ 5. Links on the page have the color `#194E76`, are *not* underlined,
+    and have a white background.
+
+{hidden Part One Solution}
+
+    body {
+    	color:              #2A2A2A;
+    	background-color:   #EBE5DC;
+    	font-family:        Helvetica, 
+    	                    "Times New Roman", 
+    	                    serif;
+    }
+    h1, h2, h3, h4, h5, h6 {
+    	color:              #8C0B0B;
+    	background-color:   #A79E8C;
+    	text-align:         center;
+    }
+    a {
+    	color:              #194E76;
+    	text-decoration:    none;
+    	background-color:   #FFFFFF;
+    }
+
+{/hidden}
+
+## Part Two:  The Intro
+
+Important to this section is that you do not modify anything other
+than what is specified. All of the below modifications are specified
+to be made in the intro (`div#intro`) section of the document and
+should not affect other elements on the page.
+
+Modify the **intro section** (and only the intro section) such that
+
+ 1. All text is 150% its normal size,
+ 2. Paragraph text is exactly its normal size (this may require some
+    simple algebra) and the first lines in paragraphs are **indented**
+    by 2 ems (you may have to look up this property),
+ 3. The first paragraphs in the intro sections (these already have a
+    class applied to them in the HTML that you can use) are **not**
+    indented, and
+ 4. The paragraph with the text "Download the sample html file and css
+    file" is centered (but no other paragraphs are).
+
+(4) will require looking closely at the document tree to see how to
+isolate only that particular paragraph and not any others.
+
+{hidden Part Two Solution}
+
+    div#intro {
+        font-size:      1.5em;
+        /* notice that this is applied to the  *
+         * div as a whole which is essentially *
+         * a direct-descendant of the body     */
+    }
+    div#intro p {
+        font-size:      0.667em;
+        text-indent:    2em;
+        /* text-indent is our first instance   *
+         * where an em means something         *
+         * different than wat it does for      *
+         * font-size. We'll talk about this in *
+         * day two.                            */
+    }
+    div#intro p.p1 {
+        text-indent:    0;
+    }
+    div#intro div#quickSummary p.p2 {
+        text-align: center;
+    }
+
+Note that the final selector
+
+    div#intro div#quickSummary p.p2
+
+was perhaps superfluous because the additional information about the
+ancestor of `div#quickSummary` is irrelevant: there can only be one of
+them on the page, so why bother specifying that you only want to
+select the one that is a descendant of `div#intro`? We might just as
+well have used
+
+    div#quickSummary p.p2
+
+as this last selector.
+
+{/hidden}
+
+## Part Three:  The Lists
+
+This part of the exercise involves manipulating the three lists at the
+bottom of the Zen Garden page. Again, the changes made in Part Three
+should not affect any elements outside of the `div#linkList` section.
+
+(Note that there is an additional, *wrapper* div
+surrounding these lists. In particular, the structure is
+something like
+
+    {{lang:html}}
+    <div id="linkList">
+        <div id="linkList2">
+        ...
+        </div>
+    </div>
+
+and there is nothing inside of `div#linkList2` that is not inside
+`div#linkList`. This is done solely for placement and alignment
+purposes. That is to say, your selectors can use *either*
+`div#linkList` or `div#linkList2` without additional consequences. You
+could, of course, use both, in the manner of
+
+    {{lang:css}}
+    div#linkList div#linkList2
+
+but this would be superfluous for the same reason as the descendant
+selector is unnecessary in the solution to Part Two.)
+
+Your assignment is to
+
+ 1. Get rid of all bullets 
+ 2. Put the bullets back in in `div#lselect`

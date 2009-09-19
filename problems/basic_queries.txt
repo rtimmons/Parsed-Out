@@ -1,0 +1,259 @@
+# Sample Queries With MySQL
+
+This information pertains to the "phpii_initial_data.txt" data which can be
+inserted using "phpii_initial_data_sql.txt", both of which are available from
+<http://uwwebpub.com/php2>.
+
+## A Note on Terminology
+
+A database has one or more *tables* which have one or more *columns*. The
+table has zero or more *rows* each of which may or may not have data for each
+of the table's columns.
+
+## A Note on Syntax
+
+Remember that spacing is arbitrary in SQL. It is "proper" to surround *table
+names* and *column names* in the back-tick quotes. If something is considered
+a string, then it should be surrounded by either single- or double-quotes.
+
+If there is ambiguity with respect to a column name, it is proper to specify
+which table the column pertains to by preceding the column name with the table
+name. Since both `authors` and `posts` have a `title` field, if we're
+operating on data from both tables, then we would have to specify
+
+    `posts`.`title`
+
+or
+
+    `authors`.`title`
+
+
+
+## Basic C.R.U.D. with Result-Sets
+
+ 1. Create new author:
+
+        {{lang:sql}}
+        INSERT INTO `authors`
+            (`title`,           `email`)
+        VALUES
+            ('Bill Clinton',    'bill@whitehouse.gov');
+
+    No result-set because `INSERT`s don't return results! But here's
+    the full authors data table after this change, which I got from
+    doing a simple `SELECT`:
+
+        +----+---------------+----------------------+
+        | id | title         | email                |
+        +----+---------------+----------------------+
+        |  1 | Mark Twain    | marktwain@yahoo.com  |
+        |  2 | Archimedes    |                      |
+        |  3 | John Gruber   | johngruber@gmail.com |
+        |  4 | Walt Mossberg | walt@wsj.com         |
+        |  5 | Bill Clinton  | bill@whitehouse.gov  |
+        +----+---------------+----------------------+
+
+
+ 2. Get all posts:
+
+        {{lang:sql}}
+        SELECT  `title`,
+                `id`
+        FROM    `posts`
+        ;
+
+    Result-Set:
+
+        +-------------------+----+
+        | title             | id |
+        +-------------------+----+
+        | Secession?        |  1 |
+        | What the Book?    |  2 |
+        | I'm Awesome!      |  3 |
+        | I hate everything |  4 |
+        | I'm still cool    |  5 |
+        +-------------------+----+
+
+
+ 3. Get all posts by author with ID 11:
+
+        {{lang:sql}}
+        SELECT  `title`,
+                `id`
+        FROM    `posts`
+        WHERE   `author_id`=11
+        ;
+
+    (No result-set because there are no posts by author #11.)
+
+ 4.  Get all posts created in or after the year 2007:
+
+        {{lang:sql}}
+        SELECT  `title`,`id`
+        FROM    `posts`
+        WHERE   `created` > '2006-12-31 23:59:59'
+        ;
+
+    Result-Set:
+
+        +-------------------+----+
+        | title             | id |
+        +-------------------+----+
+        | I hate everything |  4 |
+        | I'm still cool    |  5 |
+        +-------------------+----+
+
+ 5. Update post with ID 13
+
+        {{lang:sql}}
+        UPDATE  `posts`
+        SET     `title`='Limbo Mania',
+                `text`='Disco it up!'
+        WHERE   `id` = 13
+        ;
+
+    No result-set because `UPDATE`s don't return results! But here's
+    the full, updated posts table:
+
+        +----+-----------+-------------+---------------------+
+        | id | author_id | category_id | created             |
+        +----+-----------+-------------+---------------------+
+        | 10 |        10 |          11 | 1897-01-27 14:00:00 |
+        | 11 |        10 |          12 | 1987-12-24 08:27:34 |
+        | 12 |        13 |          12 | 1985-01-24 08:37:34 |
+        | 13 |        12 |          10 | 2007-10-23 08:42:34 |
+        | 14 |        13 |          13 | 2007-04-05 08:11:34 |
+        +----+-----------+-------------+---------------------+
+                       +----------------+--------------------+
+        -->            | title          | text               |
+                       +----------------+--------------------+
+                       | Secession?     | Can haz internetz? |
+                       | What the Book? | Robots rule        |
+                       | I'm Awesome!   | So says I          |
+                       | Limbo Mania    | Disco it up!       |
+                       | I'm still cool | So said I          |
+                       +----------------+--------------------+
+## C.R.U.D. With Joins
+
+Note that we're operating on more than one table here, so it's important to
+indicate the table in which the data you're accessing resides.
+
+ 1. Get all posts with author information:
+
+        {{lang:sql}}
+        SELECT  `posts`.`title`,
+                `posts`.`id`,
+                `authors`.`title`,
+                `authors`.`email`,
+                `authors`.`id`
+        FROM    `posts`,`authors`
+        WHERE   `posts`.`author_id`=`authors`.`id`
+        ;
+
+    Result-Set:
+
+        +----------------+----+---------------+----------------------+----+
+        | title          | id | title         | email                | id |
+        +----------------+----+---------------+----------------------+----+
+        | Secession?     | 10 | Mark Twain    | marktwain@yahoo.com  | 10 |
+        | What the Book? | 11 | Mark Twain    | marktwain@yahoo.com  | 10 |
+        | I'm Awesome!   | 12 | Walt Mossberg | walt@wsj.com         | 13 |
+        | Limbo Mania    | 13 | John Gruber   | johngruber@gmail.com | 12 |
+        | I'm still cool | 14 | Walt Mossberg | walt@wsj.com         | 13 |
+        +----------------+----+---------------+----------------------+----+
+
+
+ 2. Here it's helpful to rename the fields by selecting fields "AS"
+    some other value since the fields with the same name aren't
+    renamed in the result-set:
+
+        {{lang:sql}}
+        SELECT  `posts`.`title`   AS 'posts.title',
+                `posts`.`id`      AS 'posts.id',
+                `authors`.`title` AS 'authors.title',
+                `authors`.`email` AS 'authors.email',
+                `authors`.`id`    AS 'authors.id'
+        FROM    `posts`,`authors`
+        WHERE   `posts`.`author_id`=`authors`.`id`
+        ;
+
+    Result-Set:
+
+        +----------------+----------+---------------+
+        | posts.title    | posts.id | authors.title |
+        +----------------+----------+---------------+
+        | Secession?     |       10 | Mark Twain    |
+        | What the Book? |       11 | Mark Twain    |
+        | I'm Awesome!   |       12 | Walt Mossberg |
+        | Limbo Mania    |       13 | John Gruber   |
+        | I'm still cool |       14 | Walt Mossberg |
+        +----------------+----------+---------------+
+                +----------------------+------------+
+        -->     | authors.email        | authors.id |
+                +----------------------+------------+
+                | marktwain@yahoo.com  |         10 |
+                | marktwain@yahoo.com  |         10 |
+                | walt@wsj.com         |         13 |
+                | johngruber@gmail.com |         12 |
+                | walt@wsj.com         |         13 |
+                +----------------------+------------+
+
+ 2.  Get all posts in the 'Business' category:
+
+        {{lang:sql}}
+        SELECT  `posts`.`title` AS 'posts.title',
+                `posts`.`id`    AS 'posts.id'
+          FROM  `posts`,
+                `categories`
+         WHERE  `categories`.`title`='Business'
+           AND  `posts`.`category_id`=`categories`.`id`
+        ;
+
+    Result-Set:
+
+        +----------------+----------+
+        | posts.title    | posts.id |
+        +----------------+----------+
+        | What the Book? |       11 |
+        | I'm Awesome!   |       12 |
+        +----------------+----------+
+
+    Notice that we still had to specify the join predicate,
+
+        `posts`.`category_id` = `categories`.`id`
+
+    If we didn't, we'd get the *cross-product* of all entries in `posts` and
+    `categories` matching the single other predicate. More on this example in
+    the workshop.
+
+    Example:
+
+        {{lang:sql}}
+        SELECT  *
+        FROM    `posts`,`categories`
+        WHERE   `categories`.`title` = 'Business'
+        ;
+
+    Result-Set:
+
+        +----+-----------+-------------+---------------------+
+        | id | author_id | category_id | created             |
+        +----+-----------+-------------+---------------------+
+        | 10 |        10 |          11 | 1897-01-27 14:00:00 |
+        | 11 |        10 |          12 | 1987-12-24 08:27:34 |
+        | 12 |        13 |          12 | 1985-01-24 08:37:34 |
+        | 13 |        12 |          10 | 2007-10-23 08:42:34 |
+        | 14 |        13 |          13 | 2007-04-05 08:11:34 |
+        +----+-----------+-------------+---------------------+
+             +----------------+--------------------+----+----------+
+        -->  | title          | text               | id | title    |
+             +----------------+--------------------+----+----------+
+             | Secession?     | Can haz internetz? | 12 | Business |
+             | What the Book? | Robots rule        | 12 | Business |
+             | I'm Awesome!   | So says I          | 12 | Business |
+             | Limbo Mania    | Because I pwn?     | 12 | Business |
+             | I'm still cool | So said I          | 12 | Business |
+             +----------------+--------------------+----+----------+
+
+    (Note that this definitely might come as a bit of a surprise if you've
+    never worked with SQL before.)

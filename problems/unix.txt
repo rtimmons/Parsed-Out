@@ -1,0 +1,73 @@
+===
+
+# *NIX Bits
+
+
+## How to Use these Commands:
+
+ 1. Highlight all of the text with your fancy, space-age mouse,
+
+ 2. Copy (*Control+C*), and
+
+ 3. In PuTTY, simply right-click
+
+    (note that *Control+V* does **not** paste in PuTTY).
+
+
+## The Commands
+
+ * **Start the BaSH Shell**
+
+        bash
+
+ *  **Enable colors and "nice" paths on the command line**:
+
+        {{lang:bash}}
+        wget http://uwwebpub.com/tools/bash_profile.sh  \
+            && cat bash_profile.sh >> ~/.bash_profile   \
+            && rm bash_profile.sh                       \
+            && source ~/.bash_profile
+
+## Some Useful *NIX Commands
+
+(Also see the [Unix Curriculum][unix]).
+
+[unix]:http://catalyst.washington.edu/help/computing_fundamentals/unix
+
+ * `man CMD` shows a man(ual) page for the command `CMD`.  E.g., `man man`
+   will show a manual page on the `man` command.
+
+ *  `pwd` prints the working directory
+
+ *  `cat FILE` shows the contents of `FILE` all at once
+
+ *  `less FILE` shows a file screen-by-screen (press `q` to exit.)
+
+ *  `pico FILE` opens the UW Pico basic text editor to edit (or create) `FILE`
+    (Control+O to save; Control+X to exit)
+
+ *  `mkdir DIR` creates a directory `DIR` inside the working directory.
+
+ *  `mv OLD NEW` moves (or renames) the file `OLD` to `NEW`
+
+ *  `ln -s LONG SHORT` creates a shortcut (symbolic link) to `LONG` at
+    `SHORT`
+
+ *  `cd DIR` changes working directory to `DIR`
+
+ *  `cd` (without a `DIR`) changes working directory to home (a/k/a
+    `~`)
+
+ *  `ls` lists the contents of the current directory
+
+ *  `rm -r F` (recursively) delete the file (or folder) `F`
+
+ *  `wget URL` downloads the file at `URL` to the working directory
+
+ *  `tar xzf FILE` unzips a tar.gz or .tgz file
+    called `FILE`
+
+ *  `chmod 755 FILE` makes `FILE` writable by the web server (and
+    visible to everyone else!)
+
+

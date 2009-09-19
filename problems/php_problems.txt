@@ -1,0 +1,2974 @@
+===
+
+# PHP Practice Problems
+
+I've gone through and indicated the difficulty of each problem on a 5-<@>
+scale. One <@> is easy while five <@>s is tough.
+
+Even if you do not know how to solve a problem, you should give it a shot and
+read the problem and its solution thoroughly. In most cases these problems are
+written to introduce concepts rather than test your coding abilities.
+
+These problems are not really in any specific order, but I've done my best to
+indicate where one function uses a previous function (as a lot of these do).
+
+
+## A Brief Note on Strings
+
+Throughout, I'll assume you're good with returning strings and escaping
+quotes. Also note that in PHP, variables are replaced (*interpolated*) within
+double-quoted strings but are simply ignored within single-quoted strings.
+
+It's also pertinent to note that the newline and tab characters only work
+while within double-quoted strings.
+
+Note the output of the following code:
+
+    {{lang:php}}
+    $first = 'Mickey';
+    $last  = 'Mouse';
+    $full  = "$first $last";
+    //     = "Mickey Mouse"
+    $quote = '"I said it", $full\'s Wife Said Said';
+    //     = "I said it", $full's Wife Said
+    //          (surrounded by quotes)
+    //      (note that `$full` is *not* replaced)
+    echo "$full";
+    echo '$full';
+    echo "\n\t";
+    echo '\n\t';
+    echo "\n$full\t\t$full";
+
+The output is
+
+    Mickey Mouse$full
+        \n\t
+    Mickey Mouse        Mickey Mouse
+
+
+As a simpler example, consider
+
+    {{lang:php}}
+    $var = "thevar";
+    echo "MyNewline\n\ttabbed\n$var\n";
+    echo 'MyNewline\n\ttabbed\n$var\n';
+
+whose output is the string
+
+    MyNewline
+        tabbed
+    thevar
+    MyNewline\n\ttabbed\n$var\n
+
+So in *double* quotes, newline- and tab-escapes (`\n` and `\t`) are replaced,
+as are variables. But in *single* quotes, nothing is replaced except for `\'`
+which is of course replaced with a single-quote character.
+
+
+## Loose Syntax <@>
+
+Just an observation, not a problem.
+
+PHP is known for being a "sloppy" language for many reasons. One of the places
+where its sloppiness can come to your advantage is in how liberally you can
+space your files.
+
+We already know that PHP considers all whitespace to be created equally
+allowing us to do something like
+
+    {{lang:php}}
+    $a = 3;
+    $b          = 5;
+    $c =
+                6;
+    $d = time();
+    $e = $d + 
+            time();
+
+but you can even put an arbitrary amount of whitespace between the name of a
+function and its parentheses such as:
+
+    {{lang:php}}
+    $d = time ();
+    $e = time
+    ();
+
+or as a more useful example, you can put whitespace after the word `array`:
+
+    {{lang:php}}
+    $chars = array
+    (
+        'Horton' => 'Elephant',
+        'Hooey'  => 'Owl',
+        'Cat'    => 'Cat'
+    );
+
+
+## Too Many Brackets <@>
+
+This is not a problem, just a useful observation.
+
+This is handy: it turns out that you don't always need curly brackets around
+flow-control (`if`, `while`, `for`, `foreach`, etc.) statement blocks. In
+fact, you only need them if there is more than one statement inside the block.
+
+So the following code
+
+    {{lang:php}}
+    if ( $age >= 21 )
+    {
+        echo 'Have a beer';
+    } else
+    {
+        echo 'Have a soda!';
+    }
+    for ( $i=0; $i < $age; $i++ )
+    {
+        if ( $i % 2 == 0 )
+        {
+            echo "Even year $i!";
+        } else
+        {
+            echo "Odd year $i!";
+        }
+    }
+
+is equivalent to the code
+
+    {{lang:php}}
+    if ( $age >= 21 )
+        echo 'Have a beer';
+    else
+        echo 'Have a soda!';
+    for ( $i=0; $i < $age; $i++ )
+        if ( $i % 2 == 0 )
+            echo "Even year $i!";
+        else
+            echo "Odd year $i!";
+
+It is considered "bad style" to not use curly braces, but it can sometimes
+greatly improve the readability of your code. It is my recommendation that you
+only get rid of curly braces *after* your code works.
+
+
+## Assignment Statements As Return Values <@><@>
+
+This is not a problem, just a useful explanation.
+
+One thing that most people use regularly in C-like programming languages (such
+as PHP) but rarely understand how it works is the implicit return on
+assignment statements.
+
+Simply put, **assignments (with `=`) return the assigned value**. Usually this
+returned value is ignored. But because the `=` returns what's to its right, we
+can do interesting things like
+
+    {{lang:php}}
+    $one = $two = $three = 'Hello';
+
+If we decompose this, we see three statements:
+
+ 1. The first is the right-hand side of the second equals sign:
+    
+        {{lang:php}}
+        $three = 'Hello';
+    
+ 2. Since this statement returns the right-hand-side of the `=`, our original
+    statement is now reduced to the next statement,
+
+        {{lang:php}}
+        $one = $two = 'Hello';
+
+ 3. Again, the right-hand-side of the first `=` is evaluated and returned, so
+    we now reduce our original statement to
+    
+        {{lang:php}}
+        $one = 'Hello';
+
+Perhaps parentheses would help clear this up even further:
+
+    {{lang:php}}
+    ($one = ($two = ($three = 'Hello')));
+
+These parentheses are evaluated by PHP from the inside-out: first `$three =
+'Hello'` is evaluated and returns the string `Hello`. Then the next enclosing
+set of parentheses is evaluated and so on.
+
+This is useful many times in the boolean part of a `while` loop to do variable
+assignment. An example is found in the below section, "Implementing The
+`foreach` Loop."
+
+
+## Fencepost <@>
+
+We frequently want to take a bunch of items in an array, "glue" them together,
+and put something before and after the result. Imagine you want to take an
+array
+
+    {{lang:php}}
+    $items = array('One','Two','Three');
+
+and have output
+
+    {{lang:html}}
+    <ul><li>One</li><li>Two</li><li>Three</li></ul>
+
+So what's going on here is that we have something between (indicated by
+'`Tween`' below) each of the list items "gluing" them together and then
+something before and after all the 'glued-together' items:
+
+    |-Before-|     |--Tween--|     |--Tween--|       |---After--|
+     <ul><li>  One  </li><li>  Two  </li><li>  Three  </li></ul>
+
+You can convert an array into a string using PHP's built-in `implode` function
+that takes a string and an array as arguments and returns a string. 
+
+This code:
+
+    {{lang:php}}
+    $characters = array('Horton','Tizzy','Hooey');
+    echo implode('|', $characters);
+
+`echo`es the string
+
+    Horton|Tizzy|Hooey
+
+to the browser.
+
+Using this information, create a function
+`fencepost($arr,$before,$after,$glue)` that returns a string with `$before`
+before and `$after` after the result of gluing `$arr` together using `$glue`
+between each item.
+
+So calling
+
+    {{lang:php}}
+    fencepost(array('a','b','c'), '->', '<-', ';' );
+
+returns the string
+
+    ->a;b;c<-
+
+and calling
+
+    {{lang:php}}
+    $characters = array('Horton','Tizzy','Hooey');
+    fencepost($characters,'<ul><li>','</li></ul>','</li><li>');
+
+returns the string
+
+    {{lang:html}}
+    <ul><li>Horton</li><li>Tizzy</li><li>Hooey</li></ul>
+
+{hidden}
+
+    {{lang:php}}
+    function fencepost($arr,$before,$after,$glue)
+    {
+        return $before . implode($glue,$arr) . $after;
+    }
+
+{/hidden}
+
+
+## One-Liner <@>
+
+Create a function `form_input_text($name,$value,$size)` that returns an HTML
+one-line textbox with `name="$name"`, `value="$value"`, and `size="$size"`.
+The last two arguments should have default values of `null` and `10`,
+respectively.
+
+Calling
+
+    {{lang:php}}
+    form_input_text('email','mailer@spam.com');
+
+should return
+
+    {{lang:html}}
+    <input type="text" name="email" value="" size="10" />
+
+{hidden}
+
+    {{lang:php}}
+    function form_input_text($name,$value=null,$size=10)
+    {
+        return "<input type=\"text\" name=\"$name\""
+              ."       value=\"$value\""
+              ."       size=\"$size\" />";
+    }
+
+{/hidden}
+
+
+## Multiliner <@>
+
+Create a function `form_textarea($name,$value,$rows,$cols)` that returns a
+`<textarea>` field with the given attributes. 
+
+Also,
+
+ *  `$value` should default to `null`, 
+ *  `$rows` should default to `5`, and
+ *  `$cols` should default to `25`.
+
+Calling
+
+    {{lang:php}}
+    form_textarea('comments','Enter Comments Here',7)
+
+should return
+
+    {{lang:html}}
+    <textarea name="comments"
+      rows="7" cols="25">Enter Comments Here</textarea>
+
+{hidden}
+
+    {{lang:php}}
+    function form_textarea( $name, $value = null
+                                 , $rows  = 5
+                                 , $cols  = 25)
+    {
+        // there are a lot of escaped quotes below!
+        return "<textarea name=\"$name\""
+              ."   rows=\"$rows\" cols=\"$cols\""
+              .">$value</textarea>";
+    }
+
+{/hidden}
+
+
+## HTML Dropdown <@><@>
+
+Create a function `dropdown($arr,$selected_key,$name)` that creates an HTML
+dropdown (an `<option>`s) field with one entry for each key/value pair in
+`$arr`. The `<select>` tag surrounding the options should have `name="$name"`.
+If any of the keys from the array matches `$selected_key`, then it should have
+a `selected="selected"` bit added to its associated `<option>`.
+
+We have a bit of confusion in terminology about "value" though because we want
+
+    {{lang:php}}
+    dropdown(array(
+        'WA' => 'Washington',
+        'OR' => 'Oregon',
+        'CA' => 'California'
+        ),'WA','state');
+
+to return
+
+    {{lang:html}}
+    <select name="state">
+        <option value="WA" selected="selected">
+            Washington
+        </option><option value="OR">
+            Oregon
+        </option><option value="CA">
+            California
+        </option>
+    </select>
+
+So in the HTML, the `value` attribute to the `option` tag corresponds to the
+key from the array.
+
+{hidden}
+
+    {{lang:php}}
+    function dropdown($arr,$selected_key,$name)
+    {
+        $acc = "<select name=\"$name\">";
+        foreach ( $arr as $key=>$val )
+        {
+            $acc .= "\n\t<option value=\"$key\"";
+            if ( $selected_key == $key )
+                $acc .= " selected=\"selected\""
+            $acc .= ">\n\t\t$val\n\t</option>";
+        }
+        $acc .= "\n</select>";
+        return $acc;
+    }
+
+{/hidden}
+
+
+## Checkboxer  <@><@>
+
+Define a function `checkboxer($data,$selected,$name)` that takes two arrays
+and a string as parameters and returns an **array** of strings: one string for
+each key/value pair in `$data`.
+
+`$data` contains the key/value pairs for the generated checkboxen: the keys
+being the "internal" representation of the value while the value being the
+"UI"--user-friendly--version that also becomes the key for the checkbox in the
+returned array. The name of each of the boxen should be `$name`.
+
+`$data` looks something like
+
+    {{lang:php}}
+    array(
+        'dogs' => 'Dogs',
+        'cats' => 'Cats',
+        'fish' => 'Fish',
+    )
+
+while `$selected` is the list of keys in `$data` that should be indicated with
+`checked="checked"`.
+
+So the following code
+
+    {{lang:php}}
+    checkboxer(array(
+        'dogs' => 'Dogs',
+        'cats' => 'Cats',
+        'fish' => 'Fish',
+      ),array(
+        'dogs','fish'
+    ),'animal[]');
+
+should return
+
+    {{lang:php}}
+    array(
+        "Dogs" => "<input type=\"checkbox\"
+                          name=\"animal[]\"
+                          value=\"dogs\"
+                          checked=\"checked\" />",
+        "Cats" => "<input type=\"checkbox\"
+                          name=\"animal[]\"
+                          value=\"cats\" />",
+        "Fish" => "<input type=\"checkbox\"
+                          name=\"animal[]\"
+                          value=\"fish\"
+                          checked=\"checked\" />"
+    )
+
+**Solution left as an exercise.**
+
+
+## Random Array Element 1 <@><@>
+
+Write a function `random_element($arr)` that returns a random element from
+`$arr` assuming that the array only has keys starting at 0 and going up to
+`count($arr)-1`.  
+
+(This function will work on an array like `array(2,4,6,8)` or `array('horton',
+'hooey')` but will not work on an array like `array('horton'=>'elephant',
+'owl'=>'hooey')`.
+
+You can use PHP's built-in `rand($min,$max)` function that returns a random
+integer between `$min` and `$max` (inclusive).
+
+{hidden}
+
+    {{lang:php}}
+    function random_element($arr)
+    {
+        $len = count($arr);
+        $max = $len - 1;
+        $key = rand(0,$max)
+        return $arr[$key];
+    }
+
+or the 'simpler,' one-line version:
+
+    {{lang:php}}
+    function random_element($a)
+    {
+        return $a[rand(0,count($a)-1)];
+    }
+
+{/hidden}
+
+
+## Array Keys <@><@>
+
+PHP has a built-in function, `array_keys($arr)`, that returns an array of the
+keys used in `$arr`. Pretend this function doesn't exist and create your own
+function called `my_array_keys($arr)` that returns the keys used in `$arr`.
+
+So running
+
+    {{lang:php}}
+    my_array_keys(array(
+        'Red','Green','Blue'
+    ));
+
+returns
+
+    {{lang:php}}
+    array(0,1,2)
+
+and running
+
+    {{lang:php}}
+    my_array_keys(array(
+       'Name'   => 'Mickey',
+       'Animal' => 'Mouse',
+       'Minnie'
+    ));
+
+returns
+
+    {{lang:php}}
+    array('Name','Animal',0);
+
+(The `0` at the end is because the value `Minnie` is added to the array
+without a designated, pre-defined key. When this happens, PHP chooses the
+**next available numeric key**, and since there are no other numeric keys in
+the array, `0` is the next available numeric key.)
+
+{hidden}
+
+    {{lang:php}}
+    function my_array_keys($arr)
+    {
+        $tor = array();
+        foreach( $arr as $key=>$val )
+        {
+            $tor[] = $key;
+        }
+        return $tor;
+    }
+
+{/hidden}
+
+
+## Random Array Element 2 <@><@>
+
+Our previous version of `random_element` above only allowed for arrays like
+
+    {{lang:php}}
+    array('Horton','Hooey','Tizzy');
+
+but would not work on something like
+
+    {{lang:php}}
+    array(  'Horton' => 'Elephant',
+            'Hooey'  => 'Owl',
+            'Cat'    => 'Cat'       );
+
+Modify your existing `random_element` to become a new function called
+`random_pair($arr)` to handle associative arrays: it should return a random
+key/value pair in the form of an array: let's call it `$returned` where
+`$returned[0]` is the randomly-chosen key and `$returned[1]` is the value
+associated with that randomly-chosen key.
+
+So calling
+
+    {{lang:php}}
+    random_element(array(
+            'Horton' => 'Elephant',
+            'Hooey'  => 'Owl',
+            'Cat'    => 'Cat'));
+
+might return
+
+    {{lang:php}}
+    array('Horton','Elephant');
+
+or it might return
+
+    {{lang:php}}
+    array('Cat','Cat');
+
+**Hint**: There is very little new here. You'll want to find a list of the
+array's keys (i.e., the previous problem) and pick a random key from this list
+(solved in our last version of this problem) and then simply return an array
+of this key and the array's value at this key.
+
+{hidden}
+
+    {{lang:php}}
+    function random_pair($arr)
+    {
+        $keys     = array_keys($arr);
+        $len_keys = count($keys);
+        $max_key  = $len_keys - 1;
+        $key_key  = rand(0,$max_key);
+        $rand_key = $keys[$key_key];
+        $value    = $arr[$rand_key];
+        return array( $rand_key, $value );
+    }
+
+or the simpler, three-line version:
+
+    {{lang:php}}
+    function random_pair($arr)
+    {
+        $keys  = array_keys($arr);
+        $randk = $keys[rand(0,count($keys)-1)];
+        return array($randk,$arr[$randk]);
+    }
+
+{/hidden}
+
+
+## Array Merging <@><@>
+
+Create a function `vjoin($keys,$values)` that takes two arrays of the same
+length and combines them: the first array becomes the **keys** while the second
+array becomes the **values** for the keys at the same position.
+
+(The 'v' in 'vjoin' is for *value*, since we're joining our two keys together
+on their values.)
+
+Note that this function is built into PHP and is called
+`array_combine($keys,$values)`. Pretend that it does not exist for your
+solution, however :).
+
+So running
+
+    {{lang:php}}
+    vjoin
+    (   array('WA','OR','CA'),
+        array('Washington','Oregon','California')
+    );
+
+returns
+
+    {{lang:php}}
+    array(
+        'WA' => 'Washington',
+        'OR' => 'Oregon',
+        'CA' => 'California'
+    )
+
+{hidden}
+
+Here is a simple version:
+
+    {{lang:php}}
+    function vjoin($keys,$vals)
+    {
+        $out = array();
+        $c   = count($keys);
+        for( $i=0; $i<$c; $i++ )
+        {
+            $key       = $keys[$i];
+            $out[$key] = $vals[$i];
+        }
+        return $out;
+    }
+
+{/hidden}
+
+
+## Array Flip <@><@>
+
+PHP has a built-in function called `array_flip($arr)` that returns an array
+with `$arr`'s keys/values exchanged. Pretend this function does not exist and
+create your own version `my_array_flip($arr)`.
+
+So running
+
+    {{lang:php}}
+    $a = array( 'One' => 1, 'Two' => 2, 'Three' => 3 );
+    $b = my_array_flip($a)
+
+should result in `$b` being
+
+    {{lang:php}}
+    array( 1 => 'One', 2 => 'Two', 3 => 'Three' )
+
+And running
+
+    {{lang:php}}
+    $a = array( 'Horton'    => 'Elephant',
+                'Hooey'     => 'Parrot',
+                'Tizzy'     => 'Turtle'     );
+    $b = my_array_flip($a);
+
+should result in `$b` being
+
+    {{lang:php}}
+    array( 'Elephant'  =>  'Horton',
+           'Parrot'    =>  'Hooey',
+           'Turtle'    =>  'Tizzy'      );
+
+For a bit more of a challenge, try writing this one using `vjoin`, defined in
+a previous problem. (Hint: use the built-in `array_keys` and `array_values`
+functions.)
+
+{hidden}
+
+    {{lang:php}}
+    function my_array_flip($arr)
+    {
+        $out = array();
+        foreach ( $arr as $key => $val )
+        {
+            $out[$val] = $key;
+        }
+        return $out;
+    }
+
+Here's the "challenge" solution using `vjoin`:
+
+    {{lang:php}}
+    function my_array_flip($arr)
+    {
+        return vjoin(array_values($arr),array_keys($arr));
+    }
+
+{/hidden}
+
+
+## Array Unique <@><@>
+
+PHP has a built-in function called `array_unique($a)` that takes an array as
+an argument and returns a new array without duplicate values. Keys are
+preserved.
+
+Pretend this function does not exist and create your own `my_array_unique($a)`
+that returns a new array with no duplicated values.
+
+So calling
+
+    {{lang:php}}
+    my_array_unique(array( 
+        'one' => 1, 'two' => 2, 
+        'une' => 1, 'ein' => 1 ));
+
+returns the array
+
+    {{lang:php}}
+    array(  'ein' => 1,
+            'two' => 2 )
+
+(Note that your solution might also return `array('one'=>1,'two'=>2)` or
+`array('une'=>1,'two'=>2)`, it doesn't matter.
+
+**Hint** One solution is to use `my_array_flip` twice. (Why does this work?) A
+'more mundane' solution exists as well, of course.
+
+{hidden}
+
+Here is a version that uses the `my_array_flip` function defined above. (You
+could also use the built-in `array_flip` function to exactly the same effect.)
+
+    {{lang:php}}
+    function my_array_unique($arr)
+    {
+        return my_array_flip(my_array_flip($arr));
+    }
+
+Here is a more intuitive solution:
+
+    {{lang:php}}
+    function my_array_unique($arr)
+    {
+        $out  = array();
+        $seen = array();
+        foreach ( $arr as $key => $value )
+        {
+            if ( !isset($seen[$value]) || !$seen[$value] )
+            {
+                $out[$key]    = $value;
+                $seen[$value] = true;
+            }
+        }
+        return $out;
+    }
+
+{/hidden}
+
+
+## Associative Implode <@><@>
+
+Unfortunately `implode` does not work for associative arrays. The `implode`
+function will only return results based on the **values** of the array, not
+the *keys*.
+
+So running
+
+    {{lang:php}}
+    implode(';',array('name'=>'Horton','species'=>'Elephant'));
+
+returns `Horton;Elephant` and pays no mind to `name` or `species`.
+
+Your job is to make a function `associative_implode($glue,$separator,$arr)`
+that returns a string. The first part of the string should be all of `$arr`'s
+keys with `$glue` between them. Then there should be `$separator` followed by
+all of `$arr`'s *values* with `$glue` between them.
+
+(You do not need to check whether any of the keys or values in `$arr` have
+your `$glue` or `$separator` in them, but this is a "failure point" for this
+function. Note that PHP's built-in `implode` function does not care in this
+circumstance. So calling
+
+    {{lang:php}}
+    implode('e',array('one','two','three'));
+
+returns the string
+
+    oneetwoethree
+
+Dealing with this in the general case is difficult.)
+
+So running
+
+    {{lang:php}}
+    associative_implode(
+        ';', '||',
+        array( 'name'    => 'Horton',
+               'species' => 'Elephant' )
+    );
+
+returns the string `name;species||Horton;Elephant`.  And running
+
+    {{lang:php}}
+    associative_implode(
+        ';', '||',
+        array('Horton','Tizzy','Hooey')
+    );
+
+returns the string
+
+    0;1;2||Horton;Tizzy;Hooey
+
+Hint: Use the built-in `implode` function and the built-in `array_keys` and
+`array_values` functions. Look up the [Array Functions][af] page on the PHP
+web site for more information.
+
+[af]:http://us2.php.net/array
+
+{hidden}
+
+    {{lang:php}}
+    function associative_implode($glue,$separator,$arr)
+    {
+        return implode($glue,array_keys($arr))
+               . $separator
+               . implode($glue,array_values($arr));
+    }
+
+{/hidden}
+
+
+## Associative Explode <@><@><@>
+
+Now write the "inverse" of your `associative_implode` function (just above
+this one). We'll call this `associative_explode($glue,$separator,$str)`. This
+function takes a string `$str` and breaks into an associative array.
+
+Running
+
+    {{lang:php}}
+    associative_explode(';','||','0;1;2||Horton;Tizzy;Hooey');
+
+returns
+
+    {{lang:php}}
+    array(  '0' => 'Horton',
+            '1' => 'Tizzy',
+            '2' => 'Hooey'  );
+
+and running
+
+    {{lang:php}}
+    associative_explode(';','||','name;species||Horton;Elephant');
+
+returns
+
+    {{lang:php}}
+    array(  'name'    => 'Horton',
+            'species' => 'Elephant'  );
+
+Hint: Use the built-in `explode` function a total of three times and then use
+the `vjoin($keys,$vals)` function we made in the "Array Merging" section
+above.
+
+{hidden}
+
+    {{lang:php}}
+    function associative_explode($glue,$separator,$str)
+    {
+        $separated = explode($separator,$str);
+        // $separated is now something like
+        //     array( 'name;species', 'Horton;Elephant' );
+        
+        $keys = explode($glue,$separated[0]);
+        // $keys is now something like
+        //     array( 'name', 'species' );
+        
+        $vals = explode($glue,$separated[1]);
+        // $vals is now something like
+        //     array( 'Horton', 'Elephant' );
+        
+        return vjoin($keys,$vals);
+    }
+
+{/hidden}
+
+
+## Not Defined In <@><@>
+
+Make a function `not_defined_in($words_to_errors,$dictionary)` that returns
+the `$word_to_errors` entries for the keys that are not also defined in
+`$dictionary.`
+
+So the following
+
+    {{lang:php}}
+    $words_to_errors = array
+    (
+        'name'  => 'I need your name!',
+        'email' => 'I want your email address.',
+        'age'   => 'Hey, how old are you?!'
+    );
+    $dictionary = array
+    (
+        'name'  => 'Billy Jean',
+        'email' => 'Isnotmylover@hotmail.com'
+    )
+    not_defined_in($words_to_errors,$dictionary);
+
+should return
+
+    {{lang:php}}
+    array(
+        'age' => 'Hey, how old are you?!'
+    );
+
+{hidden}
+
+    {{lang:php}}
+    function not_defined_in($words_to_errors,$dictionary)
+    {
+        $toreturn      = array();
+        $defined_words = array_keys($dictionary);
+        foreach ( $words_to_errors as $word=>$error )
+        {
+            if ( ! in_array($word,$defined_words) )
+                $toreturn[$word] = $error
+        }
+        return $toreturn;
+    }
+
+{/hidden}
+
+
+## Menu Mapping <@>
+
+Make a function `array_to_menu($array)` that takes an associative array
+mapping link titles to URLs and that returns an unordered list of links (in
+HTML) representing that.
+
+So
+
+    {{lang:php}}
+    $menu = array
+    (
+        'Home Page'     => 'index.php',
+        'About Us'      => 'about.php',
+        'Contact Us'    => 'contact.php'
+    );
+    echo array_to_menu($menu);
+
+should print to the browser
+
+    {{lang:html}}
+    <ul>
+        <li><a href="index.php">Home Page</a></li>
+        <li><a href="about.php">About Us</a></li>
+        <li><a href="contact.php">Contact Us</a></li>
+    </ul>
+
+{hidden}
+
+    {{lang:php}}
+    function array_to_menu($array)
+    {
+        $tor = '<ul>';
+        foreach ( $array as $url=>$title )
+        {
+            $tor .= "\n\t<li><a href=\"$url\">$title</a></li>";
+        }
+        $tor .= "\n</ul>";
+        return $tor;
+    }
+
+{/hidden}
+
+
+## Site Header <@>
+
+In an external file, say "global.php", make a function `my_header($title)`
+that outputs a standard (x)HTML document header with `<title>$title</title>`.
+
+You can then call
+
+    {{lang:php}}
+    include( 'global.php' );
+
+on other pages on your site and then simply call, e.g.,
+
+    {{lang:php}}
+    my_header('Home Page');
+
+to output the standard header for the home page.
+
+{hidden}
+
+    {{lang:php}}
+    function my_header( $title )
+    {
+        echo ''                                                  ,"\n"
+        ,'<?xml version="1.0" encoding="UTF-8"?>'                ,"\n"
+        ,'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0'          ,"\n"
+        ,' Strict//EN"'                                          ,"\n"
+        ,'"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'  ,"\n"
+        ,'<html xmlns="http://www.w3.org/1999/xhtml"'            ,"\n"
+        ,' xml:lang="en" lang="en">'                             ,"\n"
+        ,'<head>'                                                ,"\n"
+        ,'<title>',$title,'</title>'                             ,"\n"
+        ,'<style type="text/css">'                               ,"\n"
+        ,'/*<![CDATA[*/'                                         ,"\n"
+        ,'@import "styles.css";'                                 ,"\n"
+        ,'/*]]>*/'                                               ,"\n"
+        ,'</style>'                                              ,"\n"
+        ,'<script type="text/javascript">'                       ,"\n"
+        ,'</script>'                                             ,"\n"
+        ,'</head>'                                               ,"\n"
+        ,'<body>'                                                ,"\n"
+        ;
+    }
+
+{/hidden}
+
+
+## Scope:  Global <@><@>
+
+Only variables you use inside of a function are visible inside of that
+function unless you declare them as "global." So the following code will not
+have the intended results:
+
+    {{lang:php}}
+    $counter = 0;
+    function count()
+    {
+        $counter++;
+        return $counter;
+    }
+
+because our `count` function has no notion of the `$counter` variable
+precisely because we did not say it was global.
+
+In order to specify that a variable `$my_variable` is a "global" variable
+within a function, you simply have to put
+
+    {{lang:php}}
+    global $my_variable;
+
+within the function body. You can specify multiple global variables in the
+manner of
+
+    {{lang:php}}
+    function foobar()
+    {
+        global $foo, $bar, $baz;
+        return $foo++ + $bar++ + $baz++;
+    }
+
+With this information, make a function `global_counter()` that starts by
+returning `0` and then returns one more than it returned last time every time
+it is called after the first time. The function should access the global
+variable `$counter` so other functions can perhaps use the value as well.
+
+{hidden}
+
+The most basic solution:
+
+    {{lang:php}}
+    $counter = 0;   // assume this is defined somewhere in the script
+    function global_counter()
+    {
+        global $counter;
+        $ret = $counter;
+        $counter++;
+        return $ret;
+    }
+
+A slightly more tricky solution:
+
+    {{lang:php}}
+    $counter = 0;
+    function global_counter()
+    {
+        global $counter;
+        return $counter++;
+    }
+
+(this works because the `++` operator increments after it is returned when it
+is placed after a variable; it increments *before* it is returned it if is
+placed before a variable. This is subtle and mostly not important, however.)
+
+{/hidden}
+
+
+## Scope:  Static  <@><@>
+
+PHP also has the notion of static variables (these have no connection to
+static class variables from object-oriented programming). If a variable is
+declared as `static` within a function body, then it persists across the
+function's execution: its value is maintained for next time even after the
+function is executed.
+
+If you assign a value to a static variable at the same time as you declare it
+static, then that assignment only happens the first time the function is run.
+
+As an example, the following function always returns one more than it returned
+on the previous call and does not rely on any global variables:
+
+    {{lang:php}}
+    function counter()
+    {
+        static $i = 0; // this assignment only happens the first time 
+                       // this function is run
+        $i++; // this is always run, even the first time the function is run.
+        return $i; // of course this is always run as well.
+    }
+
+With this information make a function `even_odd()` that first returns `true`
+and then alternates back and forth between returning `false` and `true` every
+time it's called. You may not use global variables.
+
+{hidden}
+
+The simple solution is
+
+    {{lang:php}}
+    function even_odd()
+    {
+        static $i = false; // this is only run the first
+                           // time the funciton is called
+        $i = !$i; // this is kind of like the `$counter++` from above
+        return $i;
+    }
+
+or another version (which instead keeps a counter and then returns whether
+the value is even before incrementing it).
+
+    {{lang:php}}
+    function even_odd()
+    {
+        static $i = 0;
+        return $i++ % 2 == 0;
+    }
+
+{/hidden}
+
+
+## Scope:  Static 2  <@><@>
+
+Rework your `global_counter` function into `counter($reset)` that takes a
+single argument: whether or not to reset the counter (the default to this
+argument should be `false`). Your function should return 0 when it's first run
+and when it's reset but should otherwise return 1 more than it did the last
+time it was run. You may not rely on any global variables.
+
+{hidden}
+
+    {{lang:php}}
+    function counter($reset=false)
+    {
+        static $i = 0;
+        $i += $reset ? -$i : 0;
+        return $i++;
+    }
+
+{/hidden}
+
+
+## XML Tag  <@><@><@>
+
+Create a function `xml($tag,$data,$attributes)` that returns the `$tag` XML
+tag surrounding `$data` with the called `$attributes`, an associative array
+mapping attribute names to their values. Remember that XML is very similar to
+HTML (in fact, modern versions of HTML, called xHTML, actually *are* XML).
+Your function should default to having no attributes (i.e., have the default
+parameter be `null`).
+
+So calling
+
+    {{lang:php}}
+    xml('name','John Denver',array('type'=>'first'));
+
+should return
+
+    {{lang:xml}}
+    <name type="first">John Denver</name>
+
+Similarly, calling
+
+    {{lang:php}}
+    xml('p',
+        'It was the best of times',
+        array( 'class'  => 'poem',
+               'id'     => 'taleof2cities' )
+        );
+
+should return
+
+    {{lang:xml}}
+    <p class="poem" id="taleof2cities">It was the best of times</p>
+
+
+And calling
+
+    {{lang:php}}
+    xml('artist','Johnny Cash');
+
+should return
+
+    {{lang:xml}}
+    <artist>Johnny Cash</artist>
+
+{hidden}
+
+    {{lang:php}}
+    function xml($tag,$data,$atts=null)
+    {
+        // important that this be declared outside the `if` statement for
+        // proper scope:
+        $attributes = '';
+        // assemble attributes string only if $atts != null:
+        if ( $atts )
+        {
+            $strs = array();
+            foreach ( $atts as $attr=>$val )
+                $strs[] = "$attr=\"$val\"";
+            $strs       = implode(' ',$strs);
+            // prepend a space:
+            $attributes = " $strs";
+        }
+        // we prepended a space earlier so we could simply call
+        //
+        //     $tag{$attributes}
+        //
+        // which is simpler than
+        //
+        //     $atts ? "$tag $attributes" : "$tag"
+        //
+        // inside the <>
+        return "<$tag{$attributes}>$data</$tag>";
+    }
+
+{/hidden}
+
+
+## Array to XML <@><@>
+
+Modern web sites, dubbed *web applications*, use a combination of server-side
+and client-side programming to deliver content to the user without the him/her
+having to reload the page. For example, on the Gmail web site, you can "star"
+a message without making the browser get a new page. This technology is still
+rapidly evolving and goes by the name **AJAX**, or *Asynchronous Javascript
+and XML*. The name implies that XML, *eXtensible Markup Language* is used.
+While it is definitely not required that the AJAX use XML, many web developers
+prefer the XML format because of its wide adoption.
+
+What you are to do is create a function, `array_to_xml($arr,$collection)`,
+that takes an associative array as its first argument and a string as its
+second argument.
+
+The first argument, `$arr`, is the data being passed. It might be something
+like
+
+    {{lang:php}}
+    array(  'name'  => 'Sir Elton John',
+            'email' => 'theslayerofdragons@gmail.com',
+            'title' => 'Singer/Songwriter'
+    );
+
+The second argument, `$collection` is simply the name of the "wrapper" XML tag
+for all the other tags.
+
+Your function doesn't need to handle the case where a value from `$arr` is
+itself an array (e.g., where `'Sir Elton John'` is an array of names,
+perhaps).
+
+So calling
+
+    {{lang:php}}
+    array_to_xml(array( 'name'  => 'Sir Elton John',
+                        'email' => 'theslayerofdragons@gmail.com',
+                        'title' => 'Singer/Songwriter'),
+                'data');
+
+should return
+
+    {{lang:xml}}
+    <data>
+        <name>Sir Elton John</name>
+        <email>theslayerofdragons@gmail.com</email>
+        <title>Singer/Songwriter</title>
+    </data>
+
+{hidden}
+
+    {{lang:php}}
+    function array_to_xml($a,$collection)
+    {
+        $acc = "<$collection>";
+        foreach ( $a as $tag=>$data )
+            $acc .= "\n\t".xml($tag,$data);
+        return "$acc\n</$collection>";
+    }
+
+{/hidden}
+
+
+## JSON Field <@>
+
+More on AJAX...
+
+If XML just isn't your thing, then you have other ways of getting data from
+the server to the page. Another popular syntax is **JSON**, or *Javascript
+Object Notation*. It is, as its name implies, inspired by how objects are
+defined in Javascript. (Refer to the [Javascript Problems][js] page for
+Javascript sample problems.)
+
+[js]:javascript_problems.html
+
+Here is an example bit of JSON:
+
+    {{lang:javascript}}
+    {
+        name:   'Sir Elton John',
+        email:  'dragonslayer@gmail.com',
+        title:  'singer/songwrier'
+    }
+
+Notice that JSON uses colons to separate a key from its value (whereas PHP
+uses the `=>` "arrow"). Some other important things to note:
+
+ 1. The keys (`name`,`email`, and `title` in this example) are *always*
+    considered strings, so there's no need to surround them with quotes (and
+    it's bad syntax if you do).
+
+ 2. Keys may contain letters, numbers, and underscores but no spaces or
+    special characters.
+
+ 3. Commas separate the key/value pairs, but spacing is arbitrary.
+
+ 4. Values may be of any type (strings, integers, or any JavaScript data type,
+    including arrays and hashes).
+
+ 5. Values may contain quotes, so if you wish a value to include a quote, it
+    must be escaped.
+
+    You can use the built-in `addslashes($str)` function that takes a string
+    as a parameter and returns the escaped version of that string.
+
+    So calling
+
+        {{lang:php}}
+        addslashes("I didn't say anything");
+
+    returns the string
+
+        I didn\'t say anything!
+
+
+Your assignment is to create a function `json($key,$value)` that returns the
+JSON to be put inside a JSON object for the key/value pair.
+
+So calling
+
+    {{lang:php}}
+    json('name','Sir Elton John')
+
+returns the string
+
+    name:   'Sir Elton John'
+
+and calling
+
+    {{lang:php}}
+    json('he_said',"That's just not right!");
+
+returns the string
+
+    he_said:    'That\'s just not right!'
+
+{hidden}
+
+    {{lang:php}}
+    function json($k,$v)
+    {
+        return "$k: '".addslashes($v).'\'';
+    }
+
+{/hidden}
+
+
+## Array to JSON <@><@><@>
+
+(The discussion from the above problem, "JSON Field," is relevant.)
+
+Your assignment is to create a PHP function `array_to_json($data)` that takes
+an associative array and returns the JSON to transmit that data.
+
+So calling
+
+    {{lang:php}}
+    array_to_json(array(
+        'name'  => 'Sir Elton John',
+        'email' => 'dragonslayer@gmail.com',
+        'title' => 'singer/songwrier'
+        ));
+
+returns the string
+
+    {{lang:javascript}}
+    {
+        name:   'Sir Elton John',
+        email:  'dragonslayer@gmail.com',
+        title:  'singer/songwrier'
+    }
+
+Note:  You might make use of the earlier `fencepost` function.
+
+{hidden}
+
+    {{lang:php}}
+    function array_to_json($arr)
+    {
+        $fds = array();
+        foreach ( $arr as $key=>$value )
+            $fds[] = json($key,$value);
+        return   fencepost( $fds, '{ ', ' }', ', ' );
+    }
+
+{/hidden}
+
+
+## HTML Table <@><@><@>
+
+Create a function `html_table($arrays)` that takes an array of associative
+arrays and that returns an HTML table representing that array.
+
+An example array of arrays would be
+
+    {{lang:php}}
+    $posts = array(
+        array(
+            'id'        => 0,
+            'title'     => 'My First Entry',
+            'created'   => 1195073683,
+            'date'      => '2007-11-13',
+            'author_id' => 1,
+            'text'      => 'My 1st Post'
+        ),
+        array(
+            'id'        => 1,
+            'title'     => 'My Second Entry'
+            'created'   => 1195073623,
+            'date'      => '2007-11-14',
+            'author_id' => 2,
+            'text'      => 'My 2nd Post'
+        ),
+    );
+
+And your output from `html_table($posts)` is supposed to mimic this
+table:
+
+    +----+-----------------+-------------+------------+
+    | id | title           |     created |       date |
+    +----+-----------------+-------------+------------+
+    |  0 | My First Entry  | 11195073683 | 2007-11-13 |
+    |  1 | My Second Entry |  1195073623 | 2007-11-14 |
+    +----+-----------------+-------------+------------+
+                -->      +-----------+----------------+
+                         | author_id | text           |
+                         +-----------+----------------+
+                         |         1 | My 1st Post    |
+                         |         2 | My 2nd Post    |
+                         +-----------+----------------+
+
+So the HTML code you would need to produce is something like...
+
+{hidden HTML Table Code}
+
+    {{lang:html}}
+    <table>
+    
+    <thead><tr>
+      <th>id</th>           <th>title</th>              <th>created</th>
+      <th>date</th>         <th>author_id</th>          <th>text</th>
+    </tr></thead>
+    
+    <tbody><tr>
+      <td>0</td>            <td>My First Entry</td>     <td>11195073683</td>
+      <td>2007-11-13</td>   <td>1</td>                  <td>My 1st Post</td>
+    </tr><tr>                                           
+      <td>1</td>            <td>My Second Entry</td>    <td>1195073623</td>
+      <td>2007-11-14</td>   <td>2</td>                  <td>My 2nd Post</td>
+    </tr></tbody>
+    
+    </table>
+
+(Don't worry about spacing our your HTML like this--that's beyond the scope of
+this problem.)
+
+{/hidden HTML Table Code}
+
+{hidden Solution}
+
+Here is a simple solution:
+
+    {{lang:php}}
+    function html_table($data)
+    {
+        $keys = array_keys($data[0]);
+        // could have used the `my_array_keys`, created above!
+        $acc  = "<table>\n<thead>\n<tr>";
+        foreach ( $keys as $key )
+        {
+            $acc .= "\n\t<th>$key</th>";
+        }
+        $acc .= "\n</tr>\n</thead>\n<tbody>";
+        foreach ( $data as $d )
+        {
+            $acc .= "\n\t<tr>";
+            foreach( $keys as $key )
+            {
+                $dval = $d[$key];
+                $acc .= "\n\t\t<td>$dval</td>";
+            }
+            $acc .= "\n\t</tr>";
+        }
+        $acc .= "\n</tbody>\n</table>";
+        return $acc;
+    }
+
+And here is a more complex but "refactored" solution:
+
+    {{lang:php}}
+    function html_table($users)
+    {
+        $a  = fencepost( array_keys($users[0]),
+                         '<table><thead><tr><th>',
+                         '</th></tr></thead><tbody>',
+                         '</th><th>');
+        foreach ( $users as $user )
+        {
+            $a .= fencepost( array_values($user),
+                            '<tr><td>',
+                            '</td></tr>',
+                            '</td><td>');
+        }
+        return $a.'</tbody></table>';
+    }
+
+{/hidden Solution}
+
+
+## CSV Data <@><@><@>
+
+(This one's not as tough as it initially appears but does introduce a lot of
+new concepts.)
+
+Parsing data is one of the primary uses for PHP and other scripting languages:
+we want to mash some existing data from a file or a database or the user into
+a new format so it has a different use.
+
+**CSV** stands for Comma-Separated Value and is a common format that a lot of
+programs export to. It has a very simple format: the first line typically has
+a list of the fields and the subsequent lines have all of those fields. Commas
+(`,`) are used to separate values, and all values are surrounded in double
+quotes. If a value is not given for a field, then it is indicated by empty
+quotes.
+
+Here is a very simple sample CSV file
+
+    "Title","Email","Job"
+    "Sir Elton John","","Singer/Composer"
+    "The Slayer of Dragons","dragonslayer@hotmail.com","Barista"
+
+Your job is to create a function `csv_to_array($filename)` that takes a file
+name as a parameter and returns an array of associative arrays for the CSV
+data in that file.
+
+You may assume that the only commas in the file are between the fields (which
+isn't guaranteed you by most programs that export to CSV).
+
+If I had the above contents in a file called *data.csv*, I should be able to
+call
+
+    {{lang:php}}
+    $data = csv_to_array($filename);
+
+and then have that
+
+    {{lang:php}}
+    $data = array(
+        array(
+            'Title' => 'Sir Elton John',
+            'Email' => '',
+            'Job'   => 'Singer/Composer'
+        ),
+        array(
+            'Title' => 'The Slayer of Dragons',
+            'Email' => 'dragonslayer@hotmail.com',
+            'Job'   => 'Barista'
+        )
+    );
+
+### Hints:
+
+PHP has a built-in function `file_get_contents($file)` that takes a file name
+as an argument and returns the contents of that file as a string (the file
+must be in the same directory as the PHP script).
+
+(There is also a function `file` that returns the file's contents back
+directly as an array of lines, but this requires dealing with newline
+characters which can be a pain, and using `get_file_contents` is not much
+extra work for us or the computer.)
+
+You might find your functions `my_array_keys` and `vjoin` handy. Also don't
+forget to [read up on the `explode` function][explode].
+
+  [explode]:http://us3.php.net/explode
+
+Feel free to make a helper function.
+
+{hidden}
+
+    {{lang:php}}
+    /* A line looks like
+       
+           "Export Item","Date","Start","End","Duration","Title","Importance","Access"
+       
+       And we want to explode on `","`, so we'll remove the leading and
+       trailing quotes and explode on that value.
+     */
+    function split_on_quote_comma($line)
+    {
+        $line = substr($line,1,strlen($line)-2);
+        return explode('","',$line);
+    }
+    
+    function csv_to_array($filename)
+    {
+        $data   = file_get_contents($filename);
+        // `trim`, below, gets rid of any leading/trailing whitespace
+        $lines  = explode("\n",trim($data));
+        $keys   = split_on_quote_comma($lines[0]);
+        $out    = array();
+        $c = count($lines); // count here instead of at every loop iteration
+        for( $i=1; $i < $c; $i++ )
+        {
+            $line_data = split_on_quote_comma($lines[$i])
+            $out[]     = vjoin($keys,$line_data);
+        }
+        return $out;
+    }
+
+
+{/hidden}
+
+
+## Quote Columns <@><@>
+
+SQL, the language of databases, uses back-quotes (`` ` ``) to surround **table
+and column names** and single- or double-quotes to surround **values** in its
+statements. (Most people don't actually use the back-quotes, but they're
+considered good form). 
+
+Here is an example of an SQL statement that inserts two values into a table
+`people`:
+
+    {{lang:sql}}
+    INSERT INTO `people` (`title`,`email`,`job`)
+        VALUES
+            ('Sir Elton John','','Singer/Composer'),
+            ('The Slayer of Dragons','dragonslayer@hotmail.com','Barista')
+    ;
+
+(Spacing is arbitrary and statements are terminated by semicolons.)
+
+Make a function `quote_columns($cols)` that takes an array of associative
+arrays such as
+
+    {{lang:php}}
+    array(
+        array(
+            'title' => 'Sir Elton John',
+            'email' => '',
+            'job'   => 'Singer/Composer'
+        ),
+        array(
+            'title' => 'The Slayer of Dragons',
+            'email' => 'dragonslayer@hotmail.com',
+            'job'   => 'Barista'
+        )
+    );
+
+and returns a back-ticked, comma-separated, list of the "columns" in `$cols`.
+These "columns" are really just the keys from any of the "sub" arrays in
+`$cols`.
+
+So calling `quote_columns` on the above should return the string
+
+    `title`,`email`,`job`
+
+(Note that you can use your `fencepost` function.)
+
+{hidden}
+
+Here is the solution with `fencepost`:
+
+    {{lang:php}}
+    function quote_columns($cols)
+    {
+        return fencepost( $cols, '`', '`', '`,`' );
+    }
+
+and here is a solution without using `fencepost`:
+
+    {{lang:php}}
+    function quote_columns($cols)
+    {
+        $titles = array_keys($cols[0]);
+        return '`'.implode('`,`',$titles).'`';
+    }
+
+{/hidden}
+
+
+## Quote Value <@>
+
+Similar to `quote_columns` above, write a function `quote_value($arr)` that
+takes a an associative array such as
+
+    {{lang:php}}
+    array(
+        'title' => 'Sir Elton John',
+        'email' => '',
+        'job'   => 'Singer/Composer'
+    )
+
+and returns a single-quoted, comma-separated list of the values.
+
+So calling
+
+    {{lang:php}}
+    quote_value(array(
+        'title' => 'Sir Elton John',
+        'email' => '',
+        'job'   => 'Singer/Composer'
+    ));
+
+should return
+
+    'Sir Elton John','','Singer/Composer'
+
+You may assume that there are no single-quotes in the values.
+
+{hidden}
+
+    {{lang:php}}
+    function quote_value($arr)
+    {
+        $vals = array_values($arr);
+        return '\''.implode('\',\'',$vals).'\'';
+    }
+
+If you did want to handle the case where single-quotes are allowed in the
+values, you would need to escape all of them by replacing them with `\'`. PHP
+has a built-in function `addslashes` that can be used to add slashes to
+single- or double-quotes in a string. It has an associated function
+`stripslashes` that can used to delete backslashes before quotes.
+
+Here is a solution that properly handles slashes in the values:
+
+    {{lang:php}}
+    function quote_value($arr)
+    {
+        $vals = array_map('addslashes',array_values($arr));
+        return '\''.implode('\',\'',$vals).'\'';
+    }
+
+{/hidden}
+
+
+## Array to SQL <@><@><@>
+
+Write a PHP function `insert_statement_for_array($table,$arr)` that
+takes a table name and an array of associative arrays such as
+
+    {{lang:php}}
+    array(
+        array(
+            'title' => 'Sir Elton John',
+            'email' => '',
+            'job'   => 'Singer/Composer'
+        ),
+        array(
+            'title' => 'The Slayer of Dragons',
+            'email' => 'dragonslayer@hotmail.com',
+            'job'   => 'Barista'
+        )
+    );
+
+and returns an SQL statement that could be used to insert the data in `$arr`
+into the table `$table`.
+
+So calling `insert_statement_for_array` on the above (with `$table` set to
+`people`) should return something like
+
+    {{lang:sql}}
+    INSERT INTO `people` (`title`,`email`,`job`)
+        VALUES
+            ('Sir Elton John','','Singer/Composer'),
+            ('The Slayer of Dragons','dragonslayer@hotmail.com','Barista')
+    ;
+
+(This should use your previous `quote_value` and `quote_columns` functions.)
+
+{hidden}
+
+    {{lang:php}}
+    function insert_statement_for_array($table,$arr)
+    {
+        $values = array();
+        foreach ( $arr as $value )
+            $values[] = '('.quote_value($value).')';
+        $vals = implode(', ',$values);
+        $cols = quote_columns($arr);
+        return "INSERT INTO `$table` ($cols) VALUES $vals;";
+    }
+
+{/hidden}
+
+
+## Update Attributes <@><@>
+
+The "U" part of C.R.U.D.--Update--is found in SQL (and in MySQL) in the
+`UPDATE` statement. How clever. So updating a record involves running a query
+string like this:
+
+    {{lang:sql}}
+    UPDATE `people`
+       SET `title`='A Slayer of Dragons',
+           `email`='iheartdragons@gmail.com'
+     WHERE `id`=1
+     LIMIT 1
+     ;
+
+(The `LIMIT` is perhaps extraneous considering we would never have two rows in
+our `people` table with the same `id`, but it's a good habit to be in: always
+put a `LIMIT` declaration when you know in advance how many rows you're
+intending to update.)
+
+With this in mind, create a function
+`update_attributes_sql($table,$id,$attrs)` that takes the name of a table, an
+id, and an associative array of attributes to update. It should then return
+the (My)SQL to perform the update.
+
+So we should be able to call
+
+    {{lang:php}}
+    update_attributes_sql( 'people', 1,
+                    array( 'title' => 'A Slayer of Dragons',
+                           'email' => 'iheartdragons@gmail.com' ));
+
+to get the `UPDATE` SQL statement above.
+
+{hidden}
+
+    {{lang:php}}
+    function update_attributes_sql($table, $id, $attrs)
+    {
+        $acc    = array("UPDATE `$table` SET ");
+        $to_set = array();
+        foreach( $attrs as $attr=>$val )
+            $to_set[] = "`$attr`='$val'";
+        $acc[] = implode(', ',$to_set);
+        $acc[] = " WHERE `id`=$id LIMIT 1";
+        return implode('',$acc);
+    }
+
+{/hidden}
+
+
+## Safe Input <@><@><@>
+
+Create a function `sql_statement($array)` that takes in a single array. The
+first item in `$array` (`$array[0]`) is an SQL statement with question marks
+(`?`) in it. Then the following items in `$array` are to replace the question
+marks **in order** after first cleaning them with the function
+`mysql_real_escape_string` and surrounding them with quotes.
+
+So calling 
+
+    {{lang:php}}
+    sql_statement(array(
+        'INSERT INTO `users` 
+            (`title`,`username`)
+            VALUES ( ?, ? )',
+        'Bobby McGee',
+        'bmcgee'));
+
+returns the string
+
+    {{lang:sql}}
+    INSERT INTO `users` 
+        (`title`,`username`)
+        VALUES ( 'Bobby McGee', 'bmcgee' )
+
+And calling
+
+    {{lang:php}}
+    sql_statement(array('My name is ?','Mickey Rooney'));
+
+returns the string
+
+    My name is 'Mickey Rooney'
+
+**Note:** We are using the function `mysql_real_escape_string` here which
+*requires a live database connection* to work. This is because the
+`mysql_real_escape_string` function actually sends its argument to the server
+to be cleaned up.
+
+Moreover, if you are connecting to your database using something like
+
+    {{lang:php}}
+    $link = mysql_connect('host','user','pass');
+
+then you will have to start your function in the manner of
+
+    {{lang:php}}
+    function sql_statement($arr)
+    {
+        global $link; // THIS IS CRITICAL
+    }
+
+or else your `mysql_real_escape_string` function won't know how to connect to
+the database server to sanitize the inputs.
+
+You can test your function locally using the similar (**but unsafe for real
+database use**) function `addslashes` in the place of
+`mysql_real_escape_string`.
+
+{hidden}
+
+Here is the solution using `addslashes` instead of `mysql_real_escape_string`:
+
+    {{lang:php}}
+    function sql_statement($tokens)
+    {
+        $statement = array_shift($tokens);
+        // something like 'name = ? and age = ?'
+        $bits      = explode('?',$statement);
+        // something like  [ 'name =', ' and age = ', '' ]
+        
+        // If we have a ? at the beginning or end of our statement, then we'll
+        // have one too many bits.  This is because
+        //
+        //     explode('?','? foo ?') = [ '', foo, '' ]
+        // 
+        // So essentially we want to have something similar to implode but
+        // instead of always gluing with the same string between each of the
+        // bits, we want to glue with the next item in $tokens.
+        
+        // $ii starts at 1 because never want to put a $token before our first
+        // $bit.  If our $statement starts with a ? then $bits[0] will just
+        // be the empty string.
+        $result = $bits[0];
+        $c      = count($bits);
+        for( $ii=1; $ii < $c; $ii++)
+        {
+            if ( count($tokens) > 0 ) // we have more things left to add in
+            {
+                $clean   = addslashes(array_shift($tokens));
+                $result .= "'$clean'";
+            } else // nothing left but still have a ? in the $statement so put it
+                   // back in there
+            {
+                $result .= "?";
+            }
+            $result .= $bits[$ii];
+        }
+        return $result;
+    }
+
+{/hidden}
+
+
+## The `list` Language Contruct
+
+Not a problem for this one, just an observation.
+
+Imagine you need to separate the string "Abraham Lincoln" into the first name
+and the last name. This is simple using the magic of the
+`explode($separator,$string)` function that separates `$string` into an array
+of substrings:
+
+    {{lang:php}}
+    $name  = "Abraham Lincoln";
+    $split = explode(' ',$name);
+    $first = $split[0];
+    $last  = $split[1];
+
+It turns out we can do this in a simpler step:
+
+    {{lang:php}}
+    $name = 'Abraham Lincoln';
+    list($first,$last) = explode(' ',$name);
+
+The `list` you see there isn't actually a function--it's a *language
+construct* much in the same way that `if` and `foreach` are. Here is a simpler
+example of `list` in action:
+
+    {{lang:php}}
+    list($one,$two,$three,$four) = array(1,2,3,4);
+
+which is equivalent to
+
+    {{lang:php}}
+    $temp  = array(1,2,3,4);
+    $four  = $temp[3];
+    $three = $temp[2];
+    $two   = $temp[1];
+    $one   = $temp[0];
+    unset($temp)
+
+which is equivalent to
+
+    {{lang:php}}
+    $one   = 1;
+    $two   = 2;
+    $three = 3;
+    $four  = 4;
+
+This construct is helpful to the implementation of the `foreach` construct
+which is discussed later.
+
+
+## Array Equality? <@><@><@><@>
+
+PHP has built-in mechanisms to compare arrays for equality. For instance, you
+can do something like
+
+    {{lang:php}}
+    $a = array( 1, 2, 3, 4 );
+    $b = array( 1, 2, 3, 4 );
+    $a == $b; // this is true
+
+Imagine, though, that this weren't built into the language.
+
+Create a function `arrays_equal($a,$b)` that returns `true` if and only if
+`$a` and `$b` are the same.
+
+There are several things to think about:
+
+ 1. What if you have nested arrays?
+
+    PHP's built-in equality comparison *does* compare nested arrays, and so
+    should yours. So your function **should call itself** if it comes across
+    values that are arrays.
+
+    This is an example of [recursion][], which is a very deep subject in
+    computer science in general, but this use of it is very simple. Here is an
+    example of a function that computes the [factorial][] of *n*:
+
+        {{lang:php}}
+        function factorial($n)
+        {
+            if ( $n == 0 or $n == 1 )
+                return 1;
+            return $n * factorial($n-1);
+        }
+
+    Specifically to this problem, you'll want to compare the values in your
+    two arrays depending on their type: if they're not arrays, you can use the
+    regular `==` comparison. if they are arrays, then you have to compare them
+    using a mechanism that compares arrays for equality. That certainly does
+    sound familiar...
+
+ 2. What if the two arrays have all the same keys and all the same
+    values but in a different order? Note that this only makes sense
+    with associative arrays. Regular arrays are of course ordered.
+
+    For instance, we would consider `array(1,2,3)` different from
+    `array(3,2,1)`. To see why this is the case, look at the keys and values
+    in these arrays. Remember that all arrays in PHP are just mappings from
+    keys to values.
+
+    So then `array(1,2,3)` is as follows when re-written using the
+    associative-array syntax:
+
+        {{lang:php}}
+        array(  0 => 1,     // key 0 has value 1
+                1 => 2,     // key 1 has value 2
+                2 => 3 )    // key 2 has value 3
+
+    and `array(3,2,1)` is essentially
+
+        {{lang:php}}
+        array(  0 => 3,     // key 0 has value 3
+                1 => 2,     // key 1 has value 2
+                2 => 1 );   // key 2 has value 1
+
+    With associative arrays, there is no real sense of different key/value
+    pairs having an order. So one key/value pair isn't really *before* or
+    *after* any of the other key/value pairs So the following two arrays are
+    the same:
+
+        {{lang:php}}
+        $superman = array(
+            'identity'   => 'Clark Kent',
+            'girlfriend' => 'Lois Lane',
+            'weakness'   => 'Kryptonite'
+        );
+        $superman2 = array(
+            'weakness'   => 'Kryptonite'   // Notice that the keys
+            'identity'   => 'Clark Kent',  // and values are in a
+            'girlfriend' => 'Lois Lane',   // different order here.
+        );
+
+    **Essentially, we must have that the all the keys and values match in both
+    of the arrays.**
+
+
+[recursion]:http://en.wikipedia.org/wiki/Recursion
+[factorial]:http://en.wikipedia.org/wiki/Factorial
+
+Calling
+
+    {{lang:php}}
+    arrays_equal(
+        array(1, 2, 'sub' => array(3,4,5) ),
+        array(1, 'sub' => array(3,4,5), 2 )
+    );
+
+returns `true`.  And calling
+
+    {{lang:php}}
+    arrays_equal(
+        array(1, 2, 'sub' => array(3,4,5) ),
+        array(1, 'sub' => array(5,4,3), 2 ) // the 'sub' array is a 'regular'
+                                            // array in a different order than
+                                            // it is in the previous example.
+    );
+
+returns `false`.
+
+{hidden}
+
+    {{lang:php}}
+    function arrays_equal($a, $b)
+    {
+        // we can only run this on arrays:
+        if ( !is_array($a) or !is_array($b) ) { return false; }
+        $a_count = count($a);
+        $b_count = count($b);
+        // two different-sized arrays can never be the same
+        if ( $a_count != $b_count ) { return false; }
+        $a_keys = array_keys($a);
+        for( $j=0; $j < $a_count; $j++ )
+        {
+            // note that we have two index variables now: $j which loops over
+            // the keys in $a and $b; $i is just what key that is for $a. So
+            // $a[$i] is always equal to $a[$j]. But we don't want to test
+            // that $a[$i] == $b[$i] because $b's keys might be in a different
+            // order, although they still could associate the same values to
+            // those keys as $a's keys do.
+            $i = $a_keys[$j];
+            if ( is_array($a[$i]) )
+            {
+                if ( !is_array($b[$i]) )
+                    return false;
+                // so now both $a[$i] and $b[$i] are arrays and we have to
+                // call ourselves to see if the sub-arrays are equal.
+                if ( !arrays_equal($a[$i],$b[$i]) )
+                    return false;
+            } else if ( is_array($b[$i]) )
+            {
+                // because we're in an `else if` here, we know that $a[$i] is
+                // not an array (or else that branch would have been taken).
+                // So then if $b[$i] is an array, then there's problems...
+                return false;
+            } else
+            {
+                // here neither $a[$i] nor $b[$i] is an array, so we do just
+                // regular comparison using `==`:
+                if ( $a[$i] != $b[$i] )
+                    return false;
+            }
+        }
+        return true;
+    }
+
+{/hidden}
+
+
+;; ## Serialize Array <@><@><@><@>
+;; 
+;; This is somewhat similar to the above "Array Equality." function.
+;; 
+;; You can 
+;;
+;; function serialize_array($arr,$depth=1)
+;; {
+;;     $out = array();
+;;     $pad = str_repeat("\t",$depth);
+;;     foreach($arr as $k=>$v)
+;;         $out[] = $pad.(is_int($k) ? $k : "'$k'")
+;;                      ." => "
+;;                      .(is_array($v) 
+;;                             ? serialize_array($v,$depth+1) 
+;;                             : (is_int($v)   ? $v                       
+;;                                             : '\''.addslashes($v).'\''));
+;;     return  "array(\n"  
+;;                 .implode(",\n",$out)
+;;                 ."\n".str_repeat("\t",max(0,$depth-1)).')';
+;; }
+
+
+## Array Finder  <@><@>
+
+Make a function `find_key_for($val,$array)` that returns the key for `$val` if
+it's in `$array` or `FALSE` if it's not.
+
+So running
+
+    {{lang:php}}
+    find_key_for
+    (  'baseball',
+        array(  'movie'=>'fight club',
+                'sport'=>'baseball')
+    );
+
+returns `'sport'`.
+
+**Hint** You can use your earlier `my_array_flip($arr)` to make this very
+easy!
+
+{hidden}
+
+Here is the "very easy" solution:
+
+    {{lang:php}}
+    function find_key_for($val,$array)
+    {
+        $flipped = my_array_flip($array);
+        return $flipped[$val];
+    }
+
+and here is the "traditional" solution:
+
+    {{lang:php}}
+    function find_key_for($val,$array)
+    {
+        foreach ( $array as $key=>$v )
+        {
+            if ( $val == $v )
+                return $key;
+        }
+        return FALSE;
+    }
+
+{/hidden}
+
+
+
+## CSV to SQL <@><@>
+
+Create a function `csv_to_sql($table,$file)` that takes the name of a database
+table and a filename of a CSV file as parameters and returns the SQL to insert
+the data from the file into the table.
+
+{hidden}
+
+    {{lang:php}}
+    function csv_to_sql($table,$file)
+    {
+        $arr = csv_to_array($file);
+        return insert_statement_for_array($table,$arr);
+    }
+
+{/hidden}
+
+
+## Implementing The `foreach` Loop <@><@><@><@>
+
+This one is again not a problem but is rather just an explanation of a
+concept. It is rated 4-<@>s, though, because of how confusing this problem can
+be for those new to PHP.
+
+Recall that the `foreach` loop is used to *iterate* over an array giving you
+access to each key/value pair in the manner of
+
+    {{lang:php}}
+    $chars = array(
+        'Yertle' => 'turtle',
+        'Hooey'  => 'parrot',
+        'Horton' => 'elephant'
+    );
+    foreach ( $chars as $name => $animal )
+    {
+        echo "$name is a(n) $animal\n";
+    }
+
+which would echo the screen
+
+    Yertle is a(n) turtle
+    Hooey is a(n) parrot
+    Horton is a(n) elephant
+
+It turns out that we can implement our own version of the `foreach` loop using
+a little-known fact about arrays in PHP.
+
+In addition to keeping track of a bunch of key/value pairs, arrays also keep
+track of an *internal pointer* that can be used with the `each` function (and
+a few others). This internal pointer starts by pointing to the first key/value
+pair in the array. The `each` function then asks the array to give back the
+"*pointed-to*" key/value pair as an array *and to then move the internal
+pointer down one.* If the pointer "falls off the end" (when there is no more
+key-value pairs left), then `each` returns `false`.
+
+To illustrate, imagine we had an array called `$people`,
+
+    {{lang:php}}
+    $people = array(
+        'Cindy',  'Greg',
+        'Marcia', 'Jan',
+        'Bobby',
+        'Oldest'   => 'Marcia',
+        'Youngest' => 'Bobby'
+    );
+
+Pictorially, this array looks like
+
+        +----------+--------+
+        |      Key | Value  |
+        +----------+--------+
+    --> |        0 | Cindy  |
+        |        1 | Greg   |
+        |        2 | Marcia |
+        |        3 | Jan    |
+        |        4 | Bobby  |
+        |   Oldest | Marcia |
+        | Youngest | Bobby  |
+        +----------+--------+
+
+The arrow, `-->`, represents the internal pointer.
+
+We can then call
+
+    {{lang:php}}
+    $first_key_value_pair = each($family);
+
+and have that `$first_key_value_pair = array(0,'Cindy')`. Notice that `each`
+operates on an array and returns an array. The first item (0) in the array
+that it returns is the "pointed-to" **key** from the array it operated on
+while the second item (Cindy) in the array that it returns is the "pointed-to"
+**value**.
+
+(All arrays have this internal pointer--even the array we're given back from
+`each`--but they aren't always very useful.)
+
+After we call `each($family)`, the `$family` array has changed: its internal
+pointer has been moved down one row:
+
+        +----------+--------+
+        |      Key | Value  |
+        +----------+--------+
+        |        0 | Cindy  |
+    --> |        1 | Greg   |
+        |        2 | Marcia |
+        |        3 | Jan    |
+        |        4 | Bobby  |
+        |   Oldest | Marcia |
+        | Youngest | Bobby  |
+        +----------+--------+
+
+So calling `each` again on `$family` will now return `array(1,'Greg')` and
+will move the pointer down yet another row...
+
+We could repeat this process several times:
+
+         +----------+--------+                 +----------+--------+
+         |      Key | Value  |                 |      Key | Value  |
+         +----------+--------+                 +----------+--------+
+         |        0 | Cindy  |                 |        0 | Cindy  |
+     --> |        1 | Greg   |                 |        1 | Greg   |
+         |        2 | Marcia |             --> |        2 | Marcia |
+         |        3 | Jan    |                 |        3 | Jan    |
+         |        4 | Bobby  |                 |        4 | Bobby  |
+         |   Oldest | Marcia |                 |   Oldest | Marcia |
+         | Youngest | Bobby  |                 | Youngest | Bobby  |
+         +----------+--------+                 +----------+--------+
+      each returns array(1,'Greg')          each returns array(2,'Marcia')
+
+         +----------+--------+                 +----------+--------+
+         |      Key | Value  |                 |      Key | Value  |
+         +----------+--------+                 +----------+--------+
+         |        0 | Cindy  |                 |        0 | Cindy  |
+         |        1 | Greg   |                 |        1 | Greg   |
+         |        2 | Marcia |                 |        2 | Marcia |
+     --> |        3 | Jan    |                 |        3 | Jan    |
+         |        4 | Bobby  |            -->  |        4 | Bobby  |
+         |   Oldest | Marcia |                 |   Oldest | Marcia |
+         | Youngest | Bobby  |                 | Youngest | Bobby  |
+         +----------+--------+                 +----------+--------+
+      each returns array(3,'Jan')           each returns array(4,'Jan')
+
+         +----------+--------+                 +----------+--------+
+         |      Key | Value  |                 |      Key | Value  |
+         +----------+--------+                 +----------+--------+
+         |        0 | Cindy  |                 |        0 | Cindy  |
+         |        1 | Greg   |                 |        1 | Greg   |
+         |        2 | Marcia |                 |        2 | Marcia |
+         |        3 | Jan    |                 |        3 | Jan    |
+         |        4 | Bobby  |                 |        4 | Bobby  |
+    -->  |   Oldest | Marcia |                 |   Oldest | Marcia |
+         | Youngest | Bobby  |             --> | Youngest | Bobby  |
+         +----------+--------+                 +----------+--------+
+         each returns                       each returns
+                array('Oldest','Marcia')          array('Youngest','Bobby')
+
+
+And then finally when there are no more lines left for the internal pointer to
+move to, we can call `each` once more and get
+
+        +----------+--------+
+        |      Key | Value  |
+        +----------+--------+
+        |        0 | Cindy  |
+        |        1 | Greg   |
+        |        2 | Marcia |
+        |        3 | Jan    |
+        |        4 | Bobby  |
+        |   Oldest | Marcia |
+        | Youngest | Bobby  |
+    --> +----------+--------+
+
+In this scenario, `each` will return `false` to indicate that there are no
+more key/value pairs.
+
+Putting this all together, how can we implement the `foreach` loop? Very
+easily! All we have to do is use our good old friend the `while` loop.
+
+Let's implement the same bit of code that we had before:
+
+    {{lang:php}}
+    $chars = array(
+        'Yertle' => 'turtle',
+        'Hooey'  => 'parrot',
+        'Horton' => 'elephant'
+    );
+    foreach ( $chars as $name => $animal )
+    {
+        echo "$name is a(n) $animal\n";
+    }
+
+only now using our new friend `each`. As a convenience, we also use the `list`
+language construct which is discussed above.
+
+    {{lang:php}}
+    $chars = array(
+        'Yertle' => 'turtle',
+        'Hooey'  => 'parrot',
+        'Horton' => 'elephant'
+    );
+    while ( list($name,$animal) = each($chars) )
+    {
+        echo "$name is a(n) $animal\n";
+    }
+
+and that's all there is to it folks!
+
+Refer to the earlier "Assignment Statements As Return Values" for an
+explanation on why we can use something like
+
+    {{lang:php}}
+    while ( list($name,$animal) = each($chars) )
+
+instead of having to do this "the hard way":
+
+    {{lang:php}}
+    $chars = array(
+        'Yertle' => 'turtle',
+        'Hooey'  => 'parrot',
+        'Horton' => 'elephant'
+    );
+    $temp = each($chars);
+    while ( $temp )
+    {
+        $name   = $temp[0];
+        $animal = $temp[1];
+        echo "$name is a(n) $animal\n";
+        $temp   = each($chars);
+    }
+
+
+## Where Statement <@><@>
+
+If you want to do anything to your database table other than create new rows
+(a/k/a `INSERT` in SQL), then you're going to need to tell the database what
+rows you plan to do something with.
+
+SQL achieves this using its `WHERE` declaration. For example, the following
+SQL can be used to delete all people named 'Sir Elton John' from a table
+called `people`:
+
+    {{lang:sql}}
+    DELETE FROM `people`
+          WHERE `name`='Sir Elton John'
+    ;
+
+Remember that SQL uses back-quotes to surround table- and column-names and
+single- or double-quotes to surround string values. Also note that there isn't
+a second equals sign there -- we don't have to use a double-equals (`==`) in
+SQL when doing equality comparison.
+
+If you want to specify multiple conditions, you simply separate them with
+`AND` or `OR`. The following SQL can be used to delete all people named 'Sir
+Elton John' with the job 'Barista' from our `people` database:
+
+    {{lang:sql}}
+    DELETE FROM `people`
+          WHERE `name`='Sir Elton John'
+            AND `job`='Barista'
+    ;
+
+Your job is to make a function `where_statement($conditions,$op)` that takes
+an array of conditions and an operation (either 'AND' or 'OR') that produces
+the "WHERE" part of an SQL statement for those conditions. The `$op` should
+default to 'AND'.
+
+For example, the following code
+
+    {{lang:php}}
+    where_statement(array(
+        'name' => 'Sir Elton John',
+        'job'  => 'Barista'
+        ,'AND');
+
+should return
+
+    {{lang:sql}}
+    `name`='Sir Elton John' AND `job`='Barista'
+
+{hidden}
+
+    {{lang:php}}
+    function where_statement($conditions,$op='AND')
+    {
+        $acc = array();
+        foreach( $conditions as $col=>$val)
+        {
+            $acc[] = "`$col`='$val'";
+        }
+        return implode(" $op ",$acc);
+    }
+
+{/hidden}
+
+
+## Select Rows <@><@><@>
+
+Once you have a query formed and ready to execute on your database, you simply
+pass it to MySQL using the built-in `mysql_query($query,$link)` function. This
+requires that you first establish a `$link` variable using
+[`mysql_connect`][m].
+
+[m]:http://php.net/mysql_connect
+
+What `mysql_query` returns is a blob of completely useless data that you can't
+directly work with. You can, however, work with it using one of the many
+built-in MySQL functions.
+
+Here is an example of PHP code that selects information about users born in
+1955 from a database and puts them all into an array `$users`:
+
+    {{lang:php}}
+    $query = "SELECT `id`,`name`,`email`
+                FROM `users`
+               WHERE `birth_year`=1955";
+    $result = mysql_query($query) or die( mysql_error() );
+    $users  = array();
+    $user   = array();
+    while ( $user = mysql_fetch_array($result,MYSQL_ASSOC) )
+    {
+        $users[] = $user;
+    }
+
+Your job is to write a function `select_rows($table,$cols,$conds,$op)` that
+takes four parameters
+
+ 1. `$table`, which table to select the data from,
+ 2. `$cols`, an array of the columns to select from the table,
+ 3. `$conds`, an associative array of titles that must match in in 
+    in the selected rows.  The keys correspond to the column names
+    while the values correspond to "what we're looking for," and
+ 4. `$op` is either `"and"` or `"or"` and indicates whether we want
+    all of the columns to be matched or *one or more* of the columns
+    to be matched, respectively.
+
+Your function should return *an array of associative arrays* corresponding to
+the rows that matched the given conditions.
+
+(The last two parameters correspond to the parameters in the previous
+`where_statement` problem.)
+
+So if you have a database table `users` that looks like
+
+    +---+----------------+-----------------+-----------+
+    |id |name            |email            |birth_year |
+    +---+----------------+-----------------+-----------+
+    |0  |Peter Griffin   |peter@gmail.com  |1955       |
+    |1  |Louis Griffin   |louis@gmail.com  |1955       |
+    |3  |Stewie Griffin  |stewie@gmail.com |2005       |
+    +---+----------------+-----------------+-----------+
+
+you could run
+
+    {{lang:php}}
+    $users = select_rows('users',
+                   array('name','email'),
+                   array('birth_year' => 1955));
+
+and then have that 
+
+    {{lang:php}}
+    $users = array(
+        array(  
+                'name'  => 'Peter Griffin',
+                'email' => 'peter@gmail.com'
+        ),array(
+                'name'  => 'Louis Griffin',
+                'email' => 'louis@gmail.com'
+        ));
+
+
+{hidden}
+
+    {{lang:php}}
+    function select_rows($table,$cols,$conds,$op)
+    {
+        global $link;
+        $cols   = quote_columns($cols);
+        $where  = where_statement($conds,$op);
+        $query  = "SELECT $cols FROM `$table` WHERE $where";
+        $result = mysql_query($query,$link) or die(mysql_error());
+        $many   = array();
+        $one    = array();
+        while ( $one = mysql_fetch_array($result,MYSQL_ASSOC) )
+        {
+            $many[] = $one;
+        }
+        return $many;
+    }
+
+
+{/hidden}
+
+
+## "The" Sorting  <@><@><@><@>
+
+This one is not easy: it combines what is probably several new concepts into
+one slightly-more-than-trivially useful functionality. I'd say come back to
+this one after you've mastered the concepts needed for the other problems
+first.
+
+PHP has a built-in function called `usort(&$array, $callback)` that allows you
+to sort an array by calling a user-defined sorting function `$callback`. You
+can also use one of the many built-in comparison functions like
+`strcmp($a,$b)` that compares two strings alphabetically.
+
+The ampersand (`&`) before `$array` means that `$array` will be modified
+in-place.  So rather than saying something like
+
+    {{lang:php}}
+    $a = usort($a,'strcmp');
+
+you simply say
+
+    {{lang:php}}
+    usort($a,'strcmp');
+
+to sort your `$a` array alphabetically.
+
+From [the `usort` documentation][usortdoc],
+
+ > The comparison function must return an integer less than, equal to, or
+ > greater than zero if the first argument is considered to be respectively
+ > less than, equal to, or greater than the second.
+
+  [usortdoc]:http://us3.php.net/usort
+
+So if we wanted to simply sort the array in regular, increasing order, we
+might define
+
+    {{lang:php}}
+    function cmp($a, $b)
+    {
+        if ($a == $b)
+            return 0;
+        if ($a < $b)
+            return -1;
+        return 1;
+    }
+
+which we could then call to sort an array a la:
+
+    {{lang:php}}
+    $myvals = array(1,3,5,2,4,6);
+    usort($myvals,'cmp');
+    // now $myvals = array(1,2,3,4,5,6)
+
+Your assignment is to create a function `sort_the($a,$b)` that returns **-1**
+if `$a` is alphabetically **before** `$b`, returns **1** if `$a` is
+alphabetically **after** `$a` and **0** if `$a` and `$b` are alphabetically
+the same.
+
+The kicker is that we're not going to care about the presence of the words
+*the*, *The*, *a*, *A*, *an*, or *an*, if they're the first word in a title.
+
+Once you've completed this function, you can do things like
+
+    {{lang:php}}
+    $bands = array(
+        'Beck',
+        'Blue October',
+        'The All American Rejects',
+        'The Starting Line'
+    );
+    usort($bands,'sort_the');
+
+which yields the array as
+
+    {{lang:php}}
+    $bands = array(
+        'The All American Rejects',
+        'Beck',
+        'Blue October',
+        'The Starting Line'
+    );
+
+### Hint
+
+Here is the pseudo-code (almost-english description) of what to do as
+well as a simple example pair of arguments.
+
+    A := The Rolling Stones
+    B := A Rage Against the Machine
+    split the arguments into words to obtain
+        A = [The, Rolling, Stones]
+        B = [A, Rage, Against, the, Machine]
+    if the first word is in the list of ignored words then remove it to obtain
+        A = [Rolling, Stones]
+        B = [Rage, Against, the, Machine]
+    join the lists back into words to obtain
+        A = Rolling Stones
+        B = Rage Against the Machine
+    and use the built-in `strcmp` function to compare the resulting strings
+
+{hidden}
+
+    {{lang:php}}
+    function sort_the($a,$b)
+    {
+        $ignored_words = array('a','A','the','The');
+        $a = explode(' ',$a);
+        $b = explode(' ',$b);
+        if ( count($a) > 0 && in_array($a[0], $ignored_words) )
+            array_shift($a);
+        if ( count($b) > 0 && in_array($b[0], $ignored_words) )
+            array_shift($b);
+        $a = implode(' ',$a);
+        $b = implode(' ',$b);
+        return strcmp($a,$b);
+    }
+
+or the more "refactored" form:
+
+    {{lang:php}}
+    function stem_t($phrase)
+    {
+        $ignored_words = array('a','A','the','The');
+        $phrase = explode(' ',$a);
+        if ( count($phrase) > 0 &&  in_array($phrase[0],$ignored_words)  )
+            array_shift($phrase);
+        return implode(' ',$phrase);
+    }
+    function sort_the($a,$b)
+    {
+        return strcmp(stem_t($a),stem_t($b));
+    }
+
+(Neither of these is particularly efficient, but that's not the point.)
+
+{/hidden}
+
+
+;; ## FormTron <@><@><@><@><@>
+;; 
+;; This is just a solution without a writeup yet:
+;; 
+;;     {{lang:php}}
+;;     // a simple callback function that returns
+;;     // whether its parameter is null
+;;     function not_empty($val)
+;;     {
+;;         return $val == null;
+;;     }
+;; 
+;;     /*
+;;      * This beast of a function has so many arguments that we've just
+;;      * given up hope of trying to remember which order they come in and
+;;      * instead just use an associative array as a means of parameter
+;;      * passing.
+;;      *
+;;      * Calling this thing looks a little something like
+;;      *
+;;      *    echo form_field(array(
+;;      *      'name'                => 'user_name',
+;;      *      'validation_callback' => 'not_empty',
+;;      *      'invalid_message'     => 'Cannot Be Empty!',
+;;      *      'before'              => 'Your Name: &nbsp;',
+;;      *      'between'             => ' &nbsp; ',
+;;      *      'after'               => 'ERROR_MSG<br />',
+;;      *    ));
+;;      *
+;;      * (The advantage here is that these parameters can be put in any order,
+;;      * and it's certainly a lot clearer. The disandvantage of course is that
+;;      * this is a lot more typing.)
+;;      *
+;;      *
+;;      * You could put a bunch of these on a page and then check whether
+;;      * they're all valid before (e.g.) submitting to the database. Every time
+;;      * this function is run, it keeps track of whether or not the callback
+;;      * function returns true. If it doesn't (i.e., the callback function
+;;      * returns false), then the function "logs" this failure. You can then
+;;      * simply call
+;;      *
+;;      *     form_field(array('all_valid_check'=>true))
+;;      *
+;;      * which will return an array of all the parameter arrays that didn't
+;;      * pass their callback functions.
+;;      *
+;;      * The below summarizes the keys for the $params array that this function
+;;      * looks at including their "default" values. So the parameter NAME
+;;      * (which the function looks for at $params['name']) has a default
+;;      * auto_configured value. The purpose is expressed as an abridged view of
+;;      * what is returned with respect to the purpose of this parameter.
+;;      *
+;;      * Params:
+;;      *
+;;      *      NAME = auto_configured
+;;      *          <input name="$NAME" />
+;;      *
+;;      *      VALUE = null
+;;      *          <input value="$VALUE" />
+;;      *
+;;      *      (If there is $_POST[$NAME], then $VALUE is subsumed by that.)
+;;      *
+;;      *      TYPE = text
+;;      *          <input type="$TYPE" />
+;;      *
+;;      *      (Note that the logic and parameters are not set up to support
+;;      *      any input types other than 'text' and 'hidden'. Adding other
+;;      *      input types (e.g., checkbox, radio, textarea, select)
+;;      *      doesn't significantly complicate things, but it does kind of
+;;      *      obviate the need to have more functions.)
+;;      *
+;;      *      LABEL = auto_configured
+;;      *          <label>$LABEL</label>
+;;      *
+;;      *      VALIDATION_CALLBACK = null
+;;      *          $is_valid = $VALIDATION_CALLBACK($user_data)
+;;      *
+;;      *      (Some people are surprised to learn that you can call functions
+;;      *      this way.  You can even do something like
+;;      *
+;;      *          $fun = 'echo';
+;;      *          $fun('Hello!');
+;;      *
+;;      *      which would be the same as simply calling echo on its own.)
+;;      *
+;;      *      INVALID_MESSAGE = null
+;;      *          if !($is_valid) { [replace all ooccurrences of 'ERROR_MSG'
+;;      *                              in the $BEFORE/$AFTER/$BETWEEN params
+;;      *                              with $INVALID_MESSAGE] }
+;;      *
+;;      *      ALL_VALID_CHECK = false
+;;      *          if ( $ALL_VALID_CHECK )
+;;      *              { [return an array of params arrays
+;;      *                  for fields that didn't pass validation] }
+;;      *
+;;      *      (You could check whether everything validates by testing
+;;      *      wheter this is a zero-length array. That's something like:
+;;      *
+;;      *          $errors    = form_field(array('all_valid_check'=>true));
+;;      *          $all_valid = count($errors) == 0;
+;;      *
+;;      *      )
+;;      *
+;;      *      BEFORE = null          }  (Put 'ERROR_MSG' in any of these
+;;      *          $BEFORE<label>...  |   three to have it replaced by
+;;      *                             |   $INVALID_MESSAGE if there is one
+;;      *      AFTER = null           |   and this field doesn't pass
+;;      *          <input />$AFTER    |   validation.)
+;;      *                             |
+;;      *      BETWEEN = null         }
+;;      *          <label></label>$BETWEEN<input />
+;;      *
+;;      *
+;;      */
+;;     function form_field($params = array())
+;;     {
+;;         static $count   = 0;       // used to automatically get names
+;;         static $invalid = array(); // a running tally of the params
+;;                                    //    arrays from invalid form fields
+;;         // check for our special parameter
+;;         if ( $params['all_valid_check'] )
+;;             return $invalid;
+;;         // book-keeping functions and automatic-parameter loading:
+;;         $name    = isset($params['name' ]) ? $params['name' ] : 'in'.$count++ ;
+;;         $type    = isset($params['type' ]) ? $params['type' ] : 'text'        ;
+;;         $label   = isset($params['label']) ? $params['label'] : $name         ;
+;;         $call    = isset($params['validation_callback'])
+;;                    && function_exists($params['validation_callback'])
+;;                    ?  $params['validation_callback']       : FALSE ;
+;;         $msg     =    $params['invalid_message'    ]
+;;                    ?  $params['invalid_message'    ]       : null  ;
+;;         $before  = isset($params['before' ])  ? $params['before' ] : null   ;
+;;         $after   = isset($params['after'  ])  ? $params['after'  ] : null   ;
+;;         $between = isset($params['between'])  ? $params['between'] : null   ;
+;;         $value   = isset($_POST) && isset($_POST[$name]) ? $_POST[$name]    :
+;;                    isset($params['value'])               ? $params['value'] :
+;;                    null                                                     ;
+;;         // handle errors:
+;;         $replacement = ''; // initially assume we have no problem
+;;         if ( $call && $_POST                   // If we have a callback
+;;                    && isset($_POST[$name])     // function and user
+;;                    && !($call($_POST[$nae])) ) // input and the callback
+;;         {                                      // returns false...
+;;             $invalid[]   = $params;            //
+;;             $replacement = $msg;               // ...we have a problem.
+;;         }
+;;         // always do replacement because we don't ever want to actually
+;;         // print ERROR_MSG:  We want to replace it with nothing if there
+;;         // is no problem or replace it with the $msg if there is a
+;;         // problem:
+;;         $before  = str_replace('ERROR_MSG', $replacement, $before );
+;;         $after   = str_replace('ERROR_MSG', $replacement, $after  );
+;;         $between = str_replace('ERROR_MSG', $replacement, $between);
+;;         // Build our output string:
+;;         $acc = $before
+;;                ."<label for=\"$name\">$label</label>"
+;;                .$between
+;;                ."<input type=\"$type\" value=\"$value\" id=\"$name\" />"
+;;                .$after
+;;                ;
+;;         return $acc;
+;;     }
+;; 

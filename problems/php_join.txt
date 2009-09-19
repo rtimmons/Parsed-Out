@@ -1,0 +1,457 @@
+===
+
+# Joining with PHP:  Doing the Job of MySQL
+
+Here is a brief introduction to the topic of joining. For further explanation,
+I would recommend getting a book on SQL -- any basic introduction book would
+be fine.
+
+(Note, we're working on an example data set which is similar to what would be
+given to you from a simple database query. We're saying that this data is
+loaded into the variables `$posts` and `$authors`. This data can be found at
+<http://uwwebpub.com/php>; click on "Get Data File").
+
+## Data Structure
+
+It is much "cheaper" (and easier) to join data straight from the database:
+doing this manually requires that we fetch *all* the entities from the
+database. For our small data set, that's okay, but it's not a good idea to be
+fetching more than a couple hundred entities at once. It turns out that most
+of the joins we'll see are versions of hasOne and belongsTo ((2), below).
+
+An "entity" is a single instance of a prototypical thing. E.g., `$posts[0]`
+(from our data.php file) is a post entity of the prototypical post. Each of
+the data about an entity (e.g. its id, its title, its author_id, etc.) go by
+the term *data fields*. When we're talking about databases, though, they are
+more commonly referred to as *columns* because we typically have a *table* for
+each one of our kind of entities. Our tables are structured like:
+
+    +---+----------------+-----------------+-----------+
+    |id |title           |created          |date       | --->...
+    +---+----------------+-----------------+-----------+
+    |0  |My First Entry  |1195073683       |2007-11-13 |
+    |1  |My Second Entry |1195073623       |2007-11-14 |
+    |3  |Another Entry   |1195072623       |2007-10-11 |
+    |4  |YAE             |1095072623       |2004-10-11 |
+    +---+----------------+-----------------+-----------+
+
+And the "entity" relationship is that these two tables should be "glued
+together" *on* the 'post.author_id = author.id' condition (called a
+predicate):
+
+    +----------------+        +----------------+
+    |   Posts        |        |   Authors      |
+    +----------------+        +----------------+
+    | id             |       /+ id             |
+    | title          |     /  | title          |
+    | created        |   /    | email          |
+    | date           | /      +----------------+
+    | author_id      +-      
+    | text           |       
+    +----------------+        
+
+(Note that the notation is simply `$table_name.$column_name`, as you probably
+figured out.)
+
+## Entity Relationships
+
+There are three kinds of relationships between entities:
+
+1.   hasMany and belongsTo
+
+    e.g., an author hasMany posts, and a post belongsTo an author.
+
+2.   hasOne  and belongsTo
+
+    e.g., a post hasOne author, and an author belongsTo many posts. This is
+    best thought of as the "other side" of (1).
+
+3.   hasAndBelongsToMany
+
+    This one is trickier to store (we might talk about it on the last day of
+    PHP II): It involves having a separate data store called a join table. If
+    we were to introduce categories into our data, then a post might belongTo
+    many categories, and many categories might belongTo a post.
+
+## Left and Right Joins
+
+Joining entities involves iterating over two sets of entities and "gluing"
+pairs of them together based on some sort of condition. This condition is
+usually the two entities having a data field in common. In our example, we
+want to glue together our $posts and our $authors, but the question is *in
+which direction do we want to glue them together?* Should we glue authors to
+posts, or should we glue posts to authors.
+
+In the first case, gluing authors to posts, we'll be replacing the 'author_id'
+field with the corresponding author entity. This is called a *left join*.
+Joining the first post, $posts[0], with $authors,
+
+    {{lang:php}}
+    array(                                
+        'id'        => 0,                 
+        'title'     => 'My First Entry',  
+        'created'   => 1195073683,        
+        'date'      => '2007-11-13',      
+        // Notice that we no longer have
+        // an 'author_id' field and instead
+        // we have an entire 'author' field:
+        'author'    => array(
+            'id'    => 1,
+            'title' => 'Mark Twain',
+            'email' => 'marktwain@yahoo.com'
+            )         
+        'text'      => 'My First Post'    
+    ),                
+
+In the second case, we'll be gluing posts to authors. This is a *right join*.
+(The direction is so because we're selecting from "posts and authors"; if we
+were selecting from "authors and posts", this would be a left join and the
+previous example would be a right join.) Remember that an author hasMany posts
+and a post belongsTo an author. In this case, we would have to add a field in
+our author called maybe "posts" that would be an *array* of post entities
+(i.e., an array of arrays). If we were to join $posts with `$authors[0]`
+("Mark Twain"), we would have:
+
+    {{lang:php}}
+    array(                                     
+        'id'        => 1,                      
+        'title'     => 'Mark Twain',           
+        'email'     => 'marktwain@yahoo.com'
+        // The 'posts' field is an array of the
+        // posts that had an 'author_id' field
+        // equal to this author's 'id' field:
+        'posts'     => array(
+            array(                              
+                'id'        => 0,               
+                'title'     => 'My First Entry',
+                'created'   => 1195073683,      
+                'date'      => '2007-11-13',    
+                'author_id' => 1,               
+                'text'      => 'My First Post'  
+            ),                                  
+            array(                                     
+                'id'        => 3,                      
+                'title'     => 'Another Entry',        
+                'created'   => 1195072623,             
+                'date'      => '2007-10-11',           
+                'author_id' => 1,                      
+                'text'      => 'This is another entry' 
+            ),                                         
+        )   
+    )
+
+
+## The functions:
+
+We'd like to be able to call
+
+    {{lang:php}}
+    $posts_with_author_info 
+        = join_tables( $posts,$authors,
+                       'posts.author_id=authors.id',
+                       'one'  );
+
+and
+
+    {{lang:php}}
+    $authors_with_all_posts_by_them
+        = join_tables( $authors,$posts,
+                       'authors.id=posts.author_id',
+                       'many' );
+
+Where the first argument to is the "left" table, the second argument is the
+"right" table, and the third argument is the condition that tells us whether
+or not a post is related to an author. I'll refer to the third argument as the
+predicate.
+
+The fourth argument is either 'one' or 'many' and indicates whether or not
+we're looking for a single entity from the right table or many entities in the
+right column to pair with the left column.
+
+Notice that we'll craft the function to always do a left-join (that is, we'll
+be adding information to the "left" table, which is the table given in the
+first argument). Since our second example join was originally posed in terms
+of a right-join, we're swapping the order of the arguments and the order of
+the predicate.
+
+Succinctly, posts right-joined with authors is the same as authors left-joined
+with posts.
+
+
+### Helper Functions
+
+We're going to be iterating over arrays with keys and values, not tables with
+dotted column names. Our predicate is of the form:
+
+    left_table.left_column=right_table.right_column
+
+We're following a good-sense convention that column names match up with the
+entities' array keys. So we need to extract the array keys from a predicate so
+we can compare two entity arrays:
+
+    {{lang:php}}
+    function extract_keys($predicate)
+    {
+        // $predicate is something like
+        //      'posts.author_id=authors.id'
+        $full_column_names = explode('=',$predicate);
+        if ( count($full_column_names) != 2 )
+        {
+            die('Invalid predicate');
+        }
+        
+        // Book-keeping:
+        $left   = trim($full_column_names[0]);
+        $right  = trim($full_column_names[1]);
+        // trim($a) simply removes any whitespace before or
+        // or after $a.   This allows us to put spaces around
+        // the equals sign and still be okay
+        
+        // $left  is something like 'posts.author_id'
+        // $right is something like 'authors.id'
+        
+        $left_a  = explode('.',$left);
+        $right_a = explode('.',$right);
+        if ( count($left_a) != 2 or count($right_a) != 2 )
+        {
+            die('Invalid predicate');
+        }
+        
+        // Now the table names are available at key 0
+        // and the column names are available at key 1.
+        // We're interested in the column names, so 
+        // return an array with both the column names:
+        
+        return( array($left_a[1],$right_a[1]) );
+    }
+
+We'll also need to extract the table names. This is a very similar function,
+so I'll make it brief:
+
+    {{lang:php}}
+    function extract_tables($predicate)
+    {
+        $full_column_names = explode('=',$predicate);
+        if ( count($full_column_names) != 2 )
+            die('Invalid predicate');
+        $left_a  = explode('.',trim($full_column_names[0]));
+        $right_a = explode('.',trim($full_column_names[1]));
+        if ( count($left_a) != 2 or count($right_a) != 2 )
+            die('Invalid predicate');
+        return( array($left_a[0],$right_a[0]) );
+    }
+
+And finally we'll need a function to iterate over the "right" table and return
+the matching entity or entities. In the case of a 'one' relationship, we
+return a single entity -- the first (and hopefully only) one that matches the
+predicate. In the case of a 'many' relationship, we return an array of the
+entities that match:
+
+    {{lang:php}}
+    function match($authors,$author_key,$posts_author_key,$type)
+    {
+        $tor = array(); // we might eventually return this
+        foreach ( $authors as $author )
+        {
+            if ( $author[$author_key] == $posts_author_key )
+            {
+                if ( $type == 'one' ) 
+                {
+                    return( $author );
+                    // the function "short-circuits" as soon 
+                    // as it returns a value; it stops executing
+                } else if ( $type == 'many' )
+                {
+                    $tor[] = $author;
+                } else
+                {
+                    die('Improper relationship type!');
+                }
+            }
+        }
+        if ( count($tor) == 0 )
+        {
+            return( null );
+        }
+        return( $tor );
+    }
+
+
+### All Together:
+
+    {{lang:php}}
+    function join_tables($posts,$authors,$predicate,$type)
+    {
+        list($left_key,$right_key) 
+            = extract_keys($posts,$authors,$predicate);
+        // `list` is a handy way to assign variables to 
+        // array values.   More information at
+        // <http://php.net/list>
+        
+        list($left_table,$right_table)
+            = extract_tables($posts,$authors,$predicate);
+        
+        // $left_key is something like 'author_id'
+        // $right_key is something like 'id'
+        // $left_table is something like 'posts'
+        // $right_table is something like 'authors'
+        
+        $tor = array(); // what we're going to return later
+        
+        foreach ( $posts as $post )
+        {
+            $post[$right_table] 
+                = match( $authors, $right_key,
+                         $post[$left_key], $type );
+            unset($post[$left_key]);
+            // We unset because we no longer need 
+            // $post['author_id'] -- we were keeping it
+            // to join on it, but that's what we just did!
+            $tor[] = $post;
+        }
+        return $tor;
+    }
+
+
+## Results -- Does it Work?
+
+Returning to our original formulation, we have:
+
+    {{lang:php}}
+    $posts_with_author_info 
+        = join_tables( $posts,$authors,
+                       'posts.author_id=authors.id',
+                       'one'  );
+
+...  when `print_r`-ed, we get:
+
+    Array
+    (
+        [0] => Array
+            (
+                [id] => 0
+                [title] => My First Entry
+                [created] => 1195073683
+                [date] => 2007-11-13
+                [text] => My First Post
+                [authors] => Array
+                    (
+                        [id] => 1
+                        [title] => Mark Twain
+                        [email] => marktwain@yahoo.com
+                    )
+            )
+        [1] => Array
+            (
+                [id] => 1
+                [title] => My Second Entry
+                [created] => 1195073623
+                [date] => 2007-11-14
+                [text] => My Second Post
+                [authors] => Array
+                    (
+                        [id] => 2
+                        [title] => Archimedes
+                        [email] => 
+                    )
+            )
+        [2] => Array
+            (
+                [id] => 3
+                [title] => Another Entry
+                [created] => 1195072623
+                [date] => 2007-10-11
+                [text] => This is another entry
+                [authors] => Array
+                    (
+                        [id] => 1
+                        [title] => Mark Twain
+                        [email] => marktwain@yahoo.com
+                    )
+            )
+        [3] => Array
+            (
+                [id] => 4
+                [title] => YAE
+                [created] => 1095072623
+                [date] => 2004-10-11
+                [text] => This is perhaps an old entry
+                [authors] => 
+            )
+    )
+
+...and...
+    
+    {{lang:php}}
+    $authors_with_all_posts_by_them
+        = join_tables( $authors,$posts,
+                       'authors.id=posts.author_id',
+                       'many' );
+
+...  when `print_r`-ed, we get:
+
+    Array
+    (
+        [0] => Array
+            (
+                [title] => Mark Twain
+                [email] => marktwain@yahoo.com
+                [posts] => Array
+                    (
+                        [0] => Array
+                            (
+                                [id] => 0
+                                [title] => My First Entry
+                                [created] => 1195073683
+                                [date] => 2007-11-13
+                                [author_id] => 1
+                                [text] => My First Post
+                            )
+                        [1] => Array
+                            (
+                                [id] => 3
+                                [title] => Another Entry
+                                [created] => 1195072623
+                                [date] => 2007-10-11
+                                [author_id] => 1
+                                [text] => This is another entry
+                            )
+                    )
+            )
+        [1] => Array
+            (
+                [title] => Archimedes
+                [email] => 
+                [posts] => Array
+                    (
+                        [0] => Array
+                            (
+                                [id] => 1
+                                [title] => My Second Entry
+                                [created] => 1195073623
+                                [date] => 2007-11-14
+                                [author_id] => 2
+                                [text] => My Second Post
+                            )
+                    )
+            )
+    )
+
+
+## Remarks
+
+The above examples were written with posts and authors in mind, but really
+they'll work for any tables.
+
+We didn't cover "un-pluralizing" the table-names for 'one' relationship types.
+It would be nice if we could "left-join posts,authors" and be able to refer
+to, e.g, `$post[0]['author']`, but in our implementation we still refer to
+`$post[0]['authors']`. Removing an 's' isn't hard to do, but to do it in
+general (e.g. turning "people" into "person") is difficult. Frameworks like
+Ruby on Rails actually *do* handle this. See
+<http://nubyonrails.com/tools/pluralize> (that's *not* a typo) for more
+information.
+
+This implementation isn't by any means the most-efficient, but it was written
+for clarity. And since joins aren't really something we do with PHP, concerns
+about efficiency have little relevance here.

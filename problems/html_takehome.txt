@@ -1,0 +1,502 @@
+===
+# HTML Day One Take-Home Assignment
+
+If you have time between now and Day Two of HTML, you would benefit
+from completing these following exercises.
+
+Do your best to do these from memory, but by all means look up
+anything you're not familiar with. The full set of resources is at
+<http://uwwebpub.com/html>. You might also benefit from the online
+Tryit! tool at <http://tryit.uwwebpub.com/>, which has modes for HTML
+and Markdown, both of which are featured in these exercises.
+
+
+## Part One:  Fixing Errors
+
+Take the following HTML Document, save it on your local computer, and
+fix all the HTML errors.
+
+Some of the errors come from the ambiguity with what the author was
+intending with the given markup. You should try viewing the document
+as it stands right now (i.e., with its errors), available [here][]
+when it doubt, try to make your HTML fixes such that they don't affect
+how the page is rendered by the web browser.
+
+[here]: ./htmlday1takehomepart1.html
+
+    <head>
+      <title>Synergy Corp. Home</title>
+    </head>
+    <body>
+    
+    <h1>Welcome to Synergy Corp.</h1>
+    <h2>"Your Business, Our Passion"</h2>
+    <p><img src="image.gif" alt="our logo">
+    
+    <h3>Menu:</h3>
+    <ul>
+      <li><a href=mission.html>Mission Statement</a></li>
+      <li><a href=our products.html>Our Products</a></li>
+      <li><a href=contact.html>Contact Us</a>
+      <li><a href=Perspectives.html>Company
+        Perspectives</a></li>
+    </ul>
+    
+    <em>
+      <h3>About Us!</h3>
+      
+      <p>Synergy Corp is in the business of connecting people
+      with what they need. We provide the marketing and
+      business backbone to get you what you need here and now.
+      We make all efforts to ensure you can focus on what
+      matters most to you and your business -- your
+      business!</p> 
+    </em>
+    
+    
+    <h3>Employee Perspectives</h3>
+    
+    <ul>
+      <li><b>Alan Alda</b>
+      <ul>
+        <li>CEO</li>
+        <li>MBA, Cornell</li>
+      </ul></li>
+      <li><b>Loretta Swit</b>
+      
+      <ul>
+        <li>Manager</li>
+        <li>AA, BCC</li>
+      </li></ul>
+      <li><b>Gary Burghoff</b>
+      <ul>
+        <li>He Who Makes the Coffee</li>
+        <li>PhD, UC Berkeley</li>
+      </ul>
+    </ul>
+    </ul>
+    
+    </body>
+
+You could even run your code through the HTML Validator at
+<http://validator.w3.org>. (Note, though, that it'll probably complain
+about not knowing which version of HTML to validate against, something
+we'll talk about in Day Two.)
+
+
+### Part 1 Solution  
+
+Well you asked for it...
+
+{hidden}
+
+    <html>
+    <head>
+        <title>Synergy Corp. Home</title>
+    </head>
+    <body>
+    
+    <h1>Welcome to Synergy Corp.</h1>
+    <h2>“Your Business, Our Passion”</h2>
+    <p><img src=“image.gif” alt=“our logo” /></p>
+    
+    <h3>Menu:</h3>
+    <ul>
+        <li><a href=”mission.html”>Mission Statement</a></li>
+        <li><a href=”our products.html”>Our Products</a></li>
+        <!— there’s also a problem with this file-name:
+              it shouldn’t have spaces in it.         —>
+        <li><a href=”contact.html”>Contact Us</a></li>
+        <li><a href=”Perspectives.html”>Company
+            Perspectives</a></li>
+    </ul>
+    
+    <!—<em> (block-level tags cannot be within
+              inline tags, so this <em> must be
+              copy/pasted into each block-level
+              tag)                          —>
+      <h3><em>About Us!</em></h3>
+    
+      <p><em>Synergy Corp is in the business of connecting people
+      with what they need. We provide the marketing and
+      business backbone to get you what you need here and now.
+      We make all efforts to ensure you can focus on what
+      matters most to you and your business — your
+      business!</em></p>
+    <!—</em>—>
+    
+    <h3>Employee Perspectives</h3>
+    
+    <!— this whole block is badly spaced, but
+         that’s not technically an error.  —>
+    <ul>
+      <li><strong>Alan Alda</strong>
+      <ul>
+        <li>CEO</li>
+        <li>MBA, Cornell</li>
+      </ul></li>
+      <li><strong>Loretta Swit</strong>
+      
+      <ul>
+        <li>Manager</li>
+        <li>AA, BCC</li>
+      </li></ul>
+      <li><strong>Gary Burghoff</strong>
+      <ul>
+        <li>He Who Makes the Coffee</li>
+        <li>PhD, UC Berkeley</li>
+      </ul>
+    </ul>
+    <!—</ul> (this is extra)—>
+    
+    </body>
+    </html>
+
+{/hidden}
+
+This is only one interpretation of what the original author might have
+meant with the HTML. I think this is the "right" interpretation, but I
+may be wrong.
+
+
+
+## Part Two:  Markdown Conversion
+
+In this part of the assignment you will be converting some
+plain text in "Markdown" into a valid HTML document.
+
+
+### What is Markdown
+
+Markdown is a popular way of writing content for the web. The author
+of Markdown, John Gruber, says that
+
+> "the overriding design goal for Markdown's formatting syntax is to
+> make it as readable as possible. The idea is that a
+> Markdown-formatted document should be publishable as-is, as plain
+> text, without looking like it's been marked up with tags or
+> formatting instructions. While Markdown's syntax has been influenced
+> by several existing text-to-HTML filters, the single biggest source
+> of inspiration for Markdown's syntax is the format of plain text
+> email."
+
+You can learn more about Markdown at [its home page][mdownhome], where
+you'll also find links to pages explaining its syntax.
+
+You can view the Markdown source for this document by changing its
+extension to '.txt'. You can do some trial runs--converting your own
+plain text into HTML--at the [online dingus][dingus] for Markdown or
+by using the [Markdown Mode of the TryIt! tool][tryit mdown].
+
+[mdownhome]: http://daringfireball.net/projects/markdown/
+[dingus]: http://daringfireball
+[tryit mdown]: http://tryit.uwwebpub.com/?mode=Markdown
+
+
+### Conversion:  Quotes and Angle-Brackets
+
+Markdown converts regular quote-marks to "typographer's
+quotes"--quotes that angle in toward the text that they surround. It
+does this by replacing quote-marks with the *character entities* for
+typographer's quotes. You are not required to do this conversion.
+
+Markdown also converts less-than and greater-than signs to their
+character entities if they're inside code regions (regions surrounded
+by back-ticks, `` `like this` ``, or entire blocks indented one
+level.) Not doing this will make your code invalid, so you *are*
+supposed to do this conversion. (What I would do is simply copy/paste
+the regions you want to convert into a new document and then run a
+simple find-and-replace operation on the new document to replace `<`
+with `&lt;` and `>` with `&gt;`; once done, simply copy/paste it back
+into your original document.)
+
+
+### Blockquote, Code, and Pre
+
+You will also need to know the `<blockquote>` tag: it's a block-level
+tag used to denote an entire region being directly quoted from another
+source. Since it defines a region of blocks, you must put all text
+inside the `<blockquote>` tag inside of a `<p>` tag. Here is an
+example:
+
+    {{lang:html}}
+    <blockquote>
+    <p>
+        It is a far, far better thing that I do, than I have
+        ever done; it is a far, far better rest that I go to,
+        than I have ever known.
+    </p>
+    </blockquote>
+
+...which would be rendered as
+
+<blockquote>
+<p>
+    It is a far, far better thing that I do, than I have
+    ever done; it is a far, far better rest that I go to,
+    than I have ever known.
+</p>
+</blockquote>
+
+A similar, *block-level* tag is `<pre>`, which defines a
+region as being **pre-formatted**. Within a `<pre>` tag,
+**line breaks and spaces are noticed**. This tag is commonly
+combined with the `<code>` tag.
+
+The `<code>` tag is an *inline* tag that defines text as being
+computer code (e.g., HTML).  The default style for
+`<code>` also defines a <span style="font-family: monospace;">
+monospace</span> font designed to make code easier to read.
+
+So this code
+
+    {{lang:html}}
+    <pre><code>int *demux(int *j)
+    {
+        int i;
+        for ( i=0; i &lt; 10; i++ )
+            for ( j=i; *j &lt; i*i; i-- )
+                j = *j &gt;&gt; 2 &lt;&lt; i;
+        return *j;
+    }</code>
+    </pre>
+
+is rendered like
+
+<pre><code>int *demux(int *j)
+{
+    int i;
+    for ( i=0; i &lt; 10; i++ )
+        for ( j=i; *j &lt; i*i; i-- )
+            j = *j &gt;&gt; 2 &lt;&lt; i;
+    return *j;
+}</code>
+</pre>
+
+(Note that you **do** have to convert less-than and greater-than signs
+into their character entities within a `<pre>` tag.)
+
+
+### The Assignment
+
+Add all of the necessary HTML to make the following Markdown document
+into a valid HTML Document.
+
+    # HTML Review
+    
+    **HTML** stands for *Hypertext Markup Language*. It is
+    used throughout the web for *defining what content is*.
+    
+    We like to think of the various HTML tags as being like
+    different *highlighters*. We said at the beginning of
+    class that
+    
+    > HTML defines what content is much in the same way that
+    > underlining and font/position changes in books tell us
+    > that content is story text, chapter headers, page
+    > nubmers, and items in the index.
+    
+    ## Tags
+    
+    A basic tag looks like
+    
+        <tag attribute1="value1" attribute2="value2">Data</tag>
+    
+    Be sure to note that
+    
+     1. *Attributes do not need to be repeated when you close
+            the tag*. Aside from this making HTML slightly easier
+        to type, can you think of a reason why this is? We'll
+        discuss this on HTML Day Two.  Also note that
+    
+     2. *Spacing is arbitrary*. So the following block of code
+        is equivalent to the above example:
+    
+            <tag attribute1="value1"
+                 attribute2="value2">
+                    Data
+            </tag>
+        
+        It's is also equivalent to this block of code:
+        
+            <tag attribute1="value1" attribute2="value2"
+            >Data
+            </tag>
+        
+        The mnemonic is "white-space is white-space."  
+        
+        Also note that
+    
+     3. There are three separate but equal types of tags:
+     
+         *  **Block-Level** tags--`<p>`, `<h1>`,
+            `<div>`, `<ul>`, `<ol>`, `<li>`, etc.--expand
+            the entire width of their containing element.
+            
+            Block-level tags may contain any contain any kind
+            of tag (including other block-level tags) but they
+            may not be contained by any other kind of tag.
+            
+         *  **Inline** tags--`<em>`, `<strong>`, `<a>`,
+            etc.--take up only as much as width as the
+            content inside them takes up.
+            
+            Inline tags may contain other inline tags and may
+            contain element tags, but they cannot contain
+            block-level tags.
+            
+         *  **Element** tags (also called *replaced tags* or
+            *replaced elements*) **represent external
+            content**: things that can be highlighted by other
+            tags as opposed to tags that highlight other tags.
+            Examples include Images:
+            
+                <img src="./1.jpg" alt="first image" />
+                
+            and line-breaks:
+            
+                <br />
+                
+            Note that element tags do *not* have closing tags
+            (in that they are self-closing) and thus may not
+            contain any other kinds of tags.
+            
+    ## Getting Help
+    
+    If you're just not getting it, you should head to the [resources
+    page](http://uwwebpub.com/) where you can find links to, in
+    particular, the [HTML resources page][html] and links to the [HTML
+    online curriculum][html curric].
+    
+    [html]: http://uwwebpub.com/html
+    [html curric]: http://catalyst.washington.edu/help/web/html
+    
+
+
+### Part 2 Solution
+
+{hidden}
+
+My solution includes a bunch of XML stuff at the top of the document
+including a DOCTYPE, something we'll talk about in Day Two. No worries
+if you didn't put all that in there--just the standard
+
+    {{lang:html}}
+    <html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+
+header would have been fine.
+
+At any rate, this is a solution:
+
+    {{lang:html}}
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+      <title></title>
+    </head>
+    <body>
+        
+    <h1>HTML Review</h1>
+    
+    <p><strong>HTML</strong> stands for <em>Hypertext Markup Language</em>. It is
+    used throughout the web for <em>defining what content is</em>.</p>
+    
+    <p>We like to think of the various HTML tags as being like
+    different <em>highlighters</em>. We said at the beginning of
+    class that</p>
+    
+    <blockquote>
+      <p>HTML defines what content is much in the same way that
+      underlining and font/position changes in books tell us
+      that content is story text, chapter headers, page
+      nubmers, and items in the index.</p>
+    </blockquote>
+    
+    <h2>Tags</h2>
+    
+    <p>A basic tag looks like</p>
+    
+    <pre><code>&lt;tag attribute1="value1" attribute2="value2"&gt;Data&lt;/tag&gt;
+    </code></pre>
+    
+    <p>Be sure to note that</p>
+    
+    <ol>
+    <li><p><em>Attributes do not need to be repeated when you close
+    the tag</em>. Aside from this making HTML slightly easier
+    to type, can you think of a reason why this is? We'll
+    discuss this on HTML Day Two.  Also note that</p></li>
+    <li><p><em>Spacing is arbitrary</em>. So the following block of code
+    is equivalent to the above example:</p>
+    
+    <pre><code>&lt;tag attribute1="value1"
+         attribute2="value2"&gt;
+            Data
+    &lt;/tag&gt;
+    </code></pre>
+    
+    <p>It's is also equivalent to this block of code:</p>
+    
+    <pre><code>&lt;tag attribute1="value1" attribute2="value2"
+    &gt;Data
+    &lt;/tag&gt;
+    </code></pre>
+    
+    <p>The mnemonic is "white-space is white-space."  </p>
+    
+    <p>Also note that</p></li>
+    <li><p>There are three separate but equal types of tags:</p>
+    
+    <ul>
+    <li><p><strong>Block-Level</strong> tags--<code>&lt;p&gt;</code>, <code>&lt;h1&gt;</code>,
+    <code>&lt;div&gt;</code>, <code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>, <code>&lt;li&gt;</code>, etc.--expand
+    the entire width of their containing element.</p>
+    
+    <p>Block-level tags may contain any contain any kind
+    of tag (including other block-level tags) but they
+    may not be contained by any other kind of tag.</p></li>
+    <li><p><strong>Inline</strong> tags--<code>&lt;em&gt;</code>, <code>&lt;strong&gt;</code>, <code>&lt;a&gt;</code>,
+    etc.--take up only as much as width as the
+    content inside them takes up.</p>
+    
+    <p>Inline tags may contain other inline tags and may
+    contain element tags, but they cannot contain
+    block-level tags.</p></li>
+    <li><p><strong>Element</strong> tags (also called <em>replaced tags</em> or
+    <em>replaced elements</em>) <strong>represent external
+    content</strong>: things that can be highlighted by other
+    tags as opposed to tags that highlight other tags.
+    Examples include Images:</p>
+    
+    <pre><code>&lt;img src="./1.jpg" alt="first image" /&gt;
+    </code></pre>
+    
+    <p>and line-breaks:</p>
+    
+    <pre><code>&lt;br /&gt;
+    </code></pre>
+    
+    <p>Note that element tags do <em>not</em> have closing tags
+    (in that they are self-closing) and thus may not
+    contain any other kinds of tags.</p></li>
+    </ul></li>
+    </ol>
+    
+    <h2>Getting Help</h2>
+    
+    <p>If you're just not getting it, you should head to the
+    <a href="http://uwwebpub.com/">resources page</a> where you can find
+    links to, in particular, the <a href="http://uwwebpub.com/html">HTML resources page</a>
+    and links to the <a href="http://catalyst.washington.edu/help/web/html">HTML online curriculum</a>.</p>
+    
+    
+    </body>
+    </html>
+
+{/hidden}

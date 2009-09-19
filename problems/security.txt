@@ -1,0 +1,74 @@
+===
+
+# Web Site Security
+
+This is the outline for what will eventually turn into online
+curriculum for Catalyst's Web Site Security Workshop.
+
+## Basic Few-Member `.htaccess` Directives
+
+### Sample `.htaccess` File to Disable Indexing:
+
+    {{lang:apache}}
+    IndexIgnore *
+
+### Sample `.htaccess` File to require *Any* UWNetID
+
+    {{lang:apache}}
+    AuthType UWNetID
+    Require valid-user
+
+### Sample `.htaccess` File to Limit to Just Two UWNetIDs:
+
+    {{lang:apache}}
+    AuthType UWNetID
+    require user rtimmons byronm
+
+## Basic Many-Member `.htaccess` Directives
+
+### Sample `.htgroups` file:
+
+    {{lang:apache}}
+    friends: rtimmons vuongm
+    peers: morgar
+    teachers: tanimoto
+
+## Sample `.htaccess` File for Requiring A Group:
+
+    {{lang:apache}}
+    AuthType UWNetID
+    Require user rtimmonsAuthType UWNetID
+    AuthGroupFile ../.htgroup
+    Require group friends peers
+
+(Note that this will allow anyone belonging to *either* `friends` *or*
+`peers` in.)
+
+## Custom Authentication
+
+### Sample `.htaccess` file for Custom Authentication
+
+    {{lang:apache}}
+    AuthType Basic
+    AuthName "Protected"
+    AuthUserFile ./.htpasswd
+    AuthGroupFile ./.htgroup
+    Require group users
+
+### Creating a `.htpasswd` File:
+
+Type the following into the terminal:
+
+    {{lang:bash}}
+    htpasswd -c .htpasswd user
+
+Where `user` is the user you'd like to add. The created file is
+hash-encrypted.
+
+### Updating an Existing `.htaccess` File:
+
+    {{lang:bash}}
+    htpasswd .htpasswd user
+
+Where `user` is the user whose password you would like to change or
+add.

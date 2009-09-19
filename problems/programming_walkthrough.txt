@@ -1,0 +1,42 @@
+===
+
+# Programming Walkthrough
+
+Imagine you do some data collection from the user and you obtain the
+following bit of code:
+
+    var name     = ?;
+    var age      = ?;
+    var password = ?;
+
+(where `?` is replaced by values from the user.) You now want to only
+let the user enter if
+
+ *  his name is 'Sir Elton John', 
+ *  his age is greater than 50, and
+ *  the password is 'tinydancer'.
+
+Assume you "let the user enter" by setting the variable `enter` to a
+true or false value.
+
+{hidden Basic Solution}
+
+    {{lang:javascript}}
+    var enter = false;
+    if (    name == 'Sir Elton John' 
+         && age > 5  
+         && password == 'tinydancer )
+    {
+        enter = true;
+    }
+
+{/hidden Basic Solution}
+
+{hidden "Advanced" Solution}
+
+    {{lang:javascript}}
+    var enter = name == 'Sir Elton John'
+    &&          age > 50
+    &&          password == 'tinydancer';
+
+{/hidden "Advanced" Solution}
