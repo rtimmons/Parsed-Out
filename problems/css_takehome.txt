@@ -1,7 +1,12 @@
-# CSS Day One Take-Home Assignment
+---
+layout: post
+title: CSS Take-Home Problems
+published: true
+category: problems
+---
 
-This assignment is designed to test your comprehension of the basic
-CSS selectors we talked about in day one,
+This assignment is designed to test your comprehension of the basic CSS
+selectors we talked about in day one,
 
  *  Tag selectors, e.g.,
     
@@ -19,38 +24,40 @@ CSS selectors we talked about in day one,
         div#menu ul { ... }
     
 
-as well as some of the basic properties and values. This will be done
-by modifying the [CSS Zen Garden][zengarden]'s CSS code.
+as well as some of the basic properties and values. This will be done by
+modifying the [CSS Zen Garden][zengarden]'s CSS code.
 
-Note that this quiz is designed to be completed *in
-order*.
+Note that this quiz is designed to be completed *in order*.
 
 [zengarden]: http://csszengarden.com
 
 ## Getting Started
 
-Navigate to the [CSS Zen Garden][zengarden] and download the sample
-HTML file. (Or you can download it by right-clicking [this
-link][sample].) Open the file in a text editor (refer to [the uwwebpub
-programs page][programs] for information on how to download Notepad++)
-and notice the following HTML:
+Navigate to the [CSS Zen Garden][zengarden] and download the sample HTML file.
+(Or you can download it by right-clicking [this link][sample].) Open the file
+in a text editor (refer to [the uwwebpub programs page][programs] for
+information on how to download Notepad++) and notice the following HTML:
 
-    <style type="text/css" media="all">
-        @import "sample.css";
-    </style>
+{% highlight html %}
+<style type="text/css" media="all">
+    @import "sample.css";
+</style>
+{% endhighlight %}
 
 (Note that in CSS day one we had something like
 
-    <style type="text/css" media="all">
-    <!--
-        @import "sample.css";
-    -->
-    </style>
+{% highlight html %}
+<style type="text/css" media="all">
+<!--
+    @import "sample.css";
+-->
+</style>
+{% endhighlight %}
 
 which is "more proper" but is essentially the same.)
 
-Thus, create a file called *sample.css* and save it in the same folder
-as the HTML file.
+Thus, create a file called *sample.css* and save it in the same folder as the
+HTML file.
 
 [sample]: http://csszengarden.com/zengarden-sample.html
 [programs]: http://uwwebpub.com/programs
@@ -72,23 +79,25 @@ Modify the properties of the body such that
 
 {hidden Part One Solution}
 
-    body {
-    	color:              #2A2A2A;
-    	background-color:   #EBE5DC;
-    	font-family:        Helvetica, 
-    	                    "Times New Roman", 
-    	                    serif;
-    }
-    h1, h2, h3, h4, h5, h6 {
-    	color:              #8C0B0B;
-    	background-color:   #A79E8C;
-    	text-align:         center;
-    }
-    a {
-    	color:              #194E76;
-    	text-decoration:    none;
-    	background-color:   #FFFFFF;
-    }
+{% highlight css %}
+body {
+	color:              #2A2A2A;
+	background-color:   #EBE5DC;
+	font-family:        Helvetica, 
+	                    "Times New Roman", 
+	                    serif;
+}
+h1, h2, h3, h4, h5, h6 {
+	color:              #8C0B0B;
+	background-color:   #A79E8C;
+	text-align:         center;
+}
+a {
+	color:              #194E76;
+	text-decoration:    none;
+	background-color:   #FFFFFF;
+}
+{% endhighlight %}
 
 {/hidden}
 
@@ -116,74 +125,84 @@ isolate only that particular paragraph and not any others.
 
 {hidden Part Two Solution}
 
-    div#intro {
-        font-size:      1.5em;
-        /* notice that this is applied to the  *
-         * div as a whole which is essentially *
-         * a direct-descendant of the body     */
-    }
-    div#intro p {
-        font-size:      0.667em;
-        text-indent:    2em;
-        /* text-indent is our first instance   *
-         * where an em means something         *
-         * different than wat it does for      *
-         * font-size. We'll talk about this in *
-         * day two.                            */
-    }
-    div#intro p.p1 {
-        text-indent:    0;
-    }
-    div#intro div#quickSummary p.p2 {
-        text-align: center;
-    }
+{% highlight css %}
+div#intro {
+    font-size:      1.5em;
+    /* notice that this is applied to the  *
+     * div as a whole which is essentially *
+     * a direct-descendant of the body     */
+}
+div#intro p {
+    font-size:      0.667em;
+    text-indent:    2em;
+    /* text-indent is our first instance   *
+     * where an em means something         *
+     * different than wat it does for      *
+     * font-size. We'll talk about this in *
+     * day two.                            */
+}
+div#intro p.p1 {
+    text-indent:    0;
+}
+div#intro div#quickSummary p.p2 {
+    text-align: center;
+}
+{% endhighlight %}
 
 Note that the final selector
 
-    div#intro div#quickSummary p.p2
+{% highlight css %}
+div#intro div#quickSummary p.p2
+{% endhighlight %}
 
-was perhaps superfluous because the additional information about the
-ancestor of `div#quickSummary` is irrelevant: there can only be one of
-them on the page, so why bother specifying that you only want to
-select the one that is a descendant of `div#intro`? We might just as
-well have used
+was perhaps superfluous because the additional information about the ancestor
+of `div#quickSummary` is irrelevant: there can only be one of them on the
+page, so why bother specifying that you only want to select the one that is a
+descendant of `div#intro`? We might just as well have used
 
-    div#quickSummary p.p2
+{% highlight css %}
+div#quickSummary p.p2
+{% endhighlight %}
 
 as this last selector.
 
 {/hidden}
 
+
 ## Part Three:  The Lists
 
-This part of the exercise involves manipulating the three lists at the
-bottom of the Zen Garden page. Again, the changes made in Part Three
-should not affect any elements outside of the `div#linkList` section.
+This part of the exercise involves manipulating the three lists at the bottom
+of the Zen Garden page. Again, the changes made in Part Three should not
+affect any elements outside of the `div#linkList` section.
 
-(Note that there is an additional, *wrapper* div
-surrounding these lists. In particular, the structure is
-something like
+(Note that there is an additional, *wrapper* div surrounding these lists. In
+particular, the structure is something like
 
-    {{lang:html}}
-    <div id="linkList">
-        <div id="linkList2">
-        ...
-        </div>
+{% highlight html %}
+<div id="linkList">
+    <div id="linkList2">
+    ...
     </div>
+</div>
+{% endhighlight %}
 
 and there is nothing inside of `div#linkList2` that is not inside
-`div#linkList`. This is done solely for placement and alignment
-purposes. That is to say, your selectors can use *either*
-`div#linkList` or `div#linkList2` without additional consequences. You
-could, of course, use both, in the manner of
+`div#linkList`. This is done solely for placement and alignment purposes. That
+is to say, your selectors can use *either* `div#linkList` or `div#linkList2`
+without additional consequences. You could, of course, use both, in the manner
+of
 
-    {{lang:css}}
-    div#linkList div#linkList2
+{% highlight css %}
+div#linkList div#linkList2
+{% endhighlight %}
 
-but this would be superfluous for the same reason as the descendant
-selector is unnecessary in the solution to Part Two.)
+but this would be superfluous for the same reason as the descendant selector
+is unnecessary in the solution to Part Two.)
 
 Your assignment is to
 
  1. Get rid of all bullets 
  2. Put the bullets back in in `div#lselect`
+
+
+**Solution left as an exercise.**

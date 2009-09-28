@@ -1,6 +1,9 @@
-===
-
-# Ryan's Rails Notes
+---
+layout: post
+title: Ryan's Rails Notes
+published: true
+category: problems
+---
 
 This is definitely a work-in-progress: please do not use it as a
 start-to-finish guide. If there's something wrong or obviously missing, you
@@ -227,21 +230,21 @@ Windows, which I hate a lot.
 
 ### Text Editors for Ruby
 
-A good text editor is Notepad++ or [Eclipse][], the latter being a
+A good text editor is Notepad++ or [Eclipse][ecl], the latter being a
 full-fledged IDE (integrated development environment) built in Java; you may
 have to get the Rails plugins if you opt for Eclipse.
 
-I use [TextMate][tm] (~$35 with free 30-day trial), which is a great Mac text
-editor with lots of built-in support for web and *nix stuff. I occasionally
-dabble in emacs on the command line (or [Aquamacs Emacs][aquamacs], the "Mac
-Version" of emacs), but I rarely step outside of TextMate for anything
-text-related.
+I use [TextMate][tm] (~35 dollars with free 30-day trial), which is a great
+Mac text editor with lots of built-in support for web and \*nix stuff. I
+occasionally dabble in emacs on the command line (or [Aquamacs
+Emacs][aquamacs], the "Mac Version" of emacs), but I rarely step outside of
+TextMate for anything text-related.
 
 I've heard good things about the [e Text Editor][ete], which is supposed to be
 a TextMate clone for Windows. I've used it only briefly and found it to be a
 good editor. I'd look into it if the command line appeals to you in any way.
 
-[Eclipse]:http://eclipse.org/
+[ecl]:http://eclipse.org/
 [aquamacs]:http://aquamacs.org/
 [tm]:http://macromates.com/
 [ete]:http://www.e-texteditor.com/
@@ -562,7 +565,7 @@ Call `<%= yield %>` in /app/views/layouts/application.rhtml to render the
 object's view.
 
 Create, e.g., /app/views/layouts/notes.rhtml to create a layout that overrides
-the default ([...]/application.rhtml isn't even touched).
+the default (`[...]/application.rhtml` isn't even touched).
 
 Put `layout "notes"` in a controller to force a controller to use another
 controller's layout.

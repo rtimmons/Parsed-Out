@@ -1,9 +1,12 @@
-===
+---
+layout: post
+title: PHP Practice Problems
+published: true
+category: problems
+---
 
-# PHP Practice Problems
-
-I've gone through and indicated the difficulty of each problem on a 5-<@>
-scale. One <@> is easy while five <@>s is tough.
+I've gone through and indicated the difficulty of each problem on a 5-&#x2605;
+scale. One &#x2605; is easy while five &#x2605;s is tough.
 
 Even if you do not know how to solve a problem, you should give it a shot and
 read the problem and its solution thoroughly. In most cases these problems are
@@ -11,7 +14,6 @@ written to introduce concepts rather than test your coding abilities.
 
 These problems are not really in any specific order, but I've done my best to
 indicate where one function uses a previous function (as a lot of these do).
-
 
 ## A Brief Note on Strings
 
@@ -24,20 +26,21 @@ while within double-quoted strings.
 
 Note the output of the following code:
 
-    {{lang:php}}
-    $first = 'Mickey';
-    $last  = 'Mouse';
-    $full  = "$first $last";
-    //     = "Mickey Mouse"
-    $quote = '"I said it", $full\'s Wife Said Said';
-    //     = "I said it", $full's Wife Said
-    //          (surrounded by quotes)
-    //      (note that `$full` is *not* replaced)
-    echo "$full";
-    echo '$full';
-    echo "\n\t";
-    echo '\n\t';
-    echo "\n$full\t\t$full";
+{% highlight php startinline %}
+$first = 'Mickey';
+$last  = 'Mouse';
+$full  = "$first $last";
+//     = "Mickey Mouse"
+$quote = '"I said it", $full\'s Wife Said Said';
+//     = "I said it", $full's Wife Said
+//          (surrounded by quotes)
+//      (note that `$full` is *not* replaced)
+echo "$full";
+echo '$full';
+echo "\n\t";
+echo '\n\t';
+echo "\n$full\t\t$full";
+{% endhighlight %}
 
 The output is
 
@@ -48,10 +51,11 @@ The output is
 
 As a simpler example, consider
 
-    {{lang:php}}
-    $var = "thevar";
-    echo "MyNewline\n\ttabbed\n$var\n";
-    echo 'MyNewline\n\ttabbed\n$var\n';
+{% highlight php startinline %}
+$var = "thevar";
+echo "MyNewline\n\ttabbed\n$var\n";
+echo 'MyNewline\n\ttabbed\n$var\n';
+{% endhighlight %}
 
 whose output is the string
 
@@ -65,7 +69,7 @@ as are variables. But in *single* quotes, nothing is replaced except for `\'`
 which is of course replaced with a single-quote character.
 
 
-## Loose Syntax <@>
+## Loose Syntax &#x2605;
 
 Just an observation, not a problem.
 
@@ -76,35 +80,38 @@ space your files.
 We already know that PHP considers all whitespace to be created equally
 allowing us to do something like
 
-    {{lang:php}}
-    $a = 3;
-    $b          = 5;
-    $c =
-                6;
-    $d = time();
-    $e = $d + 
-            time();
+{% highlight php startinline %}
+$a = 3;
+$b          = 5;
+$c =
+            6;
+$d = time();
+$e = $d + 
+        time();
+{% endhighlight %}
 
 but you can even put an arbitrary amount of whitespace between the name of a
 function and its parentheses such as:
 
-    {{lang:php}}
-    $d = time ();
-    $e = time
-    ();
+{% highlight php startinline %}
+$d = time ();
+$e = time
+();
+{% endhighlight %}
 
 or as a more useful example, you can put whitespace after the word `array`:
 
-    {{lang:php}}
-    $chars = array
-    (
-        'Horton' => 'Elephant',
-        'Hooey'  => 'Owl',
-        'Cat'    => 'Cat'
-    );
+{% highlight php startinline %}
+$chars = array
+(
+    'Horton' => 'Elephant',
+    'Hooey'  => 'Owl',
+    'Cat'    => 'Cat'
+);
+{% endhighlight %}
 
 
-## Too Many Brackets <@>
+## Too Many Brackets &#x2605;
 
 This is not a problem, just a useful observation.
 
@@ -151,7 +158,7 @@ greatly improve the readability of your code. It is my recommendation that you
 only get rid of curly braces *after* your code works.
 
 
-## Assignment Statements As Return Values <@><@>
+## Assignment Statements As Return Values &#x2605;&#x2605;
 
 This is not a problem, just a useful explanation.
 
@@ -163,22 +170,25 @@ Simply put, **assignments (with `=`) return the assigned value**. Usually this
 returned value is ignored. But because the `=` returns what's to its right, we
 can do interesting things like
 
-    {{lang:php}}
-    $one = $two = $three = 'Hello';
+{% highlight php startinline %}
+$one = $two = $three = 'Hello';
+{% endhighlight %}
 
 If we decompose this, we see three statements:
 
  1. The first is the right-hand side of the second equals sign:
     
-        {{lang:php}}
-        $three = 'Hello';
+    {% highlight php startinline %}
+$three = 'Hello';
+{% endhighlight %}
     
  2. Since this statement returns the right-hand-side of the `=`, our original
     statement is now reduced to the next statement,
-
-        {{lang:php}}
-        $one = $two = 'Hello';
-
+    
+    {% highlight php startinline %}
+$one = $two = 'Hello';
+{% endhighlight %}
+    
  3. Again, the right-hand-side of the first `=` is evaluated and returned, so
     we now reduce our original statement to
     
@@ -199,7 +209,7 @@ assignment. An example is found in the below section, "Implementing The
 `foreach` Loop."
 
 
-## Fencepost <@>
+## Fencepost &#x2605;
 
 We frequently want to take a bunch of items in an array, "glue" them together,
 and put something before and after the result. Imagine you want to take an
@@ -221,7 +231,7 @@ something before and after all the 'glued-together' items:
      <ul><li>  One  </li><li>  Two  </li><li>  Three  </li></ul>
 
 You can convert an array into a string using PHP's built-in `implode` function
-that takes a string and an array as arguments and returns a string. 
+that takes a string and an array as arguments and returns a string.
 
 This code:
 
@@ -271,7 +281,7 @@ returns the string
 {/hidden}
 
 
-## One-Liner <@>
+## One-Liner &#x2605;
 
 Create a function `form_input_text($name,$value,$size)` that returns an HTML
 one-line textbox with `name="$name"`, `value="$value"`, and `size="$size"`.
@@ -301,10 +311,10 @@ should return
 {/hidden}
 
 
-## Multiliner <@>
+## Multiliner &#x2605;
 
 Create a function `form_textarea($name,$value,$rows,$cols)` that returns a
-`<textarea>` field with the given attributes. 
+`<textarea>` field with the given attributes.
 
 Also,
 
@@ -339,7 +349,7 @@ should return
 {/hidden}
 
 
-## HTML Dropdown <@><@>
+## HTML Dropdown &#x2605;&#x2605;
 
 Create a function `dropdown($arr,$selected_key,$name)` that creates an HTML
 dropdown (an `<option>`s) field with one entry for each key/value pair in
@@ -349,12 +359,13 @@ a `selected="selected"` bit added to its associated `<option>`.
 
 We have a bit of confusion in terminology about "value" though because we want
 
-    {{lang:php}}
-    dropdown(array(
-        'WA' => 'Washington',
-        'OR' => 'Oregon',
-        'CA' => 'California'
-        ),'WA','state');
+{% highlight php startinline %}
+dropdown(array(
+    'WA' => 'Washington',
+    'OR' => 'Oregon',
+    'CA' => 'California'
+    ),'WA','state');
+{% endhighlight %}
 
 to return
 
@@ -392,7 +403,7 @@ key from the array.
 {/hidden}
 
 
-## Checkboxer  <@><@>
+## Checkboxer  &#x2605;&#x2605;
 
 Define a function `checkboxer($data,$selected,$name)` that takes two arrays
 and a string as parameters and returns an **array** of strings: one string for
@@ -446,11 +457,11 @@ should return
 **Solution left as an exercise.**
 
 
-## Random Array Element 1 <@><@>
+## Random Array Element 1 &#x2605;&#x2605;
 
 Write a function `random_element($arr)` that returns a random element from
 `$arr` assuming that the array only has keys starting at 0 and going up to
-`count($arr)-1`.  
+`count($arr)-1`.
 
 (This function will work on an array like `array(2,4,6,8)` or `array('horton',
 'hooey')` but will not work on an array like `array('horton'=>'elephant',
@@ -481,7 +492,7 @@ or the 'simpler,' one-line version:
 {/hidden}
 
 
-## Array Keys <@><@>
+## Array Keys &#x2605;&#x2605;
 
 PHP has a built-in function, `array_keys($arr)`, that returns an array of the
 keys used in `$arr`. Pretend this function doesn't exist and create your own
@@ -534,7 +545,7 @@ the array, `0` is the next available numeric key.)
 {/hidden}
 
 
-## Random Array Element 2 <@><@>
+## Random Array Element 2 &#x2605;&#x2605;
 
 Our previous version of `random_element` above only allowed for arrays like
 
@@ -604,11 +615,11 @@ or the simpler, three-line version:
 {/hidden}
 
 
-## Array Merging <@><@>
+## Array Merging &#x2605;&#x2605;
 
 Create a function `vjoin($keys,$values)` that takes two arrays of the same
-length and combines them: the first array becomes the **keys** while the second
-array becomes the **values** for the keys at the same position.
+length and combines them: the first array becomes the **keys** while the
+second array becomes the **values** for the keys at the same position.
 
 (The 'v' in 'vjoin' is for *value*, since we're joining our two keys together
 on their values.)
@@ -654,7 +665,7 @@ Here is a simple version:
 {/hidden}
 
 
-## Array Flip <@><@>
+## Array Flip &#x2605;&#x2605;
 
 PHP has a built-in function called `array_flip($arr)` that returns an array
 with `$arr`'s keys/values exchanged. Pretend this function does not exist and
@@ -714,7 +725,7 @@ Here's the "challenge" solution using `vjoin`:
 {/hidden}
 
 
-## Array Unique <@><@>
+## Array Unique &#x2605;&#x2605;
 
 PHP has a built-in function called `array_unique($a)` that takes an array as
 an argument and returns a new array without duplicate values. Keys are
@@ -774,7 +785,7 @@ Here is a more intuitive solution:
 {/hidden}
 
 
-## Associative Implode <@><@>
+## Associative Implode &#x2605;&#x2605;
 
 Unfortunately `implode` does not work for associative arrays. The `implode`
 function will only return results based on the **values** of the array, not
@@ -846,7 +857,7 @@ web site for more information.
 {/hidden}
 
 
-## Associative Explode <@><@><@>
+## Associative Explode &#x2605;&#x2605;&#x2605;
 
 Now write the "inverse" of your `associative_implode` function (just above
 this one). We'll call this `associative_explode($glue,$separator,$str)`. This
@@ -902,7 +913,7 @@ above.
 {/hidden}
 
 
-## Not Defined In <@><@>
+## Not Defined In &#x2605;&#x2605;
 
 Make a function `not_defined_in($words_to_errors,$dictionary)` that returns
 the `$word_to_errors` entries for the keys that are not also defined in
@@ -949,7 +960,7 @@ should return
 {/hidden}
 
 
-## Menu Mapping <@>
+## Menu Mapping &#x2605;
 
 Make a function `array_to_menu($array)` that takes an associative array
 mapping link titles to URLs and that returns an unordered list of links (in
@@ -992,7 +1003,7 @@ should print to the browser
 {/hidden}
 
 
-## Site Header <@>
+## Site Header &#x2605;
 
 In an external file, say "global.php", make a function `my_header($title)`
 that outputs a standard (x)HTML document header with `<title>$title</title>`.
@@ -1038,7 +1049,7 @@ to output the standard header for the home page.
 {/hidden}
 
 
-## Scope:  Global <@><@>
+## Scope:  Global &#x2605;&#x2605;
 
 Only variables you use inside of a function are visible inside of that
 function unless you declare them as "global." So the following code will not
@@ -1107,7 +1118,7 @@ placed before a variable. This is subtle and mostly not important, however.)
 {/hidden}
 
 
-## Scope:  Static  <@><@>
+## Scope:  Static  &#x2605;&#x2605;
 
 PHP also has the notion of static variables (these have no connection to
 static class variables from object-oriented programming). If a variable is
@@ -1130,9 +1141,7 @@ on the previous call and does not rely on any global variables:
         return $i; // of course this is always run as well.
     }
 
-With this information make a function `even_odd()` that first returns `true`
-and then alternates back and forth between returning `false` and `true` every
-time it's called. You may not use global variables.
+With this information make a function `even_odd()` that first returns `true` and then alternates back and forth between returning `false` and `true` every time it's called. You may not use global variables.
 
 {hidden}
 
@@ -1147,8 +1156,7 @@ The simple solution is
         return $i;
     }
 
-or another version (which instead keeps a counter and then returns whether
-the value is even before incrementing it).
+or another version (which instead keeps a counter and then returns whether the value is even before incrementing it).
 
     {{lang:php}}
     function even_odd()
@@ -1160,13 +1168,9 @@ the value is even before incrementing it).
 {/hidden}
 
 
-## Scope:  Static 2  <@><@>
+## Scope:  Static 2  &#x2605;&#x2605;
 
-Rework your `global_counter` function into `counter($reset)` that takes a
-single argument: whether or not to reset the counter (the default to this
-argument should be `false`). Your function should return 0 when it's first run
-and when it's reset but should otherwise return 1 more than it did the last
-time it was run. You may not rely on any global variables.
+Rework your `global_counter` function into `counter($reset)` that takes a single argument: whether or not to reset the counter (the default to this argument should be `false`). Your function should return 0 when it's first run and when it's reset but should otherwise return 1 more than it did the last time it was run. You may not rely on any global variables.
 
 {hidden}
 
@@ -1181,14 +1185,9 @@ time it was run. You may not rely on any global variables.
 {/hidden}
 
 
-## XML Tag  <@><@><@>
+## XML Tag  &#x2605;&#x2605;&#x2605;
 
-Create a function `xml($tag,$data,$attributes)` that returns the `$tag` XML
-tag surrounding `$data` with the called `$attributes`, an associative array
-mapping attribute names to their values. Remember that XML is very similar to
-HTML (in fact, modern versions of HTML, called xHTML, actually *are* XML).
-Your function should default to having no attributes (i.e., have the default
-parameter be `null`).
+Create a function `xml($tag,$data,$attributes)` that returns the `$tag` XML tag surrounding `$data` with the called `$attributes`, an associative array mapping attribute names to their values. Remember that XML is very similar to HTML (in fact, modern versions of HTML, called xHTML, actually *are* XML). Your function should default to having no attributes (i.e., have the default parameter be `null`).
 
 So calling
 
@@ -1258,23 +1257,13 @@ should return
 {/hidden}
 
 
-## Array to XML <@><@>
+## Array to XML &#x2605;&#x2605;
 
-Modern web sites, dubbed *web applications*, use a combination of server-side
-and client-side programming to deliver content to the user without the him/her
-having to reload the page. For example, on the Gmail web site, you can "star"
-a message without making the browser get a new page. This technology is still
-rapidly evolving and goes by the name **AJAX**, or *Asynchronous Javascript
-and XML*. The name implies that XML, *eXtensible Markup Language* is used.
-While it is definitely not required that the AJAX use XML, many web developers
-prefer the XML format because of its wide adoption.
+Modern web sites, dubbed *web applications*, use a combination of server-side and client-side programming to deliver content to the user without the him/her having to reload the page. For example, on the Gmail web site, you can "star" a message without making the browser get a new page. This technology is still rapidly evolving and goes by the name **AJAX**, or *Asynchronous Javascript and XML*. The name implies that XML, *eXtensible Markup Language* is used. While it is definitely not required that the AJAX use XML, many web developers prefer the XML format because of its wide adoption.
 
-What you are to do is create a function, `array_to_xml($arr,$collection)`,
-that takes an associative array as its first argument and a string as its
-second argument.
+What you are to do is create a function, `array_to_xml($arr,$collection)`, that takes an associative array as its first argument and a string as its second argument.
 
-The first argument, `$arr`, is the data being passed. It might be something
-like
+The first argument, `$arr`, is the data being passed. It might be something like
 
     {{lang:php}}
     array(  'name'  => 'Sir Elton John',
@@ -1282,12 +1271,9 @@ like
             'title' => 'Singer/Songwriter'
     );
 
-The second argument, `$collection` is simply the name of the "wrapper" XML tag
-for all the other tags.
+The second argument, `$collection` is simply the name of the "wrapper" XML tag for all the other tags.
 
-Your function doesn't need to handle the case where a value from `$arr` is
-itself an array (e.g., where `'Sir Elton John'` is an array of names,
-perhaps).
+Your function doesn't need to handle the case where a value from `$arr` is itself an array (e.g., where `'Sir Elton John'` is an array of names, perhaps).
 
 So calling
 
@@ -1320,15 +1306,11 @@ should return
 {/hidden}
 
 
-## JSON Field <@>
+## JSON Field &#x2605;
 
 More on AJAX...
 
-If XML just isn't your thing, then you have other ways of getting data from
-the server to the page. Another popular syntax is **JSON**, or *Javascript
-Object Notation*. It is, as its name implies, inspired by how objects are
-defined in Javascript. (Refer to the [Javascript Problems][js] page for
-Javascript sample problems.)
+If XML just isn't your thing, then you have other ways of getting data from the server to the page. Another popular syntax is **JSON**, or *Javascript Object Notation*. It is, as its name implies, inspired by how objects are defined in Javascript. (Refer to the [Javascript Problems][js] page for Javascript sample problems.)
 
 [js]:javascript_problems.html
 
@@ -1341,8 +1323,7 @@ Here is an example bit of JSON:
         title:  'singer/songwrier'
     }
 
-Notice that JSON uses colons to separate a key from its value (whereas PHP
-uses the `=>` "arrow"). Some other important things to note:
+Notice that JSON uses colons to separate a key from its value (whereas PHP uses the `=>` "arrow"). Some other important things to note:
 
  1. The keys (`name`,`email`, and `title` in this example) are *always*
     considered strings, so there's no need to surround them with quotes (and
@@ -1372,8 +1353,7 @@ uses the `=>` "arrow"). Some other important things to note:
         I didn\'t say anything!
 
 
-Your assignment is to create a function `json($key,$value)` that returns the
-JSON to be put inside a JSON object for the key/value pair.
+Your assignment is to create a function `json($key,$value)` that returns the JSON to be put inside a JSON object for the key/value pair.
 
 So calling
 
@@ -1404,12 +1384,11 @@ returns the string
 {/hidden}
 
 
-## Array to JSON <@><@><@>
+## Array to JSON &#x2605;&#x2605;&#x2605;
 
 (The discussion from the above problem, "JSON Field," is relevant.)
 
-Your assignment is to create a PHP function `array_to_json($data)` that takes
-an associative array and returns the JSON to transmit that data.
+Your assignment is to create a PHP function `array_to_json($data)` that takes an associative array and returns the JSON to transmit that data.
 
 So calling
 
@@ -1445,10 +1424,9 @@ Note:  You might make use of the earlier `fencepost` function.
 {/hidden}
 
 
-## HTML Table <@><@><@>
+## HTML Table &#x2605;&#x2605;&#x2605;
 
-Create a function `html_table($arrays)` that takes an array of associative
-arrays and that returns an HTML table representing that array.
+Create a function `html_table($arrays)` that takes an array of associative arrays and that returns an HTML table representing that array.
 
 An example array of arrays would be
 
@@ -1510,8 +1488,7 @@ So the HTML code you would need to produce is something like...
     
     </table>
 
-(Don't worry about spacing our your HTML like this--that's beyond the scope of
-this problem.)
+(Don't worry about spacing our your HTML like this--that's beyond the scope of this problem.)
 
 {/hidden HTML Table Code}
 
@@ -1566,21 +1543,13 @@ And here is a more complex but "refactored" solution:
 {/hidden Solution}
 
 
-## CSV Data <@><@><@>
+## CSV Data &#x2605;&#x2605;&#x2605;
 
-(This one's not as tough as it initially appears but does introduce a lot of
-new concepts.)
+(This one's not as tough as it initially appears but does introduce a lot of new concepts.)
 
-Parsing data is one of the primary uses for PHP and other scripting languages:
-we want to mash some existing data from a file or a database or the user into
-a new format so it has a different use.
+Parsing data is one of the primary uses for PHP and other scripting languages: we want to mash some existing data from a file or a database or the user into a new format so it has a different use.
 
-**CSV** stands for Comma-Separated Value and is a common format that a lot of
-programs export to. It has a very simple format: the first line typically has
-a list of the fields and the subsequent lines have all of those fields. Commas
-(`,`) are used to separate values, and all values are surrounded in double
-quotes. If a value is not given for a field, then it is indicated by empty
-quotes.
+**CSV** stands for Comma-Separated Value and is a common format that a lot of programs export to. It has a very simple format: the first line typically has a list of the fields and the subsequent lines have all of those fields. Commas (`,`) are used to separate values, and all values are surrounded in double quotes. If a value is not given for a field, then it is indicated by empty quotes.
 
 Here is a very simple sample CSV file
 
@@ -1588,12 +1557,9 @@ Here is a very simple sample CSV file
     "Sir Elton John","","Singer/Composer"
     "The Slayer of Dragons","dragonslayer@hotmail.com","Barista"
 
-Your job is to create a function `csv_to_array($filename)` that takes a file
-name as a parameter and returns an array of associative arrays for the CSV
-data in that file.
+Your job is to create a function `csv_to_array($filename)` that takes a file name as a parameter and returns an array of associative arrays for the CSV data in that file.
 
-You may assume that the only commas in the file are between the fields (which
-isn't guaranteed you by most programs that export to CSV).
+You may assume that the only commas in the file are between the fields (which isn't guaranteed you by most programs that export to CSV).
 
 If I had the above contents in a file called *data.csv*, I should be able to
 call
@@ -1619,17 +1585,11 @@ and then have that
 
 ### Hints:
 
-PHP has a built-in function `file_get_contents($file)` that takes a file name
-as an argument and returns the contents of that file as a string (the file
-must be in the same directory as the PHP script).
+PHP has a built-in function `file_get_contents($file)` that takes a file name as an argument and returns the contents of that file as a string (the file must be in the same directory as the PHP script).
 
-(There is also a function `file` that returns the file's contents back
-directly as an array of lines, but this requires dealing with newline
-characters which can be a pain, and using `get_file_contents` is not much
-extra work for us or the computer.)
+(There is also a function `file` that returns the file's contents back directly as an array of lines, but this requires dealing with newline characters which can be a pain, and using `get_file_contents` is not much extra work for us or the computer.)
 
-You might find your functions `my_array_keys` and `vjoin` handy. Also don't
-forget to [read up on the `explode` function][explode].
+You might find your functions `my_array_keys` and `vjoin` handy. Also don't forget to [read up on the `explode` function][explode].
 
   [explode]:http://us3.php.net/explode
 
@@ -1671,15 +1631,11 @@ Feel free to make a helper function.
 {/hidden}
 
 
-## Quote Columns <@><@>
+## Quote Columns &#x2605;&#x2605;
 
-SQL, the language of databases, uses back-quotes (`` ` ``) to surround **table
-and column names** and single- or double-quotes to surround **values** in its
-statements. (Most people don't actually use the back-quotes, but they're
-considered good form). 
+SQL, the language of databases, uses back-quotes (`` ` ``) to surround **table and column names** and single- or double-quotes to surround **values** in its statements. (Most people don't actually use the back-quotes, but they're considered good form).
 
-Here is an example of an SQL statement that inserts two values into a table
-`people`:
+Here is an example of an SQL statement that inserts two values into a table `people`:
 
     {{lang:sql}}
     INSERT INTO `people` (`title`,`email`,`job`)
@@ -1690,8 +1646,7 @@ Here is an example of an SQL statement that inserts two values into a table
 
 (Spacing is arbitrary and statements are terminated by semicolons.)
 
-Make a function `quote_columns($cols)` that takes an array of associative
-arrays such as
+Make a function `quote_columns($cols)` that takes an array of associative arrays such as
 
     {{lang:php}}
     array(
@@ -1707,9 +1662,7 @@ arrays such as
         )
     );
 
-and returns a back-ticked, comma-separated, list of the "columns" in `$cols`.
-These "columns" are really just the keys from any of the "sub" arrays in
-`$cols`.
+and returns a back-ticked, comma-separated, list of the "columns" in `$cols`. These "columns" are really just the keys from any of the "sub" arrays in `$cols`.
 
 So calling `quote_columns` on the above should return the string
 
@@ -1739,7 +1692,7 @@ and here is a solution without using `fencepost`:
 {/hidden}
 
 
-## Quote Value <@>
+## Quote Value &#x2605;
 
 Similar to `quote_columns` above, write a function `quote_value($arr)` that
 takes a an associative array such as
@@ -1777,11 +1730,7 @@ You may assume that there are no single-quotes in the values.
         return '\''.implode('\',\'',$vals).'\'';
     }
 
-If you did want to handle the case where single-quotes are allowed in the
-values, you would need to escape all of them by replacing them with `\'`. PHP
-has a built-in function `addslashes` that can be used to add slashes to
-single- or double-quotes in a string. It has an associated function
-`stripslashes` that can used to delete backslashes before quotes.
+If you did want to handle the case where single-quotes are allowed in the values, you would need to escape all of them by replacing them with `\'`. PHP has a built-in function `addslashes` that can be used to add slashes to single- or double-quotes in a string. It has an associated function `stripslashes` that can used to delete backslashes before quotes.
 
 Here is a solution that properly handles slashes in the values:
 
@@ -1795,10 +1744,9 @@ Here is a solution that properly handles slashes in the values:
 {/hidden}
 
 
-## Array to SQL <@><@><@>
+## Array to SQL &#x2605;&#x2605;&#x2605;
 
-Write a PHP function `insert_statement_for_array($table,$arr)` that
-takes a table name and an array of associative arrays such as
+Write a PHP function `insert_statement_for_array($table,$arr)` that takes a table name and an array of associative arrays such as
 
     {{lang:php}}
     array(
@@ -1814,11 +1762,9 @@ takes a table name and an array of associative arrays such as
         )
     );
 
-and returns an SQL statement that could be used to insert the data in `$arr`
-into the table `$table`.
+and returns an SQL statement that could be used to insert the data in `$arr` into the table `$table`.
 
-So calling `insert_statement_for_array` on the above (with `$table` set to
-`people`) should return something like
+So calling `insert_statement_for_array` on the above (with `$table` set to `people`) should return something like
 
     {{lang:sql}}
     INSERT INTO `people` (`title`,`email`,`job`)
@@ -1845,11 +1791,9 @@ So calling `insert_statement_for_array` on the above (with `$table` set to
 {/hidden}
 
 
-## Update Attributes <@><@>
+## Update Attributes &#x2605;&#x2605;
 
-The "U" part of C.R.U.D.--Update--is found in SQL (and in MySQL) in the
-`UPDATE` statement. How clever. So updating a record involves running a query
-string like this:
+The "U" part of C.R.U.D.--Update--is found in SQL (and in MySQL) in the `UPDATE` statement. How clever. So updating a record involves running a query string like this:
 
     {{lang:sql}}
     UPDATE `people`
@@ -1859,15 +1803,9 @@ string like this:
      LIMIT 1
      ;
 
-(The `LIMIT` is perhaps extraneous considering we would never have two rows in
-our `people` table with the same `id`, but it's a good habit to be in: always
-put a `LIMIT` declaration when you know in advance how many rows you're
-intending to update.)
+(The `LIMIT` is perhaps extraneous considering we would never have two rows in our `people` table with the same `id`, but it's a good habit to be in: always put a `LIMIT` declaration when you know in advance how many rows you're intending to update.)
 
-With this in mind, create a function
-`update_attributes_sql($table,$id,$attrs)` that takes the name of a table, an
-id, and an associative array of attributes to update. It should then return
-the (My)SQL to perform the update.
+With this in mind, create a function `update_attributes_sql($table,$id,$attrs)` that takes the name of a table, an id, and an associative array of attributes to update. It should then return the (My)SQL to perform the update.
 
 So we should be able to call
 
@@ -1895,13 +1833,9 @@ to get the `UPDATE` SQL statement above.
 {/hidden}
 
 
-## Safe Input <@><@><@>
+## Safe Input &#x2605;&#x2605;&#x2605;
 
-Create a function `sql_statement($array)` that takes in a single array. The
-first item in `$array` (`$array[0]`) is an SQL statement with question marks
-(`?`) in it. Then the following items in `$array` are to replace the question
-marks **in order** after first cleaning them with the function
-`mysql_real_escape_string` and surrounding them with quotes.
+Create a function `sql_statement($array)` that takes in a single array. The first item in `$array` (`$array[0]`) is an SQL statement with question marks (`?`) in it. Then the following items in `$array` are to replace the question marks **in order** after first cleaning them with the function `mysql_real_escape_string` and surrounding them with quotes.
 
 So calling 
 
@@ -1929,10 +1863,7 @@ returns the string
 
     My name is 'Mickey Rooney'
 
-**Note:** We are using the function `mysql_real_escape_string` here which
-*requires a live database connection* to work. This is because the
-`mysql_real_escape_string` function actually sends its argument to the server
-to be cleaned up.
+**Note:** We are using the function `mysql_real_escape_string` here which *requires a live database connection* to work. This is because the `mysql_real_escape_string` function actually sends its argument to the server to be cleaned up.
 
 Moreover, if you are connecting to your database using something like
 
@@ -1947,12 +1878,9 @@ then you will have to start your function in the manner of
         global $link; // THIS IS CRITICAL
     }
 
-or else your `mysql_real_escape_string` function won't know how to connect to
-the database server to sanitize the inputs.
+or else your `mysql_real_escape_string` function won't know how to connect to the database server to sanitize the inputs.
 
-You can test your function locally using the similar (**but unsafe for real
-database use**) function `addslashes` in the place of
-`mysql_real_escape_string`.
+You can test your function locally using the similar (**but unsafe for real database use**) function `addslashes` in the place of `mysql_real_escape_string`.
 
 {hidden}
 
@@ -2003,10 +1931,7 @@ Here is the solution using `addslashes` instead of `mysql_real_escape_string`:
 
 Not a problem for this one, just an observation.
 
-Imagine you need to separate the string "Abraham Lincoln" into the first name
-and the last name. This is simple using the magic of the
-`explode($separator,$string)` function that separates `$string` into an array
-of substrings:
+Imagine you need to separate the string "Abraham Lincoln" into the first name and the last name. This is simple using the magic of the `explode($separator,$string)` function that separates `$string` into an array of substrings:
 
     {{lang:php}}
     $name  = "Abraham Lincoln";
@@ -2020,9 +1945,7 @@ It turns out we can do this in a simpler step:
     $name = 'Abraham Lincoln';
     list($first,$last) = explode(' ',$name);
 
-The `list` you see there isn't actually a function--it's a *language
-construct* much in the same way that `if` and `foreach` are. Here is a simpler
-example of `list` in action:
+The `list` you see there isn't actually a function--it's a *language construct* much in the same way that `if` and `foreach` are. Here is a simpler example of `list` in action:
 
     {{lang:php}}
     list($one,$two,$three,$four) = array(1,2,3,4);
@@ -2045,14 +1968,12 @@ which is equivalent to
     $three = 3;
     $four  = 4;
 
-This construct is helpful to the implementation of the `foreach` construct
-which is discussed later.
+This construct is helpful to the implementation of the `foreach` construct which is discussed later.
 
 
-## Array Equality? <@><@><@><@>
+## Array Equality? &#x2605;&#x2605;&#x2605;&#x2605;
 
-PHP has built-in mechanisms to compare arrays for equality. For instance, you
-can do something like
+PHP has built-in mechanisms to compare arrays for equality. For instance, you can do something like
 
     {{lang:php}}
     $a = array( 1, 2, 3, 4 );
@@ -2061,8 +1982,7 @@ can do something like
 
 Imagine, though, that this weren't built into the language.
 
-Create a function `arrays_equal($a,$b)` that returns `true` if and only if
-`$a` and `$b` are the same.
+Create a function `arrays_equal($a,$b)` that returns `true` if and only if `$a` and `$b` are the same.
 
 There are several things to think about:
 
@@ -2207,33 +2127,9 @@ returns `false`.
 {/hidden}
 
 
-;; ## Serialize Array <@><@><@><@>
-;; 
-;; This is somewhat similar to the above "Array Equality." function.
-;; 
-;; You can 
-;;
-;; function serialize_array($arr,$depth=1)
-;; {
-;;     $out = array();
-;;     $pad = str_repeat("\t",$depth);
-;;     foreach($arr as $k=>$v)
-;;         $out[] = $pad.(is_int($k) ? $k : "'$k'")
-;;                      ." => "
-;;                      .(is_array($v) 
-;;                             ? serialize_array($v,$depth+1) 
-;;                             : (is_int($v)   ? $v                       
-;;                                             : '\''.addslashes($v).'\''));
-;;     return  "array(\n"  
-;;                 .implode(",\n",$out)
-;;                 ."\n".str_repeat("\t",max(0,$depth-1)).')';
-;; }
+## Array Finder  &#x2605;&#x2605;
 
-
-## Array Finder  <@><@>
-
-Make a function `find_key_for($val,$array)` that returns the key for `$val` if
-it's in `$array` or `FALSE` if it's not.
+Make a function `find_key_for($val,$array)` that returns the key for `$val` if it's in `$array` or `FALSE` if it's not.
 
 So running
 
@@ -2246,8 +2142,7 @@ So running
 
 returns `'sport'`.
 
-**Hint** You can use your earlier `my_array_flip($arr)` to make this very
-easy!
+**Hint** You can use your earlier `my_array_flip($arr)` to make this very easy!
 
 {hidden}
 
@@ -2277,11 +2172,9 @@ and here is the "traditional" solution:
 
 
 
-## CSV to SQL <@><@>
+## CSV to SQL &#x2605;&#x2605;
 
-Create a function `csv_to_sql($table,$file)` that takes the name of a database
-table and a filename of a CSV file as parameters and returns the SQL to insert
-the data from the file into the table.
+Create a function `csv_to_sql($table,$file)` that takes the name of a database table and a filename of a CSV file as parameters and returns the SQL to insert the data from the file into the table.
 
 {hidden}
 
@@ -2295,14 +2188,11 @@ the data from the file into the table.
 {/hidden}
 
 
-## Implementing The `foreach` Loop <@><@><@><@>
+## Implementing The `foreach` Loop &#x2605;&#x2605;&#x2605;&#x2605;
 
-This one is again not a problem but is rather just an explanation of a
-concept. It is rated 4-<@>s, though, because of how confusing this problem can
-be for those new to PHP.
+This one is again not a problem but is rather just an explanation of a concept. It is rated 4-&#x2605;s, though, because of how confusing this problem can be for those new to PHP.
 
-Recall that the `foreach` loop is used to *iterate* over an array giving you
-access to each key/value pair in the manner of
+Recall that the `foreach` loop is used to *iterate* over an array giving you access to each key/value pair in the manner of
 
     {{lang:php}}
     $chars = array(
@@ -2321,16 +2211,9 @@ which would echo the screen
     Hooey is a(n) parrot
     Horton is a(n) elephant
 
-It turns out that we can implement our own version of the `foreach` loop using
-a little-known fact about arrays in PHP.
+It turns out that we can implement our own version of the `foreach` loop using a little-known fact about arrays in PHP.
 
-In addition to keeping track of a bunch of key/value pairs, arrays also keep
-track of an *internal pointer* that can be used with the `each` function (and
-a few others). This internal pointer starts by pointing to the first key/value
-pair in the array. The `each` function then asks the array to give back the
-"*pointed-to*" key/value pair as an array *and to then move the internal
-pointer down one.* If the pointer "falls off the end" (when there is no more
-key-value pairs left), then `each` returns `false`.
+In addition to keeping track of a bunch of key/value pairs, arrays also keep track of an *internal pointer* that can be used with the `each` function (and a few others). This internal pointer starts by pointing to the first key/value pair in the array. The `each` function then asks the array to give back the "*pointed-to*" key/value pair as an array *and to then move the internal pointer down one.* If the pointer "falls off the end" (when there is no more key-value pairs left), then `each` returns `false`.
 
 To illustrate, imagine we had an array called `$people`,
 
@@ -2364,17 +2247,11 @@ We can then call
     {{lang:php}}
     $first_key_value_pair = each($family);
 
-and have that `$first_key_value_pair = array(0,'Cindy')`. Notice that `each`
-operates on an array and returns an array. The first item (0) in the array
-that it returns is the "pointed-to" **key** from the array it operated on
-while the second item (Cindy) in the array that it returns is the "pointed-to"
-**value**.
+and have that `$first_key_value_pair = array(0,'Cindy')`. Notice that `each` operates on an array and returns an array. The first item (0) in the array that it returns is the "pointed-to" **key** from the array it operated on while the second item (Cindy) in the array that it returns is the "pointed-to" **value**.
 
-(All arrays have this internal pointer--even the array we're given back from
-`each`--but they aren't always very useful.)
+(All arrays have this internal pointer--even the array we're given back from `each`--but they aren't always very useful.)
 
-After we call `each($family)`, the `$family` array has changed: its internal
-pointer has been moved down one row:
+After we call `each($family)`, the `$family` array has changed: its internal pointer has been moved down one row:
 
         +----------+--------+
         |      Key | Value  |
@@ -2388,8 +2265,7 @@ pointer has been moved down one row:
         | Youngest | Bobby  |
         +----------+--------+
 
-So calling `each` again on `$family` will now return `array(1,'Greg')` and
-will move the pointer down yet another row...
+So calling `each` again on `$family` will now return `array(1,'Greg')` and will move the pointer down yet another row...
 
 We could repeat this process several times:
 
@@ -2434,8 +2310,7 @@ We could repeat this process several times:
                 array('Oldest','Marcia')          array('Youngest','Bobby')
 
 
-And then finally when there are no more lines left for the internal pointer to
-move to, we can call `each` once more and get
+And then finally when there are no more lines left for the internal pointer to move to, we can call `each` once more and get
 
         +----------+--------+
         |      Key | Value  |
@@ -2449,11 +2324,9 @@ move to, we can call `each` once more and get
         | Youngest | Bobby  |
     --> +----------+--------+
 
-In this scenario, `each` will return `false` to indicate that there are no
-more key/value pairs.
+In this scenario, `each` will return `false` to indicate that there are no more key/value pairs.
 
-Putting this all together, how can we implement the `foreach` loop? Very
-easily! All we have to do is use our good old friend the `while` loop.
+Putting this all together, how can we implement the `foreach` loop? Very easily! All we have to do is use our good old friend the `while` loop.
 
 Let's implement the same bit of code that we had before:
 
@@ -2468,8 +2341,7 @@ Let's implement the same bit of code that we had before:
         echo "$name is a(n) $animal\n";
     }
 
-only now using our new friend `each`. As a convenience, we also use the `list`
-language construct which is discussed above.
+only now using our new friend `each`. As a convenience, we also use the `list` language construct which is discussed above.
 
     {{lang:php}}
     $chars = array(
@@ -2484,8 +2356,7 @@ language construct which is discussed above.
 
 and that's all there is to it folks!
 
-Refer to the earlier "Assignment Statements As Return Values" for an
-explanation on why we can use something like
+Refer to the earlier "Assignment Statements As Return Values" for an explanation on why we can use something like
 
     {{lang:php}}
     while ( list($name,$animal) = each($chars) )
@@ -2508,29 +2379,20 @@ instead of having to do this "the hard way":
     }
 
 
-## Where Statement <@><@>
+## Where Statement &#x2605;&#x2605;
 
-If you want to do anything to your database table other than create new rows
-(a/k/a `INSERT` in SQL), then you're going to need to tell the database what
-rows you plan to do something with.
+If you want to do anything to your database table other than create new rows (a/k/a `INSERT` in SQL), then you're going to need to tell the database what rows you plan to do something with.
 
-SQL achieves this using its `WHERE` declaration. For example, the following
-SQL can be used to delete all people named 'Sir Elton John' from a table
-called `people`:
+SQL achieves this using its `WHERE` declaration. For example, the following SQL can be used to delete all people named 'Sir Elton John' from a table called `people`:
 
     {{lang:sql}}
     DELETE FROM `people`
           WHERE `name`='Sir Elton John'
     ;
 
-Remember that SQL uses back-quotes to surround table- and column-names and
-single- or double-quotes to surround string values. Also note that there isn't
-a second equals sign there -- we don't have to use a double-equals (`==`) in
-SQL when doing equality comparison.
+Remember that SQL uses back-quotes to surround table- and column-names and single- or double-quotes to surround string values. Also note that there isn't a second equals sign there -- we don't have to use a double-equals (`==`) in SQL when doing equality comparison.
 
-If you want to specify multiple conditions, you simply separate them with
-`AND` or `OR`. The following SQL can be used to delete all people named 'Sir
-Elton John' with the job 'Barista' from our `people` database:
+If you want to specify multiple conditions, you simply separate them with `AND` or `OR`. The following SQL can be used to delete all people named 'Sir Elton John' with the job 'Barista' from our `people` database:
 
     {{lang:sql}}
     DELETE FROM `people`
@@ -2538,10 +2400,7 @@ Elton John' with the job 'Barista' from our `people` database:
             AND `job`='Barista'
     ;
 
-Your job is to make a function `where_statement($conditions,$op)` that takes
-an array of conditions and an operation (either 'AND' or 'OR') that produces
-the "WHERE" part of an SQL statement for those conditions. The `$op` should
-default to 'AND'.
+Your job is to make a function `where_statement($conditions,$op)` that takes an array of conditions and an operation (either 'AND' or 'OR') that produces the "WHERE" part of an SQL statement for those conditions. The `$op` should default to 'AND'.
 
 For example, the following code
 
@@ -2572,21 +2431,15 @@ should return
 {/hidden}
 
 
-## Select Rows <@><@><@>
+## Select Rows &#x2605;&#x2605;&#x2605;
 
-Once you have a query formed and ready to execute on your database, you simply
-pass it to MySQL using the built-in `mysql_query($query,$link)` function. This
-requires that you first establish a `$link` variable using
-[`mysql_connect`][m].
+Once you have a query formed and ready to execute on your database, you simply pass it to MySQL using the built-in `mysql_query($query,$link)` function. This requires that you first establish a `$link` variable using [`mysql_connect`][m].
 
 [m]:http://php.net/mysql_connect
 
-What `mysql_query` returns is a blob of completely useless data that you can't
-directly work with. You can, however, work with it using one of the many
-built-in MySQL functions.
+What `mysql_query` returns is a blob of completely useless data that you can't directly work with. You can, however, work with it using one of the many built-in MySQL functions.
 
-Here is an example of PHP code that selects information about users born in
-1955 from a database and puts them all into an array `$users`:
+Here is an example of PHP code that selects information about users born in 1955 from a database and puts them all into an array `$users`:
 
     {{lang:php}}
     $query = "SELECT `id`,`name`,`email`
@@ -2600,8 +2453,7 @@ Here is an example of PHP code that selects information about users born in
         $users[] = $user;
     }
 
-Your job is to write a function `select_rows($table,$cols,$conds,$op)` that
-takes four parameters
+Your job is to write a function `select_rows($table,$cols,$conds,$op)` that takes four parameters
 
  1. `$table`, which table to select the data from,
  2. `$cols`, an array of the columns to select from the table,
@@ -2612,11 +2464,9 @@ takes four parameters
     all of the columns to be matched or *one or more* of the columns
     to be matched, respectively.
 
-Your function should return *an array of associative arrays* corresponding to
-the rows that matched the given conditions.
+Your function should return *an array of associative arrays* corresponding to the rows that matched the given conditions.
 
-(The last two parameters correspond to the parameters in the previous
-`where_statement` problem.)
+(The last two parameters correspond to the parameters in the previous `where_statement` problem.)
 
 So if you have a database table `users` that looks like
 
@@ -2671,20 +2521,13 @@ and then have that
 {/hidden}
 
 
-## "The" Sorting  <@><@><@><@>
+## "The" Sorting  &#x2605;&#x2605;&#x2605;&#x2605;
 
-This one is not easy: it combines what is probably several new concepts into
-one slightly-more-than-trivially useful functionality. I'd say come back to
-this one after you've mastered the concepts needed for the other problems
-first.
+This one is not easy: it combines what is probably several new concepts into one slightly-more-than-trivially useful functionality. I'd say come back to this one after you've mastered the concepts needed for the other problems first.
 
-PHP has a built-in function called `usort(&$array, $callback)` that allows you
-to sort an array by calling a user-defined sorting function `$callback`. You
-can also use one of the many built-in comparison functions like
-`strcmp($a,$b)` that compares two strings alphabetically.
+PHP has a built-in function called `usort(&$array, $callback)` that allows you to sort an array by calling a user-defined sorting function `$callback`. You can also use one of the many built-in comparison functions like `strcmp($a,$b)` that compares two strings alphabetically.
 
-The ampersand (`&`) before `$array` means that `$array` will be modified
-in-place.  So rather than saying something like
+The ampersand (`&`) before `$array` means that `$array` will be modified in-place. So rather than saying something like
 
     {{lang:php}}
     $a = usort($a,'strcmp');
@@ -2704,8 +2547,7 @@ From [the `usort` documentation][usortdoc],
 
   [usortdoc]:http://us3.php.net/usort
 
-So if we wanted to simply sort the array in regular, increasing order, we
-might define
+So if we wanted to simply sort the array in regular, increasing order, we might define
 
     {{lang:php}}
     function cmp($a, $b)
@@ -2724,13 +2566,9 @@ which we could then call to sort an array a la:
     usort($myvals,'cmp');
     // now $myvals = array(1,2,3,4,5,6)
 
-Your assignment is to create a function `sort_the($a,$b)` that returns **-1**
-if `$a` is alphabetically **before** `$b`, returns **1** if `$a` is
-alphabetically **after** `$a` and **0** if `$a` and `$b` are alphabetically
-the same.
+Your assignment is to create a function `sort_the($a,$b)` that returns **-1** if `$a` is alphabetically **before** `$b`, returns **1** if `$a` is alphabetically **after** `$a` and **0** if `$a` and `$b` are alphabetically the same.
 
-The kicker is that we're not going to care about the presence of the words
-*the*, *The*, *a*, *A*, *an*, or *an*, if they're the first word in a title.
+The kicker is that we're not going to care about the presence of the words *the*, *The*, *a*, *A*, *an*, or *an*, if they're the first word in a title.
 
 Once you've completed this function, you can do things like
 
@@ -2808,167 +2646,3 @@ or the more "refactored" form:
 
 {/hidden}
 
-
-;; ## FormTron <@><@><@><@><@>
-;; 
-;; This is just a solution without a writeup yet:
-;; 
-;;     {{lang:php}}
-;;     // a simple callback function that returns
-;;     // whether its parameter is null
-;;     function not_empty($val)
-;;     {
-;;         return $val == null;
-;;     }
-;; 
-;;     /*
-;;      * This beast of a function has so many arguments that we've just
-;;      * given up hope of trying to remember which order they come in and
-;;      * instead just use an associative array as a means of parameter
-;;      * passing.
-;;      *
-;;      * Calling this thing looks a little something like
-;;      *
-;;      *    echo form_field(array(
-;;      *      'name'                => 'user_name',
-;;      *      'validation_callback' => 'not_empty',
-;;      *      'invalid_message'     => 'Cannot Be Empty!',
-;;      *      'before'              => 'Your Name: &nbsp;',
-;;      *      'between'             => ' &nbsp; ',
-;;      *      'after'               => 'ERROR_MSG<br />',
-;;      *    ));
-;;      *
-;;      * (The advantage here is that these parameters can be put in any order,
-;;      * and it's certainly a lot clearer. The disandvantage of course is that
-;;      * this is a lot more typing.)
-;;      *
-;;      *
-;;      * You could put a bunch of these on a page and then check whether
-;;      * they're all valid before (e.g.) submitting to the database. Every time
-;;      * this function is run, it keeps track of whether or not the callback
-;;      * function returns true. If it doesn't (i.e., the callback function
-;;      * returns false), then the function "logs" this failure. You can then
-;;      * simply call
-;;      *
-;;      *     form_field(array('all_valid_check'=>true))
-;;      *
-;;      * which will return an array of all the parameter arrays that didn't
-;;      * pass their callback functions.
-;;      *
-;;      * The below summarizes the keys for the $params array that this function
-;;      * looks at including their "default" values. So the parameter NAME
-;;      * (which the function looks for at $params['name']) has a default
-;;      * auto_configured value. The purpose is expressed as an abridged view of
-;;      * what is returned with respect to the purpose of this parameter.
-;;      *
-;;      * Params:
-;;      *
-;;      *      NAME = auto_configured
-;;      *          <input name="$NAME" />
-;;      *
-;;      *      VALUE = null
-;;      *          <input value="$VALUE" />
-;;      *
-;;      *      (If there is $_POST[$NAME], then $VALUE is subsumed by that.)
-;;      *
-;;      *      TYPE = text
-;;      *          <input type="$TYPE" />
-;;      *
-;;      *      (Note that the logic and parameters are not set up to support
-;;      *      any input types other than 'text' and 'hidden'. Adding other
-;;      *      input types (e.g., checkbox, radio, textarea, select)
-;;      *      doesn't significantly complicate things, but it does kind of
-;;      *      obviate the need to have more functions.)
-;;      *
-;;      *      LABEL = auto_configured
-;;      *          <label>$LABEL</label>
-;;      *
-;;      *      VALIDATION_CALLBACK = null
-;;      *          $is_valid = $VALIDATION_CALLBACK($user_data)
-;;      *
-;;      *      (Some people are surprised to learn that you can call functions
-;;      *      this way.  You can even do something like
-;;      *
-;;      *          $fun = 'echo';
-;;      *          $fun('Hello!');
-;;      *
-;;      *      which would be the same as simply calling echo on its own.)
-;;      *
-;;      *      INVALID_MESSAGE = null
-;;      *          if !($is_valid) { [replace all ooccurrences of 'ERROR_MSG'
-;;      *                              in the $BEFORE/$AFTER/$BETWEEN params
-;;      *                              with $INVALID_MESSAGE] }
-;;      *
-;;      *      ALL_VALID_CHECK = false
-;;      *          if ( $ALL_VALID_CHECK )
-;;      *              { [return an array of params arrays
-;;      *                  for fields that didn't pass validation] }
-;;      *
-;;      *      (You could check whether everything validates by testing
-;;      *      wheter this is a zero-length array. That's something like:
-;;      *
-;;      *          $errors    = form_field(array('all_valid_check'=>true));
-;;      *          $all_valid = count($errors) == 0;
-;;      *
-;;      *      )
-;;      *
-;;      *      BEFORE = null          }  (Put 'ERROR_MSG' in any of these
-;;      *          $BEFORE<label>...  |   three to have it replaced by
-;;      *                             |   $INVALID_MESSAGE if there is one
-;;      *      AFTER = null           |   and this field doesn't pass
-;;      *          <input />$AFTER    |   validation.)
-;;      *                             |
-;;      *      BETWEEN = null         }
-;;      *          <label></label>$BETWEEN<input />
-;;      *
-;;      *
-;;      */
-;;     function form_field($params = array())
-;;     {
-;;         static $count   = 0;       // used to automatically get names
-;;         static $invalid = array(); // a running tally of the params
-;;                                    //    arrays from invalid form fields
-;;         // check for our special parameter
-;;         if ( $params['all_valid_check'] )
-;;             return $invalid;
-;;         // book-keeping functions and automatic-parameter loading:
-;;         $name    = isset($params['name' ]) ? $params['name' ] : 'in'.$count++ ;
-;;         $type    = isset($params['type' ]) ? $params['type' ] : 'text'        ;
-;;         $label   = isset($params['label']) ? $params['label'] : $name         ;
-;;         $call    = isset($params['validation_callback'])
-;;                    && function_exists($params['validation_callback'])
-;;                    ?  $params['validation_callback']       : FALSE ;
-;;         $msg     =    $params['invalid_message'    ]
-;;                    ?  $params['invalid_message'    ]       : null  ;
-;;         $before  = isset($params['before' ])  ? $params['before' ] : null   ;
-;;         $after   = isset($params['after'  ])  ? $params['after'  ] : null   ;
-;;         $between = isset($params['between'])  ? $params['between'] : null   ;
-;;         $value   = isset($_POST) && isset($_POST[$name]) ? $_POST[$name]    :
-;;                    isset($params['value'])               ? $params['value'] :
-;;                    null                                                     ;
-;;         // handle errors:
-;;         $replacement = ''; // initially assume we have no problem
-;;         if ( $call && $_POST                   // If we have a callback
-;;                    && isset($_POST[$name])     // function and user
-;;                    && !($call($_POST[$nae])) ) // input and the callback
-;;         {                                      // returns false...
-;;             $invalid[]   = $params;            //
-;;             $replacement = $msg;               // ...we have a problem.
-;;         }
-;;         // always do replacement because we don't ever want to actually
-;;         // print ERROR_MSG:  We want to replace it with nothing if there
-;;         // is no problem or replace it with the $msg if there is a
-;;         // problem:
-;;         $before  = str_replace('ERROR_MSG', $replacement, $before );
-;;         $after   = str_replace('ERROR_MSG', $replacement, $after  );
-;;         $between = str_replace('ERROR_MSG', $replacement, $between);
-;;         // Build our output string:
-;;         $acc = $before
-;;                ."<label for=\"$name\">$label</label>"
-;;                .$between
-;;                ."<input type=\"$type\" value=\"$value\" id=\"$name\" />"
-;;                .$after
-;;                ;
-;;         return $acc;
-;;     }
-;; 

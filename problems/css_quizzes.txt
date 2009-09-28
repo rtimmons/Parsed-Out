@@ -1,19 +1,26 @@
-# CSS Day One Quizzes
+---
+layout: post
+title: CSS Quizzes
+published: true
+category: problems
+---
 
 ## Quiz the First
 
 Given the following document with style sheet
 
-    {{lang:html}}
-    <html><head><style type="text/css"><!--
-    body    {   font-size:  12px;   }
-    ul      {   font-size: 1.5em;   }
-    li      {   font-size: 0.5em;   }
-    --></style></head><body>
-    <ul>
-        <li>Item</li>
-    </ul>
-    </body></html>
+{% highlight html %}
+<html><head><title></title>
+<style type="text/css"><!--
+body    {   font-size:  12px;   }
+ul      {   font-size: 1.5em;   }
+li      {   font-size: 0.5em;   }
+--></style></head><body>
+<ul>
+    <li>Item</li>
+</ul>
+</body></html>
+{% endhighlight %}
 
 how tall (in terms of *number of pixels*) is the word *Item*?
 
@@ -29,39 +36,38 @@ how tall (in terms of *number of pixels*) is the word *Item*?
 
 Your assignment is to
 
- 1. make all the text 1.25 times larger
-    and rendered in the "Georgia" font,
- 2. change the body's background color to
-    be a light gray,
+ 1. make all the text 1.25 times larger and rendered in the "Georgia" font,
+ 2. change the body's background color to be a light gray,
  3. make all list items bold,
  4. make all headers dark green, and
  5. make all links dark blue and bold
 
 in the following document:
 
-    {{lang:html}}
-    <html><head><title></title>
-    <style type="text/css"><!--
-    --></style></head>
-    <body>
-    
-    <h1>Initech International</h1>
-    <h2>Home Page</h2>
-    
-    <ul>
-      <h3>Menu</h3>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About Us</a></li>
-      <li><a href="contact.html">Contact Us</a></li>
-      <li><a href="legal.html">Legal</a></li>
-    </ul>
-    
-    <p>Welcome to our home page!</p>
-    <p>We hope you enjoy your stay.</p>
-    <p>Under construction!</p>
-    
-    </body>
-    </html>
+{% highlight html %}
+<html><head><title></title>
+<style type="text/css"><!--
+--></style></head>
+<body>
+
+<h1>Initech International</h1>
+<h2>Home Page</h2>
+
+<ul>
+  <h3>Menu</h3>
+  <li><a href="index.html">Home</a></li>
+  <li><a href="about.html">About Us</a></li>
+  <li><a href="contact.html">Contact Us</a></li>
+  <li><a href="legal.html">Legal</a></li>
+</ul>
+
+<p>Welcome to our home page!</p>
+<p>We hope you enjoy your stay.</p>
+<p>Under construction!</p>
+
+</body>
+</html>
+{% endhighlight %}
 
 
 ### Solution:
@@ -70,28 +76,29 @@ in the following document:
 
 (To be inserted inside the `style` section.)
 
-    {{lang:css}}
-    body {
-        font-size: 1.25em;                      /* (1) */
-        font-family: Georgia, serif;            /* (1) */
-        background-color: rgb(225,225,225);     /* (2) */
-    }
-    li {
-        font-weight: bold;                      /* (3) */
-    }
-    h1 {
-        color: rgb(10,100,10);                  /* (4) */
-    }
-    h2 {
-        color: rgb(10,100,10);                  /* (4) */
-    }
-    h3 {
-        color: rgb(10,100,10);                  /* (4) */
-    }
-    a {
-        color: rgb(10,10,100);                  /* (5) */
-        font-weight: bold;                      /* (5) */
-    }
+{% highlight css %}
+body {
+    font-size: 1.25em;                      /* (1) */
+    font-family: Georgia, serif;            /* (1) */
+    background-color: rgb(225,225,225);     /* (2) */
+}
+li {
+    font-weight: bold;                      /* (3) */
+}
+h1 {
+    color: rgb(10,100,10);                  /* (4) */
+}
+h2 {
+    color: rgb(10,100,10);                  /* (4) */
+}
+h3 {
+    color: rgb(10,100,10);                  /* (4) */
+}
+a {
+    color: rgb(10,10,100);                  /* (5) */
+    font-weight: bold;                      /* (5) */
+}
+{% endhighlight %}
 
 {/hidden}
 
@@ -102,80 +109,80 @@ necessary elements with classes/IDs such that
 
  1. the headers `<h1>` and `<h2>` are grouped together with a
     slightly-darker-than-the-background gray,
- 2.  none of the menu items have bullets,
- 3. the last paragraph (with the text "Under construction!") is
-    considered a "warning",
+ 2. none of the menu items have bullets,
+ 3. the last paragraph (with the text "Under construction!") is considered a
+    "warning",
  4. the menu item links are *not* bold,
- 5. the last menu item ("Legal") is considered a "warning", and
-    finally
+ 5. the last menu item ("Legal") is considered a "warning", and finally
  6. all things considered to be a "warning" are dark red and bold.
 
-(Note that (4) and (6) conflict. In this case, it's okay to have the
-last menu item be bold.)
+(Note that (4) and (6) conflict. In this case, it's okay to have the last menu
+item be bold.)
 
-Additionally, your solution should avoid repetition as much as
-possible. That is, if two style definitions share the same set of
-property/value pairs, then they should be combined.
+Additionally, your solution should avoid repetition as much as possible. That
+is, if two style definitions share the same set of property/value pairs, then
+they should be combined.
 
 ### Solution:
 
 {hidden}
 
-    {{lang:html}}
-    <html><head><title></title>
-    <style type="text/css"><!--
-    body {
-        font-size:          1.25em;
-        font-family:        Georgia, serif;
-        background-color:   rgb(225,225,225);
-    }
-    li {
-        font-weight: bold;
-    }
-    h1, h2, h3 {
-        color: rgb(10,100,10);
-    }
-    a {
-        color:          rgb(10,10,100);
-        font-weight:    bold;
-    }
-    div#header {
-        background-color: rgb(200, 200, 200);
-    }
-    li.nobull {
-        list-style-type: none;
-    }
-    .warning {
-        color:          rgb(80,10,10);
-        font-weight:    bold;
-    }
-    --></style></head>
-    <body>
-    
-    <div id="header">
-    <h1>Initech International</h1>
-    <h2>Home Page</h2>
-    </div><!--id=header-->
-    
-    <div id="menu">
-    <ul>
-        <h3>Menu</h3>
-        <li class="nobull"><a href="index.html">
-            Home</a></li>
-        <li class="nobull"><a href="about.html">
-            About Us</a></li>
-        <li class="nobull"><a href="contact.html">
-            Contact Us</a></li>
-        <li class="nobull">
-            <a href="legal.html"class="warning">
-            Legal</a></li>
-    </ul>
-    </div><!--id=menu-->
-    
-    <p>Welcome to our home page!</p>
-    <p>We hope you enjoy your stay.</p>
-    <p class="warning">Under construction!</p>
-    
-    </body></html>
+{% highlight html %}
+<html><head><title></title>
+<style type="text/css"><!--
+body {
+    font-size:          1.25em;
+    font-family:        Georgia, serif;
+    background-color:   rgb(225,225,225);
+}
+li {
+    font-weight: bold;
+}
+h1, h2, h3 {
+    color: rgb(10,100,10);
+}
+a {
+    color:          rgb(10,10,100);
+    font-weight:    bold;
+}
+div#header {
+    background-color: rgb(200, 200, 200);
+}
+li.nobull {
+    list-style-type: none;
+}
+.warning {
+    color:          rgb(80,10,10);
+    font-weight:    bold;
+}
+--></style></head>
+<body>
+
+<div id="header">
+<h1>Initech International</h1>
+<h2>Home Page</h2>
+</div><!--id=header-->
+
+<div id="menu">
+<ul>
+    <h3>Menu</h3>
+    <li class="nobull"><a href="index.html">
+        Home</a></li>
+    <li class="nobull"><a href="about.html">
+        About Us</a></li>
+    <li class="nobull"><a href="contact.html">
+        Contact Us</a></li>
+    <li class="nobull">
+        <a href="legal.html"class="warning">
+        Legal</a></li>
+</ul>
+</div><!--id=menu-->
+
+<p>Welcome to our home page!</p>
+<p>We hope you enjoy your stay.</p>
+<p class="warning">Under construction!</p>
+
+</body></html>
+{% endhighlight %}
 
 {/hidden}

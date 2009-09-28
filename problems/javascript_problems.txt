@@ -1,6 +1,9 @@
-===
-
-# Javascript Practice Problems
+---
+layout: post
+title: JavaScript Problems
+published: true
+category: problems
+---
 
 Remember that JavaScript and PHP (and Ruby and COBOL and Python and pretty
 much everything else) are very different: you can still use the same
@@ -256,10 +259,10 @@ Imagine you have the following document structure
             <ul>    <li><a href="1">Home</a></li>
                     <li><a href="2">About</a></li>
                     <li><a href="3">Contact</a></li>    </ul>
-        </div><div id="content">
+        {/hidden}<div id="content">
             <h1>Header</h1>
             <p>This is text</p>
-        </div>
+        {/hidden}
     </body>
 
 Then what is the jQuery to...
@@ -552,7 +555,7 @@ of ways to solve the problem.
                          +    ' characters left' );
         };
         $('textarea.limit').each(function(){
-            $(this).after('<div></div>')
+            $(this).after('<div>{/hidden}')
                    .keypress(function(){
                         current_length = $(this).val().length;
                         update_val(this);
@@ -589,7 +592,7 @@ So you're given that the following is on your page
         <input name="foo" value="bar" type="checkbox" />
         <input name="foo" value="baz" type="checkbox" />
         <input name="foo" value="bat" type="checkbox" />
-    </div>
+    {/hidden}
     </form>
 
 and after running your jQuery runs, this will become
@@ -602,7 +605,7 @@ and after running your jQuery runs, this will become
         <input name="foo" value="bar" type="checkbox" />
         <input name="foo" value="baz" type="checkbox" />
         <input name="foo" value="bat" type="checkbox" />
-    </div>
+    {/hidden}
     </form>
 
 And clicking on "All" checks all the checkboxes, clicking "None"
@@ -697,19 +700,19 @@ Imagine your document is structured like
             <p>Tab 0 text</p>
             <p>Tab 0 text</p>
             [...]
-        </div>
+        {/hidden}
         <div class="tab">
             <h1>Tab 1 Title</h1>
             <p>Tab 1 text</p>
             <p>Tab 1 text</p>
             [...]
-        </div>
+        {/hidden}
         <div class="tab">
             <h1>Tab 2 Title</h1>
             <p>Tab 2 text</p>
             <p>Tab 2 text</p>
             [...]
-        </div>
+        {/hidden}
     </body>
 
 You now want to make this a "tabbed" interface: above the set of
@@ -909,22 +912,22 @@ Here is a bit of HTML with Microformats embedded:
         <a class="fn org url" href="http://www.commerce.net/">CommerceNet</a>
         <div class="adr">
             <span class="type">Work</span>:
-            <div class="street-address">169 University Avenue</div>
+            <div class="street-address">169 University Avenue{/hidden}
             <span class="locality">Palo Alto</span>,  
             <abbr class="region" title="California">CA</abbr>  
             <span class="postal-code">94301</span>
-            <div class="country-name">USA</div>
-        </div>
+            <div class="country-name">USA{/hidden}
+        {/hidden}
         <div class="tel">
             <span class="type">Work</span> +1-650-289-4040
-        </div>
+        {/hidden}
         <div class="tel">
             <span class="type">Fax</span> +1-650-289-4041
-        </div>
+        {/hidden}
         <div>Email: 
             <span class="email">info@commerce.net</span>
-        </div>
-    </div>
+        {/hidden}
+    {/hidden}
 
 (this via the [hcard microformat page][hcard].)
 
@@ -938,7 +941,7 @@ Say you have bunch of `<div>`s on the page like
     {{lang:html}}
     <div class="showhide" title="Solution">
         <p>The solution</p>
-    </div>
+    {/hidden}
 
 and you want to hide them all when the user first loads the page but
 then provide links to show/hide the elements in their place. The text
@@ -993,7 +996,7 @@ Given the following HTML on the page, insert links to dynamically
 change the body's font size.
 
     {{lang:html}}
-    <div id="font"></div>
+    <div id="font">{/hidden}
 
 {hidden}
 
@@ -1254,7 +1257,7 @@ Assume you have the following HTML code on your page
     {{lang:html}}
     <div id="counter">
         <span>100</span> Visitors
-    </div>
+    {/hidden}
 
 and that there is a script on your server called *counter.php* that
 takes parameters

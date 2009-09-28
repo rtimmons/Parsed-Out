@@ -1,5 +1,9 @@
-
-# CSS Pop-Up Menu Example
+---
+layout: post
+title: CSS Drop-Down Menus
+published: false
+category: problems
+---
 
 Our goal in this writeup is to complete a simple horizontal pop-up
 menu using only HTML and CSS. An example of one would be:

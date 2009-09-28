@@ -1,6 +1,9 @@
-===
-
-# Joining with PHP:  Doing the Job of MySQL
+---
+layout: post
+title: Joining With PHP&colon; Doing the Job of MySQL
+published: true
+category: problems
+---
 
 Here is a brief introduction to the topic of joining. For further explanation,
 I would recommend getting a book on SQL -- any basic introduction book would
@@ -78,13 +81,13 @@ There are three kinds of relationships between entities:
 Joining entities involves iterating over two sets of entities and "gluing"
 pairs of them together based on some sort of condition. This condition is
 usually the two entities having a data field in common. In our example, we
-want to glue together our $posts and our $authors, but the question is *in
+want to glue together our `$posts` and our `$authors`, but the question is *in
 which direction do we want to glue them together?* Should we glue authors to
 posts, or should we glue posts to authors.
 
 In the first case, gluing authors to posts, we'll be replacing the 'author_id'
 field with the corresponding author entity. This is called a *left join*.
-Joining the first post, $posts[0], with $authors,
+Joining the first post, `$posts[0]`, with $authors,
 
     {{lang:php}}
     array(                                
@@ -103,14 +106,7 @@ Joining the first post, $posts[0], with $authors,
         'text'      => 'My First Post'    
     ),                
 
-In the second case, we'll be gluing posts to authors. This is a *right join*.
-(The direction is so because we're selecting from "posts and authors"; if we
-were selecting from "authors and posts", this would be a left join and the
-previous example would be a right join.) Remember that an author hasMany posts
-and a post belongsTo an author. In this case, we would have to add a field in
-our author called maybe "posts" that would be an *array* of post entities
-(i.e., an array of arrays). If we were to join $posts with `$authors[0]`
-("Mark Twain"), we would have:
+In the second case, we'll be gluing posts to authors. This is a *right join*. (The direction is so because we're selecting from "posts and authors"; if we were selecting from "authors and posts", this would be a left join and the previous example would be a right join.) Remember that an author hasMany posts and a post belongsTo an author. In this case, we would have to add a field in our author called maybe "posts" that would be an *array* of post entities (i.e., an array of arrays). If we were to join `$posts` with `$authors[0]` ("Mark Twain"), we would have
 
     {{lang:php}}
     array(                                     
