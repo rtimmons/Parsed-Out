@@ -1,21 +1,23 @@
 ---
 layout: post
 title: Hack
-published: false
+published: true
 ---
 
 Just a simple usage of command-line hacks that you couldn't easily do otherwise:
 
 I use [pyTivoX][p] to get movies from my computer to my Tivo.  A rather weird thing that it does, though, is sort movies based on modification time rather than alphabetically.  I was unable to build pyTivoX myself after a bit of effort, so I gave up on modifying it to sort properly and instead came up with this (very simple) hack:
 
-    cd ~/Movies
-    ls | sort > ~/movies.txt
-    while read movie; do
-        echo $movie
-        touch "$movie"
-        sleep 1
-    done < ~/movies.txt
-    rm movies.txt
+{% highlight bash %}
+cd ~/Movies
+ls | sort > ~/movies.txt
+while read movie; do
+    echo $movie
+    touch "$movie"
+    sleep 1
+done < ~/movies.txt
+rm movies.txt
+{% endhighlight %}
 
 `touch(1)`, of course, changes the last-modified field of a file without actually modifying file.  This simply runs `touch` on each file in *Movies* in sorted order and gives the desired result that pyTivoX displays the movies alphabetically.
 
