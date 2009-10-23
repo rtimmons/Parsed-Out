@@ -1,6 +1,3 @@
-DOCSTYLE_SRC=http://releases.ganon.com/docstyle.tar.gz
-VENDORS=_vendor/docstyle
-
 # Site:
 .PHONY: clean_site site
 
@@ -25,21 +22,8 @@ new:
 
 
 # Vendors
-.PHONY: vendors clean_vendors
-
-vendors: ${VENDORS}
-
-clean_vendors:
-	rm -rf _vendor/*
-
-_vendor/docstyle: _vendor/docstyle.tar.gz
-	mkdir -p _vendor
-	tar xzf _vendor/docstyle.tar.gz -C _vendor
-
-_vendor/docstyle.tar.gz:
-	mkdir -p _vendor
-	wget ${DOCSTYLE_SRC} -O _vendor/docstyle.tar.gz
-
+vendors:
+	braid update _vendor/docstyle
 
 # Cleanup
-clean: clean_site clean_vendors
+clean: clean_site
