@@ -1,0 +1,164 @@
+/*
+ * basic.css from docstyle project
+ * $Id$
+ */
+
+@import "geshi.css";
+
+body {
+    width: 45em;
+    color: #000000;
+    background-color: #fafafa;
+    margin: 0 auto;
+    padding: 0 0.5em;
+    font-family: Verdana, "Bitstream Vera Sans", sans-serif;
+}
+
+body.dark {
+    color: #eeeeee;
+    background-color: #3d3d3d;
+}
+
+a, a code { 
+    color: #00414f;
+    text-decoration: underline;
+}
+
+body.dark a, body.dark a code {
+    color: #ffff77;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Georgia, serif;
+    color: #19356d;
+}
+
+body.dark h1, body.dark h2, body.dark h3,
+body.dark h4, body.dark h5, body.dark h6 {
+    color: #ffffff;
+}
+
+h1 {
+    text-align: center;
+}
+
+h2, h3, h4, h5, h6 {
+    background-color: #dde0e4;
+    margin-left: -1.5em;
+    margin-right: -0.5em;
+    padding: 0.1em 0.5em;
+}
+
+body.dark h2, body.dark h3, body.dark h4, body.dark h5, body.dark h6 {
+    background-color: #6a6a6a;
+}
+
+p + h2, pre + h2, h1 + h2, h2 + h3, h3 + h4 {
+    margin-top: 1.5em;
+}
+
+pre {
+    overflow-x: auto;
+    margin-left: 3em;
+    padding: 0.3em 0.5em;
+    border: 1px dotted #162c58;
+    font-family: PanicSans, monospace;
+    font-size: 14px;
+    line-height: 1.3em;
+    word-wrap: break-word;
+    white-space: pre;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -o-pre-wrap;
+}
+
+body.dark pre {
+    border-color: #333333;
+}
+
+pre, code {
+    background-color: #f1f1f1;
+    color: #162c58;
+}
+
+body.dark pre, body.dark code {
+     background-color: #B6B6B6;
+}
+
+blockquote {
+    font-style: italic;
+    margin: 0 1em;
+    padding-left: 1em;
+    border-left: 1px solid #356e48;
+}
+
+
+@media print {
+    .noprint {
+        display: none !important;
+    }
+    body {
+        font-family: Georgia, times, serif;
+        background: #FFFFFF;
+        font-size: 12pt;
+        width: 40em;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        color: #000000;
+        margin: 0;
+        padding: 0;
+    }
+    h1 {
+        margin-left: -1.5em;
+        margin-bottom: 1em;
+    }
+    h2 {
+        margin-left: -1em;
+    }
+    h3 {
+        margin-left: -0.5em;
+    }
+    pre {
+        font-size: 10pt;
+        margin-left: 1.5em;
+        border-right-width: 0;
+        border-left-width: 0;
+        overflow-x: visible;
+    }
+    pre, blockquote {
+        page-break-inside: avoid;
+        border-color: #000000;
+    }
+    code, pre, pre code {
+        color: #000000;
+    }
+    a:link, a:visited {
+        color: #281C58;
+        background: transparent;
+        text-decoration: underline;
+    }
+    pre a, code a {
+        text-decoration: none;
+    }
+    p > a:link:after, p > a:visited:after,
+    li > a:link:after, li > a:visited:after {
+        content: " <" attr(href) ">";
+        font-size: 90%;
+    }
+    div.showhide {
+        margin: 2em;
+        padding: 0.5em;
+        border: 1px solid #dfdfdf;
+    }
+    a.showhide {
+        display: none;
+    }
+    div.showhide pre {
+        border-style: dashed;
+        margin: 0;
+    }
+    div {
+        display: block !important;
+    }
+    
+}

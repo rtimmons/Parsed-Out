@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title></title>
+  <style type="text/css">
+  /*<![CDATA[*/
+    @import "../basic.css";
+  /*]]>*/
+  </style>
+  <script type="text/javascript" src="../script.js"></script>
+</head>
+<body>
+
+<h1 id="ryan8217s_rails_notes">Ryan&#8217;s Rails Notes</h1>
+
+<p>This is definitely a work-in-progress: please do not use it as a
+start-to-finish guide. If there&#8217;s something wrong or obviously missing, you
+can contact me at <a href="&#109;&#97;&#105;&#108;&#116;&#111;:&#114;&#116;&#105;&#109;&#x6D;&#x6F;&#110;&#x73;&#64;&#117;&#46;&#119;&#x61;&#115;&#x68;&#105;&#110;&#x67;&#x74;&#x6F;n&#x2E;e&#x64;&#117;">&#114;&#116;&#105;&#109;&#x6D;&#x6F;&#110;&#x73;&#64;&#117;&#46;&#119;&#x61;&#115;&#x68;&#105;&#110;&#x67;&#x74;&#x6F;n&#x2E;e&#x64;&#117;</a> or &#8220;officially&#8221; via
+<a href="&#109;&#97;&#105;l&#116;&#111;:&#99;&#x61;&#116;&#x61;&#108;&#x79;&#x73;&#x74;h&#101;&#x6C;&#112;&#64;&#117;&#x2E;&#x77;a&#115;&#x68;&#105;&#x6E;g&#x74;&#111;&#x6E;&#46;&#101;&#100;&#x75;">&#99;&#x61;&#116;&#x61;&#108;&#x79;&#x73;&#x74;h&#101;&#x6C;&#112;&#64;&#117;&#x2E;&#x77;a&#115;&#x68;&#105;&#x6E;g&#x74;&#111;&#x6E;&#46;&#101;&#100;&#x75;</a>.</p>
+
+<h2 id="foreword">Foreword</h2>
+
+<p>This is my very disorganized and almost completely without-explanation
+gathering of notes that will one day ferment into an online curriculum for
+Catalyst&#8217;s Ruby on Rails Workshop.</p>
+
+<p>I learned Ruby on Rails mostly by trial and error and by following a few
+tutorials and reading the Rails API. Google has been my best friend in the
+process.</p>
+
+<p>Before reading my notes, be sure to check out</p>
+
+<ul>
+<li><p><a href="http://poignantguide.net/ruby/">Why&#8217;s Poignant Guide to Ruby</a> for a good look at the Ruby
+programming language. A lot of Rails&#8217;s magic comes from how well Ruby is
+designed to fit this particular application. Read through chapter 5 at
+least before going too far with Rails.</p></li>
+<li><p><a href="http://www.slash7.com/articles/2005/01/24/really-getting-started-in-rails">Amy&#8217;s Getting Started With Rails Guide</a> looks at RoR with a &#8220;I want
+to get started right away&#8221; kind of attitude, which is how some people
+prefer to get started: diving right in.</p></li>
+</ul>
+
+<p>Also don&#8217;t forget to check out</p>
+
+<ul>
+<li><a href="http://api.rubyonrails.com/">The Rails API</a> for the &#8220;official&#8221; take on how to call aspects of the
+Rails framework</li>
+<li><a href="http://railsbrain.com/">RailsBrain.com</a>, for a more AJAX-ey version of
+the Rails API</li>
+<li><a href="http://wiki.rubyonrails.com/">The Rails Wiki</a> for user-submitted documentation on Rails</li>
+</ul>
+
+<p>Central to Rails is the MVC&#8212;Model View Controller&#8212;design pattern. This
+simple idea is used everywhere in modern programming. For a full treatise on
+the subject, read <a href="http://en.wikipedia.org/wiki/Model-view-controller">the wikipedia article</a>: it does a very good job
+explaining the subject.</p>
+
+<p>I&#8217;ve also tried to introduce MVC into my discussion of PHP and JavaScript, but
+using MVC with these technologies is actually <em>more</em> work than not using it;
+compared to using MVC with Rails, in which case it&#8217;s completely unavoidable.</p>
+
+<h2 id="general_ruby_stuff">General Ruby Stuff</h2>
+
+<p>Matz, the &#8220;father&#8221; of Ruby, has to say that</p>
+
+<blockquote>
+  <p>Everyone has an individual background. Someone may come from Python, someone
+  else may come from Perl, and they may be surprised by different aspects of
+  the language. Then they come up to me and say, &#8216;I was surprised by this
+  feature of the language, so Ruby violates the principle of least surprise.&#8217;
+  Wait. Wait. The principle of least surprise is not for you only. The
+  principle of least surprise means principle of least my surprise. And it
+  means the principle of least surprise after you learn Ruby very well. For
+  example, I was a C++ programmer before I started designing Ruby. I
+  programmed in C++ exclusively for two or three years. And after two years of
+  C++ programming, it still surprises me.</p>
+</blockquote>
+
+<p>I come from languages like Java, C, Perl, and PHP with Python being my most
+adventurous leap into crazy syntax on the procedural side of programming and
+Scheme being the craziest on the functional side of programming. I stay
+curly-brace, white-space-don&#8217;t-matter with my code.</p>
+
+<p>So Ruby&#8217;s syntax was a bit weird to me at first, but I&#8217;ve found that
+everything actually works exactly as I would have implemented had I written
+the Ruby implementation. (What a disaster that would have been, though&#8230;). My
+point is that Ruby <em>does</em> hide a lot from you, but it does so very
+predictably: rarely is there some weird syntax thing going on that you
+probably won&#8217;t be able to reduce to something similar in PHP or Java.</p>
+
+<p>(This last concept I often compare to the difference between British English
+and American English: some things might take you off-guard at first, but it
+shouldn&#8217;t take you long to mentally switch between the two.)</p>
+
+<p>What makes Ruby such a great language for a framework like Rails (and
+why similar projects like CakePHP in languages like PHP are so much
+more quirky) is that it, Ruby, is purely object-oriented and has the
+notion of dynamic classes. More on this later.</p>
+
+<h3 id="ruby8217s_weird_syntax">Ruby&#8217;s Weird Syntax</h3>
+
+<p>Ruby&#8217;s syntax is pretty lax. Semicolons, curly braces, and even parens are
+optional in most cases. Functions take comma-separated lists of arguments, but
+as soon as a key=>value pair is seen, that argument and the rest of the
+arguments are globbed together in a hash. So then</p>
+
+<pre><code>{{lang:rails}}
+has_many(:comments, :dependent =&gt; :destroy,
+                     :order     =&gt; "created_at ASC")
+</code></pre>
+
+<p>is equivalent to</p>
+
+<pre><code>{{lang:rails}}
+has_many :comments, :dependent =&gt; :destroy,
+                    :order     =&gt; "created_at ASC"
+</code></pre>
+
+<p>which is in turn equivalent to</p>
+
+<pre><code>{{lang:rails}}
+has_many :comments, { :dependent =&gt; :destroy,
+                      :order     =&gt; "created_at ASC" }
+</code></pre>
+
+<p>which is, of course, equivalent to</p>
+
+<pre><code>{{lang:rails}}
+has_many(:comments, { :dependent =&gt; :destroy,
+                      :order     =&gt; "created_at ASC" })
+</code></pre>
+
+<p>You&#8217;ll also see clever use of the asterisk array exploder, a la</p>
+
+<pre><code>{{lang:ruby}}
+Chapter.find(
+    :all,
+    :conditions =&gt; ['name = ? and title LIKE \'?\'', *conds]
+)
+</code></pre>
+
+<p>where <code>conds</code> is an array. This &#8220;unleashes&#8221; or &#8220;unwalls&#8221; the array, if you
+will&#8212;it&#8217;s like you&#8217;re throwing the items in the array individually as
+arguments to the function rather than sending them all together as a single
+argument. Consider the following example:</p>
+
+<pre><code>{{lang:ruby}}
+def right_triangle(a,b)
+    Math.sqrt(a*a+b*b)
+end
+some_args = [3,4]
+puts right_triangle(*some_args) # =&gt; 5
+</code></pre>
+
+<p>It&#8217;s meant to infer the &#8220;dereference&#8221; semantics from pointers in C, but that
+analogy is difficult to follow.</p>
+
+<h4 id="symbols_vs_strings">Symbols vs. Strings</h4>
+
+<p>There is a lot of confusion, I&#8217;ve found, around the use of symbols, which are
+preceded by colons (e.g., <code>:comments</code>) versus strings, which are double- or
+single-quoted (e.g. <code>"comments"</code>).</p>
+
+<p>Technically strings are arrays of bytes which are both tedious to compare for
+equality and which also carry with them lots of extra emotional baggage.
+Symbols on the other hand are converted immediately by the Ruby compiler to
+integers and are very light and breezy, as they say.</p>
+
+<p>(Ruby is a nice language in that it <strong>will</strong> allow you to convert a symbol to
+a string, (<code>:spam.to_s</code>, for example, yields <code>"spam"</code>), but this operation is
+expensive.)</p>
+
+<p>The end result is that you should use symbols whenever you don&#8217;t need the user
+of your application (i.e. the lay-person using your fancy new Rails app) to
+see the actual string-like name of the symbol. If you could do a global
+search-and-replace on your symbol and replace it with some crazy other symbol
+and still have it compile and &#8220;make sense&#8221; (perhaps harder to read but still
+syntactically correct) then you should use a symbol.</p>
+
+<h2 id="general_rails_development">General Rails Development</h2>
+
+<p>The how and where of Rails.</p>
+
+<h3 id="rails_2x_versus_rails_1x">Rails 2.x Versus Rails 1.x</h3>
+
+<p>Rails 2.0 is new as of December 17, 2007. A lot of its core libraries have
+been reworked to make things a lot faster and a lot simpler both for you and
+the server. The only problem, though, is that most code written in Rails 1.x
+<strong>will not</strong> work in Rails 2.x. Also, many of the tutorials, message threads,
+and books are all written for Rails 1.x.</p>
+
+<p>If you&#8217;re pressing forward with Rails 2.0, it&#8217;s handy to have a list of what&#8217;s
+changed in the newest version. Please contact me for a PDF file containing a
+aptly-discussed list of the changes and how to use the new feature set of
+Rails 2.0.</p>
+
+<h3 id="aptana_studio">Aptana Studio</h3>
+
+<p>Aptana Studio is based on Eclipse and has lots of good stuff. It&#8217;s
+cross-platform, open-source, and all-around pretty cool.</p>
+
+<p><a href="http://www.aptana.com/docs/index.php/Importing_an_existing_project_into_RadRails">How to import an existing Rails project into Aptana</a></p>
+
+<h3 id="rails_for_mac">Rails for Mac</h3>
+
+<p>Rails is installed by default on Mac OS X (although you might want to download
+the most recent version if you&#8217;re still running 10.4 &#8220;Tiger&#8221; as it&#8217;s a little
+bit screwy; the version in 10.5 &#8220;Leopard&#8221; is fine.)</p>
+
+<p>I&#8217;ve tried the very popular <a href="http://locomotive.raaum.org/">Locomotive</a> application for one-button app
+creation and running, but I find that using the command line utilities are
+simply easier.</p>
+
+<h3 id="rails_for_windows">Rails for Windows</h3>
+
+<p><a href="https://rubyforge.org/projects/instantrails/">InstantRails</a> includes MySQL, Apache, Ruby, and Rails all pre-configured
+and good to go. I&#8217;ve found that this is not as easy to set up and use as it
+should be, though. In particular, you have to explicitly create the apps using
+the command-line and then either configure the Apache instance by hand or look
+for the automatic port number.</p>
+
+<p>I hate configuring Apache almost as much as I hate using the command line on
+Windows, which I hate a lot.</p>
+
+<h3 id="text_editors_for_ruby">Text Editors for Ruby</h3>
+
+<p>A good text editor is Notepad++ or <a href="http://eclipse.org/">Eclipse</a>, the latter being a
+full-fledged IDE (integrated development environment) built in Java; you may
+have to get the Rails plugins if you opt for Eclipse.</p>
+
+<p>I use <a href="http://macromates.com/">TextMate</a> (~$35 with free 30-day trial), which is a great Mac text
+editor with lots of built-in support for web and *nix stuff. I occasionally
+dabble in emacs on the command line (or <a href="http://aquamacs.org/">Aquamacs Emacs</a>, the &#8220;Mac
+Version&#8221; of emacs), but I rarely step outside of TextMate for anything
+text-related.</p>
+
+<p>I&#8217;ve heard good things about the <a href="http://www.e-texteditor.com/">e Text Editor</a>, which is supposed to be
+a TextMate clone for Windows. I&#8217;ve used it only briefly and found it to be a
+good editor. I&#8217;d look into it if the command line appeals to you in any way.</p>
+
+<h3 id="the_console">The Console</h3>
+
+<p>The console lets you interact with your models via the command line. This lets
+you quickly see if your Model logic is correct and to quickly query your
+database.</p>
+
+<p>Running the app&#8217;s rails console is simply a matter of</p>
+
+<pre><code>$ script/console
+</code></pre>
+
+<p>which in turn gives access to the console.  E.g.,</p>
+
+<pre><code>$ script/console
+&gt;&gt; c = Chapter.new(:title =&gt; "Blah")
+&gt;&gt; c.save
+true
+&gt;&gt; Chapter.find(:first)
+</code></pre>
+
+<h3 id="extensions_plugins">Extensions/Plugins</h3>
+
+<p>The <a href="http://wiki.rubyonrails.org/rails/pages/Plugins">RoR Wiki Plugins Page</a> has a good overview of the plugins and
+whatnot while <a href="http://techno-weenie.net">http://techno-weenie.net</a> has a lot of Rails Plugins listed.</p>
+
+<p>To install a plugqin, find the (svn) address and run the <em>plugin</em> script with
+the <em>install</em> option. E.g.,</p>
+
+<pre><code>$ script/plugin install http://svn.techno-weenie.net/...
+</code></pre>
+
+<p>This results in the plugin code being placed into <em>vendors/plugins</em>. You don&#8217;t
+need to do anything to activate a plugin: it is automatically loaded and used
+by virtue of it residing in <em>vendors/plugins</em>.</p>
+
+<h2 id="model_stuff">Model Stuff</h2>
+
+<h3 id="initial_model_setup_and_scaffolding">Initial Model Setup and Scaffolding</h3>
+
+<p>This is how to create scaffolding in Rails 2.0. It is the functionality
+originally found in Rails 1.x using <code>script/generate scaffold_resource</code>.</p>
+
+<pre><code>$ script/generate scaffold Chapter  \
+    title:string                    \
+    teaser:text                     \
+    body:text                       \
+    position: integer               \
+    created_at:datetime             \
+    updated_at:datetime
+</code></pre>
+
+<p>This automatically creates the initial migration to bootstrap the database
+into action. Rails can&#8217;t create the actual database though: it can only create
+its tables. (The backslashes are there so you can break the line; you may omit
+them if you do not break the line between the fields.)</p>
+
+<h3 id="migrations">Migrations</h3>
+
+<p>To create a migration, run e.g., <code>$ script/generate migration add_price</code> to
+create a migration where we add a price field to the <code>products</code> model.</p>
+
+<p>This creates a file <em>db/migrate/001_add_price.rb</em> (notice the conversion from
+under_scored to CamelCase):</p>
+
+<pre><code>{{lang:rails}}
+class AddPrice &lt; ActiveRecord::Migration
+    def self.up
+            # the first arg here, :products, is the table name
+        add_column :products, :price,
+                   :decimal,
+                   :precision   =&gt; 8,
+                   :scale       =&gt; 2,
+                   :default     =&gt; 0
+    end
+
+    def self.down
+        remove_column :products, :price
+    end
+end
+</code></pre>
+
+<p>Use <code>self.up</code> to migrate to a new version and <code>self.down</code> method to rollback.</p>
+
+<p>Run all the necessary migrations by running <code>$ rake db:migrate</code> from themain
+project directory.</p>
+
+<p>More migrations information <a href="http://wiki.rubyonrails.org/rails/pages/UsingMigrations">here</a>.</p>
+
+<h3 id="querying_with_models">Querying With Models</h3>
+
+<p>Use <code>?</code> to indicate placeholders for count/find/etc operations that interact
+with the database. This is sort of like C&#8217;s <code>printf</code>.</p>
+
+<pre><code>{{lang:rails}}
+def self.count_by_date(year, month = nil,
+                       day = nil, limit = nil)
+  if !year.blank?
+    from, to = self.time_delta(year, month, day)
+    Article.count(
+      ["published_at BETWEEN ? AND ? AND published = ?",
+        from, to, true]
+    )
+  else
+    Article.count(
+      :conditions =&gt; {:published =&gt; true }
+    )
+  end
+end
+</code></pre>
+
+<p><strong>This is also the real only way to avoid SQL injection attacks, so be sure
+that if you&#8217;re ever querying against user data that use use this style of
+querying.</strong></p>
+
+<h3 id="model_magic">Model Magic</h3>
+
+<p>Rails automatically takes care of datetimes if the table has columns
+<code>created_at</code> and/or <code>updated_at</code>.</p>
+
+<p>For (most) fields you can call automagic find methods. E.g.,</p>
+
+<pre><code>{{lang:rails}}
+Chapter.find_by_title "this is cool"
+Chapter.find_all_by_title "this is awesome"
+</code></pre>
+
+<p>The <code>title</code> part comes directly from the name of the column and isn&#8217;t
+hard-coded into Rails. Note that the <code>all</code> method always returns an array of
+objects, even if only one thing is found.</p>
+
+<p>Also have <code>find_or_create_by_*field*</code>. E.g.,</p>
+
+<pre><code>{{lang:rails}}
+Chapter.find_or_create_by_title "Chunky Bacon"
+</code></pre>
+
+<h3 id="find_in_general">Find in General</h3>
+
+<p>Aside from the automagic methods above, Rails also has the generic <code>find</code>
+method:</p>
+
+<pre><code>{{lang:rails}}
+Chapter.find(
+    :all,
+    :conditions =&gt; ["position &gt; ?", 7],
+    :group   =&gt; "position",
+    :order   =&gt; "created_at ASC"
+    :select  =&gt; "title, position", # pulls only specific fields
+    :include =&gt; :comments,  # which associations to include
+    :limit   =&gt; 5
+)
+</code></pre>
+
+<p>The <code>?</code> is a placeholder that further arguments will fill in (in order if
+there are more than one).</p>
+
+<h3 id="finding_with_has_and_belongs_to_many">Finding With <code>has_and_belongs_to_many</code></h3>
+
+<p>Imagine you have something like</p>
+
+<pre><code>{{lang:rails}}
+class Restaurant &lt; ActiveRecord::Base
+    has_and_belongs_to_many :food_items
+end
+</code></pre>
+
+<p>where each restaurant has a <code>close_time</code> and an <code>open_time</code> and you&#8217;d like to
+allow the user to search for restaurants that are both open and serving
+pancakes.</p>
+
+<p>There are actually <strong>two ways</strong> to do this: an intuitive way and a fast way.
+Unfortunately the intuitive way is very slow and the fast way is kind of
+opaque.</p>
+
+<p>The below will get you started, but it doesn&#8217;t cover how to limit the query to
+only restaurants that are currently open. That shouldn&#8217;t be too hard to add,
+though.</p>
+
+<ol>
+<li><p>Using Rails&#8217; built-in finder methods and then using a filter on the
+results.</p>
+
+<p>This way is simpler and more intuitive. You simply have in your controller</p>
+
+<pre><code>{{lang:rails}}
+def query
+  @food_item = FoodItem.find(:first,
+                       :select     =&gt; 'title',
+                       :conditions =&gt; [ 'title = ?', params[:food_item][:title] ])
+  @restaurants = Restaurant.find(:all,
+    :conditions =&gt; { :title =&gt; params[:restaurant][:title]}
+  @restaurants.delete_if { |rest| !rest.food_items.include? @food_item }
+end
+</code></pre>
+
+<p>This is, however, potentially very slow: we&#8217;re not using the database to
+do the heavy lifting it&#8217;s designed to do. Essentially we grab <em>all the
+restaurants</em> regardless of what food<em>items they have. We then simply
+remove the restaurants that don&#8217;t serve the food</em>item we found.</p>
+
+<p>We have to do this because there is a table between the restaurant and its
+food<em>items: the join table that establishes the &#8220;has</em>and<em>belongs</em>to_many&#8221;
+relationship.</p>
+
+<p>What&#8217;s interesting here is how we do in fact have to manually join our two
+tables together to achieve any reasonable amount of efficiency. Rails&#8217;s
+ActiveRecord can only be so smart.</p></li>
+<li><p>Using a bit of custom SQL, which isn&#8217;t at all obvious but isn&#8217;t too tough:</p>
+
+<pre><code>{{lang:rails}}
+def query
+  # this part is the same:
+  @food_item = FoodItem.find(:first,
+                       :select     =&gt; 'title',
+                       :conditions =&gt; [ 'title = ?', params[:food_item][:title] ])
+  # this part is changed:
+  @restaurants = Restaurant.find(:all,
+    :joins      =&gt; 'food_items_restaurants
+        ON food_items_restaurants.restaurant_id = restaurants.id'
+    :conditions =&gt; 'food_item_id = #{@food_item.id}')
+end
+</code></pre>
+
+<p>We actually could have written this as a more complex sql statement
+directly:</p>
+
+<pre><code>{{lang:sql}}
+SELECT food_items.*, restaurants.*
+FROM   food_items,food_items_restaurants,restaurants
+WHERE  food_items.id   = food_items_restaurants.food_item_id
+AND    restaurants.id  = food_items_restaurants.restaurant_id
+AND    food_item.title = YOUR_FOOD_ITEM_ID_HERE
+</code></pre>
+
+<p>This breaks the &#8220;veil of plurality&#8221; in Rails: we had to say
+<code>restaurants.id</code> when normally we refer to <code>restaurant.id</code>, but in this
+case we&#8217;re working directly with the database table names, and since the
+<code>Restaurant</code> model is stored in the <code>restaurants</code> database, we&#8217;re forced
+to use the plural form in this scenario.</p></li>
+</ol>
+
+<h3 id="useful_model_functions">Useful Model Functions</h3>
+
+<h4 id="time_delta">time_delta</h4>
+
+<pre><code>{{lang:rails}}
+def self.time_delta(year, month = nil, day = nil)
+  from = Time.mktime(year, month || 1, day || 1)
+  to = from.next_year
+  to = from.next_month unless month.blank?
+  to = from + 1.day unless day.blank?
+  to = to - 1 # pull off 1 second so we don't
+              # overlap onto the next day
+  return [from, to]
+end
+</code></pre>
+
+<h3 id="validations">Validations</h3>
+
+<p>A sample Model with validations:</p>
+
+<pre><code>{{lang:rails}}
+class Product &lt; ActiveRecord::Base
+
+    validates_presence_of     :title,
+                              :description,
+                              :image_url
+    validates_numericality_of :price
+    validates_uniqueness_of   :title
+    validates_format_of       :image_url,
+                              :with =&gt; %r{[0-9]*}i
+                                      # ^ this indicates a
+                                      # regular expression in
+                                      # ruby
+                              :message =&gt; "error message"
+
+    protected # since we never need to access this directly
+              # in the controller
+    def validate
+        if price.nil? or price &lt; 0.00 then
+            errors.add(:price,"error message")
+        end
+    end
+
+end
+</code></pre>
+
+<h3 id="model_callbacks">Model Callbacks</h3>
+
+<p>Calls methods before/after certain events take place. Useful for requiring
+authentication or logging events:</p>
+
+<pre><code>{{lang:ruby}}
+class Product &lt; ActiveRecord:Base
+    before_filter :login_required
+    after_create  :record_visit
+end
+</code></pre>
+
+<h3 id="model_magic">Model Magic</h3>
+
+<p>Including</p>
+
+<pre><code>{{lang:ruby}}
+has_many :comments
+</code></pre>
+
+<p>results in lots of magic methods:</p>
+
+<pre><code>{{lang:ruby}}
+chapter.comments
+chapter.has_comments
+chapter.comments.new
+chapter.comments &lt;&lt; Comment.create # push operator
+</code></pre>
+
+<h2 id="views">Views</h2>
+
+<h3 id="layouts">Layouts</h3>
+
+<p>Call <code>&lt;%= yield %&gt;</code> in /app/views/layouts/application.rhtml to render the
+object&#8217;s view.</p>
+
+<p>Create, e.g., /app/views/layouts/notes.rhtml to create a layout that overrides
+the default ([&#8230;]/application.rhtml isn&#8217;t even touched).</p>
+
+<p>Put <code>layout "notes"</code> in a controller to force a controller to use another
+controller&#8217;s layout.</p>
+
+<h3 id="partials">Partials</h3>
+
+<p>The file name starts with an underscore. E.g.
+<code>app/views/layouts/_footer.rhtml</code> for the &#8220;footer&#8221; partial.</p>
+
+<p>Use <code>&lt;%= render :partial =&gt; "layouts/footer" %&gt;</code> to render a partial or</p>
+
+<pre><code>{{lang:ruby}}
+&lt;%= render :partial    =&gt; "comment",
+           :collection =&gt; @comments %&gt;
+</code></pre>
+
+<p>to render a bunch of them</p>
+
+<h3 id="erb">ERb</h3>
+
+<p>These both use GET:</p>
+
+<ol>
+<li><p>First</p>
+
+<pre><code>{{lang:ruby}}
+link_to 'Next Page',
+    :action =&gt; 'show', :id =&gt; product
+    # The `id` in `product` is implicit.
+</code></pre></li>
+<li><p>Second</p>
+
+<pre><code>{{lang:ruby}}
+link_to 'Destroy', { :action =&gt; 'destroy',
+                     :id =&gt; product,
+                     :confirm =&gt; "Really?",
+                     :method =&gt; :post }
+</code></pre></li>
+</ol>
+
+<p>&#8230;while this uses POST:</p>
+
+<pre><code>{{lang:ruby}}
+button_to "Add to Cart",
+    :action =&gt; :add_to_cart,
+    :id =&gt; product
+</code></pre>
+
+<h2 id="controllers">Controllers</h2>
+
+<h3 id="redirect_to"><code>redirect_to</code></h3>
+
+<p>Use <code>redirect_to</code> within a controller:</p>
+
+<pre><code>{{lang:ruby}}
+redirect_to notes_url(:action =&gt; 'show',
+                      :id =&gt; params[:id])
+</code></pre>
+
+<p>After first adding</p>
+
+<pre><code>{{lang:ruby}}
+map.notes 'notes/:action/:id',
+        :controller =&gt; 'machines'
+</code></pre>
+
+<p>to routes.rb. In this URL, anything preceded by a colon is dynamic</p>
+
+<h3 id="filters">Filters</h3>
+
+<p>Add</p>
+
+<pre><code>{{lang:ruby}}
+before_filter :login_required,
+    :only =&gt; [:secret_stuff]
+</code></pre>
+
+<p>to the top of the controller. Then the <code>login_required</code> method will have to
+return true before execution will continue. Can also use <code>:except</code> instead of
+<code>:only</code>.</p>
+
+<h2 id="sessions">Sessions</h2>
+
+<p>Use</p>
+
+<pre><code>$ rake db:sessions:create
+</code></pre>
+
+<p>to create the database migrations needed for database-stored sessions. You
+must also comment out the appropriate lines in config/environment.rb.</p>
+
+<p>Sessions require having a session cookie key, set using, E.g.,</p>
+
+<pre><code>{{lang:ruby}}
+session :session_key =&gt; '_my_session_id_is_cool'
+</code></pre>
+
+<p>in controllers/application_controller.rb.</p>
+
+</body>
+</html>

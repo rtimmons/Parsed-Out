@@ -1,0 +1,118 @@
+/*
+Style for the overall code block:
+Default Styles
+    color: #080808; background-color: #F9F9F9;
+Keywords I (if, do, while etc)
+    color: #794938;
+Keywords II (null, true, false etc)
+    color: #811F24; font-weight: bold;
+Inbuilt Functions (echo, print etc)
+    color: ##693A17;
+Data Types (int, boolean etc)
+    color: #A71D5D; font-style: italic;
+Comments (//, etc)
+    color: #8D2E75; font-style: italic;
+Escaped Characters (\n, \t etc)
+    font-style: italic;
+Brackets ( ([{}]) etc)
+
+Strings ("foo" etc)
+    color: #0B6125; font-style: italic;
+Numbers (1, -54, 2.5 etc)
+    color: #811F24; font-weight: bold;
+Methods (Foo.bar() etc)
+    color: #691C97;
+*/
+
+.bash .de1, .bash .de2, .c .de1, .c .de2, .css .de1, .css .de2, .html .de1,
+.html .de2, .javascript .de1, .javascript .de2, .latex .de1, .latex .de2,
+.mysql .de1, .mysql .de2, .php-brief .de1, .php-brief .de2, .php .de1, .php
+.de2, .python .de1, .python .de2, .rails .de1, .rails .de2, .ruby .de1, .ruby
+.de2, .sql .de1, .sql .de2, .xml .de1, .xml .de2
+{
+	color: #000000;
+	background-color: #F9F9F9;
+}
+
+.bash .kw1, .c .kw1, .css .kw1, .html .kw1, .javascript .kw1, .latex .kw1,
+.mysql .kw1, .php-brief .kw1, .php .kw1, .python .kw1, .rails .kw1, .ruby
+.kw1, .sql .kw1, .xml .kw1
+{
+	color: #794938;
+}
+
+.bash .kw2, .c .kw2, .css .kw2, .html .kw2, .javascript .kw2, .latex .kw2,
+.mysql .kw2, .php-brief .kw2, .php .kw2, .python .kw2, .rails .kw2, .ruby
+.kw2, .sql .kw2, .xml .kw2
+{
+	color: #811F24;
+	font-weight: bold;
+}
+
+.bash .kw3, .c .kw3, .css .kw3, .html .kw3, .javascript .kw3, .latex .kw3,
+.mysql .kw3, .php-brief .kw3, .php .kw3, .python .kw3, .rails .kw3, .ruby
+.kw3, .sql .kw3, .xml .kw3, .php .re2, .php-brief .re2
+{
+	color: #693A17;
+}
+
+.bash .kw4, .c .kw4, .css .kw4, .html .kw4, .javascript .kw4, .latex .kw4,
+.mysql .kw4, .php-brief .kw4, .php .kw4, .python .kw4, .rails .kw4, .ruby
+.kw4, .sql .kw4, .xml .kw4
+{
+	color: #A71D5D;
+	font-style: italic;
+}
+
+.bash .co1, .bash .co2, .bash .coMULTI, .c .co1, .c .co2, .c .coMULTI, .css
+.co1, .css .co2, .css .coMULTI, .html .co1, .html .co2, .html .coMULTI,
+.javascript .co1, .javascript .co2, .javascript .coMULTI, .latex .co1, .latex
+.co2, .latex .coMULTI, .mysql .co1, .mysql .co2, .mysql .coMULTI, .php-brief
+.co1, .php-brief .co2, .php-brief .coMULTI, .php .co1, .php .co2, .php
+.coMULTI, .python .co1, .python .co2, .python .coMULTI, .rails .co1, .rails
+.co2, .rails .coMULTI, .ruby .co1, .ruby .co2, .ruby .coMULTI, .sql .co1, .sql
+.co2, .sql .coMULTI, .xml .co1, .xml .co2, .xml .coMULTI
+{
+	color: #8D2E75;
+	font-style: italic;
+}
+
+.bash .es0, .c .es0, .css .es0, .html .es0, .javascript .es0, .latex .es0,
+.mysql .es0, .php-brief .es0, .php .es0, .python .es0, .rails .es0, .ruby
+.es0, .sql .es0, .xml .es0
+{
+	font-style: italic;
+}
+
+.bash .st0, .c .st0, .css .st0, .html .st0, .javascript .st0, .latex .st0,
+.mysql .st0, .php-brief .st0, .php .st0, .python .st0, .rails .st0, .ruby
+.st0, .sql .st0, .xml .st0
+{
+	color: #0B6125;
+	font-style: italic;
+}
+
+.bash .nu0, .c .nu0, .css .nu0, .html .nu0, .javascript .nu0, .latex .nu0,
+.mysql .nu0, .php-brief .nu0, .php .nu0, .python .nu0, .rails .nu0, .ruby
+.nu0, .sql .nu0, .xml .nu0
+{
+	color: #811F24;
+	font-weight: bold;
+}
+
+.bash .me0, .c .me0, .css .me0, .html .me0, .javascript .me0, .latex .me0,
+.mysql .me0, .php-brief .me0, .php .me0, .python .me0, .rails .me0, .ruby
+.me0, .sql .me0, .xml .me0
+{
+	color: #691C97;
+}
+
+.php .re0
+{
+	color: #234A97;
+}
+
+.php .re3
+{
+    color: #C0552C;
+}
