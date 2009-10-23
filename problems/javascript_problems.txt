@@ -1,7 +1,7 @@
 ---
 layout: post
 title: JavaScript Problems
-published: true
+published: false
 category: problems
 ---
 
@@ -12,8 +12,8 @@ called is completely different. Try not to get them confused!
 
 ## A Quick Side Note
 
-I've gone through and indicated the difficulty of each problem on a 5-<@>
-scale. One <@> is easy while five <@>s is tough.
+I've gone through and indicated the difficulty of each problem on a 5-&#x2605;
+scale. One &#x2605; is easy while five &#x2605;s is tough.
 
 Also of note, almost all of these problems use [the jQuery framework][j] to
 make them considerably more tractable. Once you've downloaded the jQuery
@@ -21,18 +21,19 @@ framework file, you should rename it to `jquery.js` and put it in the same
 folder as your HTML document. You might then have the following as your
 "sandbox" document:
 
-    {{lang:html}}
-    <html><head><title>Sandbox</title>
-    <script type="text/javascript" src="jquery.js"></script>
-    <script type="text/javascript">
-    
-        // YOUR JAVASCRIPT GOES HERE
-    
-    </script><body>
-    
-        <!-- YOUR HTML CODE GOES HERE -->
-    
-    </body></html>
+{% highlight html %}
+<html><head><title>Sandbox</title>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript">
+
+    // YOUR JAVASCRIPT GOES HERE
+
+</script><body>
+
+    <!-- YOUR HTML CODE GOES HERE -->
+
+</body></html>
+{% endhighlight %}
 
 [j]:http://jquery.com/
 
@@ -46,7 +47,7 @@ easiest to understand.
 Let the fun begin! (I play fast and loose with my usage of the word "fun.")
 
 
-## Random Array Element <@><@>
+## Random Array Element &#x2605;&#x2605;
 
 `Math.random()` can be used to generate a random number between 0 and 1
 (inclusive), and `Math.round(n)` can be used to find the integer closest to
@@ -57,50 +58,56 @@ array as its argument and returns a random element from that array.
 
 {hidden}
 
-    {{lang:javascript}}
-    var random_elt = function(arr)
-    {
-        var len = arr.length;
-        var r   = len * Math.random();
-        r       = Math.round(r);
-        // now r is in the range 0 to len (inclusive)
-        return arr[r];
-    };
+{% highlight js %}
+var random_elt = function(arr)
+{
+    var len = arr.length;
+    var r   = len * Math.random();
+    r       = Math.round(r);
+    // now r is in the range 0 to len (inclusive)
+    return arr[r];
+};
+{% endhighlight %}
 
 Or the shorter, one-line version:
 
-    {{lang:javascript}}
-    var random_elt = function(a)
-    {
-        return a[Math.round(Math.random()*a.length)];
-    };
+{% highlight js %}
+var random_elt = function(a)
+{
+    return a[Math.round(Math.random()*a.length)];
+};
+{% endhighlight %}
 
 {/hidden}
 
 ## Implementing Some of jQuery ##
 
-Using anonymous functions can be confusing, and that's only compounded by the difficulty of learning jQuery.
+Using anonymous functions can be confusing, and that's only compounded by the
+difficulty of learning jQuery.
 
 So this code can be confusing for a beginner:
 
-    {{lang:javascript}}
-    $('#f').click(function(){
-        alert(this.href);
-        return false;
-    });
+{% highlight js %}
+$('#f').click(function(){
+    alert(this.href);
+    return false;
+});
+{% endhighlight %}
 
-This code simply takes a link like `<a id="f" href="foo">Link</a>` the following
-and alerts the `href` attribute when it's clicked on.
+This code simply takes a link like `<a id="f" href="foo">Link</a>` the
+following and alerts the `href` attribute when it's clicked on.
 
-    var e = document.getElementById('f');
-    e.click = function(f){ this.onclick = f; };
-    
-    e.click(function(){
-        alert(this.href);
-    });
+{% highlight js %}
+var e = document.getElementById('f');
+e.click = function(f){ this.onclick = f; };
+
+e.click(function(){
+    alert(this.href);
+});
+{% endhighlight %}
 
 
-## Objects in JavaScript <@>
+## Objects in JavaScript &#x2605;
 
 This is not a problem, just a necessary explanation.
 
@@ -110,19 +117,21 @@ and variables that belong to an object **properties**.
 
 An object is created simply in the manner of
 
-    {{lang:javascript}}
-    var my_new_object = {};
+{% highlight js %}
+var my_new_object = {};
+{% endhighlight %}
 
 and then we use a "dot syntax" to address the properties or values
 pertaining to our object. The "dot syntax" is best illustrated by an
 example:
 
-    {{lang:javascript}}
-    var family      = {};
-    family.name     = 'Flinstone';
-    family.mother   = 'Wilma';
-    family.father   = 'Fred';
-    family.children = ['Pebbles', 'Bam Bam'];
+{% highlight js %}
+var family      = {};
+family.name     = 'Flinstone';
+family.mother   = 'Wilma';
+family.father   = 'Fred';
+family.children = ['Pebbles', 'Bam Bam'];
+{% endhighlight %}
 
 So `family` is the object that we're talking about, and `name`, in the
 first example, is the *property of `family`* that we're changing.
@@ -140,49 +149,53 @@ We could do this in a few ways, starting at the most naive:
 
  1. The simplest way is to simply create a function that returns the
     string:
-
-        {{lang:javascript}}
-        family.toString = function()
-        {
-            return  "We're Fred and Wilma Flinstone.  "
-                 +  "Our children are Pebbles and Bam Bam.";
-        }
+    
+    {% highlight js %}
+family.toString = function()
+{
+    return  "We're Fred and Wilma Flinstone.  "
+         +  "Our children are Pebbles and Bam Bam.";
+}
+{% endhighlight %}
  
  2. A better way is to use the `family` object's properties:
- 
-        {{lang:javascript}}
-        family.toString = function()
-        {
-            return  "We're " + family.father 
-                 + " and " + family.mother + " " + family.name + ".  "
-                 +  "Our children are "
-                 +  family.children[0] + " and "
-                 +  family.children[1] + ".";
-        }
+    
+    {% highlight js %}
+family.toString = function()
+{
+    return  "We're " + family.father 
+         + " and " + family.mother + " " + family.name + ".  "
+         +  "Our children are "
+         +  family.children[0] + " and "
+         +  family.children[1] + ".";
+}
+{% endhighlight %}
 
  3. The *best* way is to use the `this` keyword that **refers back to the
     owner of the property.**  This is a more generalized way of the previous
     way.
-    
-        {{lang:javascript}}
-        family.toString = function()
-        {
-            return  "We're " + this.father 
-                 + " and " + this.mother + " " + this.name + ".  "
-                 +  "Our children are "
-                 +  this.children[0] + " and "
-                 +  this.children[1] + ".";
-        }
+
+    {% highlight js %}
+family.toString = function()
+{
+    return  "We're " + this.father 
+         + " and " + this.mother + " " + this.name + ".  "
+         +  "Our children are "
+         +  this.children[0] + " and "
+         +  this.children[1] + ".";
+}
+{% endhighlight %}
 
 Here is an example of an object being used:
 
-    {{lang:javascript}}
-    // create the variable and declare it as an object:
-    var mycounter       = {};
-    // create a `count` property and set its contents to 0
-    mycounter.count     = 0;
-    // give the object the ability to increment its value property
-    mycounter.increment = function(){ this.count++ }
+{% highlight js %}
+// create the variable and declare it as an object:
+var mycounter       = {};
+// create a `count` property and set its contents to 0
+mycounter.count     = 0;
+// give the object the ability to increment its value property
+mycounter.increment = function(){ this.count++ }
+{% endhighlight %}
 
 If you have any familiarity with the more popular Object-Oriented programming
 languages such as Java, C++, or Ruby, then JavaScript's handling of objects
@@ -194,18 +207,20 @@ JavaScript: all objects are arrays, and all arrays are objects.
 So the following are actually equivalent:
 
  *  **The array syntax**:
- 
-        {{lang:javascript}}
-        var thefamily       = [];
-        thefamily['mother'] = "Wilma";
-        thefamily['father'] = "Fred";
+    
+    {% highlight js %}
+var thefamily       = [];
+thefamily['mother'] = "Wilma";
+thefamily['father'] = "Fred";
+{% endhighlight %}
 
  *  **The object syntax**:
- 
-        {{lang:javascript}}
-        var thefamily    = {};
-        thefamily.mother = "Wilma";
-        thefamily.father = "Fred";
+    
+    {% highlight js %}
+var thefamily    = {};
+thefamily.mother = "Wilma";
+thefamily.father = "Fred";
+{% endhighlight %}
 
 Notice that we didn't surround `mother` or `father` in quotes in the second
 case: if you are treating the object as though it's an object (as opposed to
@@ -215,25 +230,35 @@ the dot, (e.g., `mother`) is *always* considered a string.
 ## Top 5 Most Useful Selectors:
 
  1. `#id` selects a single element with the given id:
-
-        $('#menu').hide();
+    
+    {% highlight js %}
+$('#menu').hide();
+{% endhighlight %}
 
  2. `element` selects all `<element>` tags:
- 
-        $('ul').addClass('a_list');
+    
+     {% highlight js %}
+$('ul').addClass('a_list');
+{% endhighlight %}
     
  3. `ancestor descendant` selects all `<descendant>` elements inside of any
     `<ancestor>` elements
     
-        $('ul li').css('color','blue');
-    
+    {% highlight js %}
+$('ul li').css('color','blue');
+{% endhighlight %}    
+
  4. `:first` matches the first selected element (similar is `:last`)
- 
-        $('body h1:first').css('font-weight','bold');
     
+    {% highlight js %}
+$('body h1:first').css('font-weight','bold');
+{% endhighlight %}    
+
  5. `:even` matches even elements, zero-indexed (similar is `:odd`)
- 
-        $('table tr:even').addClass('oddTableRow');
+    
+    {% highlight js %}
+$('table tr:even').addClass('oddTableRow');
+{% endhighlight %}
 
 Also:
 
@@ -249,21 +274,22 @@ Also:
  *  `:visible` matches if the element *hasn't* been hidden
  *  `[attribute=value]`, e.g. `$('img[src="foo.jpg"]').css('border','1px');`
 
-## Classy <@>
+## Classy &#x2605;
 
 Imagine you have the following document structure
 
-    {{lang:html}}
-    <body>
-        <div id="nav">
-            <ul>    <li><a href="1">Home</a></li>
-                    <li><a href="2">About</a></li>
-                    <li><a href="3">Contact</a></li>    </ul>
-        {/hidden}<div id="content">
-            <h1>Header</h1>
-            <p>This is text</p>
-        {/hidden}
-    </body>
+{% highlight html %}
+<body>
+    <div id="nav">
+        <ul>    <li><a href="1">Home</a></li>
+                <li><a href="2">About</a></li>
+                <li><a href="3">Contact</a></li>    </ul>
+    {/hidden}<div id="content">
+        <h1>Header</h1>
+        <p>This is text</p>
+    {/hidden}
+</body>
+{% endhighlight %}
 
 Then what is the jQuery to...
 
@@ -271,8 +297,9 @@ Then what is the jQuery to...
     
     {hidden}
     
-        {{lang:javascript}}
-        $('#content')
+    {% highlight js %}
+$('#content')
+{% endhighlight %}
     
     {/hidden}
     
@@ -280,8 +307,9 @@ Then what is the jQuery to...
     
     {hidden}
     
-        {{lang:javascript}}
-        $('#content').css('color','red')
+    {% highlight js %}
+$('#content').css('color','red')
+{% endhighlight %}
     
     {/hidden}
 
@@ -292,14 +320,15 @@ Then what is the jQuery to...
     
     Either of the following would work:
     
-        {{lang:javascript}}
-        $('#menu ul li:first a')
-        $('#menu ul li a[href="1"]')
+    {% highlight js startinline %}
+$('#menu ul li:first a')
+$('#menu ul li a[href="1"]')
+{% endhighlight %}    
     
     {/hidden}
 
 
-## Document Title <@><@>
+## Document Title &#x2605;&#x2605;
 
 Not tough if you do it right:  research the [jQuery selectors][sel].
 
@@ -310,17 +339,18 @@ property.
 
 {hidden}
 
-    {{lang:javascript}}
-    $(document).ready(function(){
-        document.title = $("h1:first").html();
-    });
+{% highlight js %}
+$(document).ready(function(){
+    document.title = $("h1:first").html();
+});
+{% endhighlight %}
 
 {/hidden}
 
 [sel]:http://docs.jquery.com/Selectors
 
 
-## Table Striping <@><@>
+## Table Striping &#x2605;&#x2605;
 
 This one's easy if you use the right [selectors][sel].
 
@@ -348,7 +378,7 @@ What is the jQuery to do this?
 {/hidden}
 
 
-## Column Hover <@><@><@><@>
+## Column Hover &#x2605;&#x2605;&#x2605;&#x2605;
 
 You can make a whole row of a table change when the mouse is over it
 very easily using some simple CSS:
@@ -495,7 +525,7 @@ Consider the following example that is outside of jQuery:
 {/hidden}
 
 
-## Toggle Both <@><@>
+## Toggle Both &#x2605;&#x2605;
 
 This is an easy one.
 
@@ -522,7 +552,7 @@ Or this slightly shorter but harder to read version:
 {/hidden}
 
 
-## Textarea Character Limit <@><@><@>
+## Textarea Character Limit &#x2605;&#x2605;&#x2605;
 
 Imagine you have a textarea on your page such as 
 
@@ -570,7 +600,7 @@ of ways to solve the problem.
 
 {/hidden}
 
-## Checkboxes:  Select All, None, and Inverse <@><@><@><@>
+## Checkboxes:  Select All, None, and Inverse &#x2605;&#x2605;&#x2605;&#x2605;
 
 Imagine you have a bunch of check boxes on your page because you're
 really fancy and like check boxes. You used to, when you were a kid,
@@ -657,7 +687,7 @@ to `checked`, e.g.,
 
 {/hidden}
 
-## Alt Captions <@><@><@>
+## Alt Captions &#x2605;&#x2605;&#x2605;
 
 Add the jQuery to put all your document's images' captions (their
 `alt` attributes) after them in a `<span>` of class "caption".
@@ -687,7 +717,7 @@ it would become
 {/hidden}
 
 
-## Tabbed Interface <@><@><@>
+## Tabbed Interface &#x2605;&#x2605;&#x2605;
 
 (Note that this one does not yet have a solution.)
 
@@ -737,7 +767,7 @@ Insert the jQuery to make this happen.
 **Solution left as an exercise**
 
 
-## Click-To-Change <@><@><@>
+## Click-To-Change &#x2605;&#x2605;&#x2605;
 
 A bit of trickery involved with this to get it right, but not too
 tough.
@@ -819,7 +849,7 @@ focus.
 {/hidden}
 
 
-## Email Replacer <@><@>
+## Email Replacer &#x2605;&#x2605;
 
 This one's pretty easy once you're in the "jQuery Mindset."
 
@@ -934,7 +964,7 @@ Here is a bit of HTML with Microformats embedded:
 [hcard]:http://microformats.org/wiki/hcard
 
 
-## ShowHide <@><@><@>
+## ShowHide &#x2605;&#x2605;&#x2605;
 
 Say you have bunch of `<div>`s on the page like
 
@@ -988,7 +1018,7 @@ of the link should include the `div`'s `title` attribute. So the above
 {/hidden}
 
 
-## Font Size <@><@>
+## Font Size &#x2605;&#x2605;
 
 If done properly, this one's not too bad.
 
@@ -1026,7 +1056,7 @@ change the body's font size.
     $(document).ready(function(){
         $('#font')
             .after('<a href="">Larger</a>')
-	        // move to the link we just created:
+            // move to the link we just created:
             .next()
                 .click(function(){
                     increase();
@@ -1034,9 +1064,9 @@ change the body's font size.
                     // redirect
                     return false;
                 })
-	        // create yet another link:
+            // create yet another link:
             .after('<a href="">Smaller</a>')
-	        // again, now, move to it:
+            // again, now, move to it:
             .next()
                 .click(function(){
                     decrease();
@@ -1048,7 +1078,7 @@ change the body's font size.
 {/hidden}
 
 
-## External Links In New Windows <@><@>
+## External Links In New Windows &#x2605;&#x2605;
 
 Make all links to external sites open in a new window by changing
 their `target` attributes to `_blank`. We define external links as
@@ -1086,7 +1116,7 @@ floating around). More information [here][].
 {/hidden}
 
 
-## Easy Rollovers <@><@><@>
+## Easy Rollovers &#x2605;&#x2605;&#x2605;
 
 This one can be implemented in a huge number of ways, some being very
 easy. My solution is designed for efficiency and clarity.
@@ -1118,7 +1148,7 @@ mouse is over the image.
                     .next() //  move to the img we just created
                     .mouseout(function(){
                             $(this).hide().prev().show();
-		    	            })
+                            })
                     .end() // go back to our original image
                     .mouseover(function(){
                         $(this).show().next().hide();
@@ -1135,7 +1165,7 @@ re-purposing the use of the `alt` attribute. Some would resort to
 using a non-existent class name for this.
 
 
-## Slideshow <@><@><@>
+## Slideshow &#x2605;&#x2605;&#x2605;
 
 This one's tough but a lot easier if you know the jQuery selectors.
 
@@ -1202,7 +1232,7 @@ show the first image.
 {/hidden}
 
 
-## Accordion Menu <@><@>
+## Accordion Menu &#x2605;&#x2605;
 
 This one's pretty easy.
 
@@ -1243,14 +1273,14 @@ Only one submenu should be visible at any given time.
         $('ul li a').click(function(){
             $('ul li ul:visible').slideUp();
             $(this).next().slideDown(); 
-	        return false; // this stops the browser from redirecting
+            return false; // this stops the browser from redirecting
         });
     });
 
 {/hidden}
 
 
-## Live AJAX Visitor Counter <@><@><@><@><@>
+## Live AJAX Visitor Counter &#x2605;&#x2605;&#x2605;&#x2605;&#x2605;
 
 Assume you have the following HTML code on your page
 

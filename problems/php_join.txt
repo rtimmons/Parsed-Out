@@ -11,8 +11,7 @@ be fine.
 
 (Note, we're working on an example data set which is similar to what would be
 given to you from a simple database query. We're saying that this data is
-loaded into the variables `$posts` and `$authors`. This data can be found at
-<http://uwwebpub.com/php>; click on "Get Data File").
+loaded into the variables `$posts` and `$authors`.)
 
 ## Data Structure
 
@@ -60,21 +59,21 @@ figured out.)
 
 There are three kinds of relationships between entities:
 
-1.   hasMany and belongsTo
+ 1. hasMany and belongsTo
 
     e.g., an author hasMany posts, and a post belongsTo an author.
 
-2.   hasOne  and belongsTo
+ 2. hasOne and belongsTo
 
     e.g., a post hasOne author, and an author belongsTo many posts. This is
     best thought of as the "other side" of (1).
 
-3.   hasAndBelongsToMany
+ 3. hasAndBelongsToMany
 
-    This one is trickier to store (we might talk about it on the last day of
-    PHP II): It involves having a separate data store called a join table. If
-    we were to introduce categories into our data, then a post might belongTo
-    many categories, and many categories might belongTo a post.
+    This one is trickier to store: It involves having a separate data store
+    called a join table. If we were to introduce categories into our data,
+    then a post might belongTo many categories, and many categories might
+    belongTo a post.
 
 ## Left and Right Joins
 
@@ -89,22 +88,23 @@ In the first case, gluing authors to posts, we'll be replacing the 'author_id'
 field with the corresponding author entity. This is called a *left join*.
 Joining the first post, `$posts[0]`, with $authors,
 
-    {{lang:php}}
-    array(                                
-        'id'        => 0,                 
-        'title'     => 'My First Entry',  
-        'created'   => 1195073683,        
-        'date'      => '2007-11-13',      
-        // Notice that we no longer have
-        // an 'author_id' field and instead
-        // we have an entire 'author' field:
-        'author'    => array(
-            'id'    => 1,
-            'title' => 'Mark Twain',
-            'email' => 'marktwain@yahoo.com'
-            )         
-        'text'      => 'My First Post'    
-    ),                
+{% highlight php startinline %}
+array(                                
+    'id'        => 0,                 
+    'title'     => 'My First Entry',  
+    'created'   => 1195073683,        
+    'date'      => '2007-11-13',      
+    // Notice that we no longer have
+    // an 'author_id' field and instead
+    // we have an entire 'author' field:
+    'author'    => array(
+        'id'    => 1,
+        'title' => 'Mark Twain',
+        'email' => 'marktwain@yahoo.com'
+        )         
+    'text'      => 'My First Post'    
+),                
+{% endhighlight %}
 
 In the second case, we'll be gluing posts to authors. This is a *right join*. (The direction is so because we're selecting from "posts and authors"; if we were selecting from "authors and posts", this would be a left join and the previous example would be a right join.) Remember that an author hasMany posts and a post belongsTo an author. In this case, we would have to add a field in our author called maybe "posts" that would be an *array* of post entities (i.e., an array of arrays). If we were to join `$posts` with `$authors[0]` ("Mark Twain"), we would have
 
@@ -256,10 +256,12 @@ entities that match:
                     return( $author );
                     // the function "short-circuits" as soon 
                     // as it returns a value; it stops executing
-                } else if ( $type == 'many' )
+                } 
+                else if ( $type == 'many' )
                 {
                     $tor[] = $author;
-                } else
+                }
+                else
                 {
                     die('Improper relationship type!');
                 }

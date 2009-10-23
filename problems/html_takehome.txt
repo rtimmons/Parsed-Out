@@ -28,64 +28,68 @@ web browser.
 
 [here]: ./htmlday1takehomepart1.html
 
-    <head>
-      <title>Synergy Corp. Home</title>
-    </head>
-    <body>
-    
-    <h1>Welcome to Synergy Corp.</h1>
-    <h2>"Your Business, Our Passion"</h2>
-    <p><img src="image.gif" alt="our logo">
-    
-    <h3>Menu:</h3>
-    <ul>
-      <li><a href=mission.html>Mission Statement</a></li>
-      <li><a href=our products.html>Our Products</a></li>
-      <li><a href=contact.html>Contact Us</a>
-      <li><a href=Perspectives.html>Company
-        Perspectives</a></li>
-    </ul>
-    
-    <em>
-      <h3>About Us!</h3>
-      
-      <p>Synergy Corp is in the business of connecting people
-      with what they need. We provide the marketing and
-      business backbone to get you what you need here and now.
-      We make all efforts to ensure you can focus on what
-      matters most to you and your business -- your
-      business!</p> 
-    </em>
-    
-    
-    <h3>Employee Perspectives</h3>
-    
-    <ul>
-      <li><b>Alan Alda</b>
-      <ul>
-        <li>CEO</li>
-        <li>MBA, Cornell</li>
-      </ul></li>
-      <li><b>Loretta Swit</b>
-      
-      <ul>
-        <li>Manager</li>
-        <li>AA, BCC</li>
-      </li></ul>
-      <li><b>Gary Burghoff</b>
-      <ul>
-        <li>He Who Makes the Coffee</li>
-        <li>PhD, UC Berkeley</li>
-      </ul>
-    </ul>
-    </ul>
-    
-    </body>
+{% highlight html %}
+<head>
+  <title>Synergy Corp. Home</title>
+</head>
+<body>
+
+<h1>Welcome to Synergy Corp.</h1>
+<h2>"Your Business, Our Passion"</h2>
+<p><img src="image.gif" alt="our logo">
+
+<h3>Menu:</h3>
+<ul>
+  <li><a href=mission.html>Mission Statement</a></li>
+  <li><a href=our products.html>Our Products</a></li>
+  <li><a href=contact.html>Contact Us</a>
+  <li><a href=Perspectives.html>Company
+    Perspectives</a></li>
+</ul>
+
+<em>
+  <h3>About Us!</h3>
+  
+  <p>Synergy Corp is in the business of connecting people
+  with what they need. We provide the marketing and
+  business backbone to get you what you need here and now.
+  We make all efforts to ensure you can focus on what
+  matters most to you and your business -- your
+  business!</p> 
+</em>
+
+
+<h3>Employee Perspectives</h3>
+
+<ul>
+  <li><b>Alan Alda</b>
+  <ul>
+    <li>CEO</li>
+    <li>MBA, Cornell</li>
+  </ul></li>
+  <li><b>Loretta Swit</b>
+  
+  <ul>
+    <li>Manager</li>
+    <li>AA, BCC</li>
+  </li></ul>
+  <li><b>Gary Burghoff</b>
+  <ul>
+    <li>He Who Makes the Coffee</li>
+    <li>PhD, UC Berkeley</li>
+  </ul>
+</ul>
+</ul>
+
+</body>
+
+{% endhighlight %}
 
 You could even run your code through the HTML Validator at
 <http://validator.w3.org>. (Note, though, that it'll probably complain about
 not knowing which version of HTML to validate against, something we'll talk
 about in Day Two.)
+
 
 
 ### Part 1 Solution  
@@ -94,67 +98,69 @@ Well you asked for it...
 
 {hidden}
 
-    <html>
-    <head>
-        <title>Synergy Corp. Home</title>
-    </head>
-    <body>
-    
-    <h1>Welcome to Synergy Corp.</h1>
-    <h2>“Your Business, Our Passion”</h2>
-    <p><img src=“image.gif” alt=“our logo” /></p>
-    
-    <h3>Menu:</h3>
-    <ul>
-        <li><a href=”mission.html”>Mission Statement</a></li>
-        <li><a href=”our products.html”>Our Products</a></li>
-        <!— there’s also a problem with this file-name:
-              it shouldn’t have spaces in it.         —>
-        <li><a href=”contact.html”>Contact Us</a></li>
-        <li><a href=”Perspectives.html”>Company
-            Perspectives</a></li>
-    </ul>
-    
-    <!—<em> (block-level tags cannot be within
-              inline tags, so this <em> must be
-              copy/pasted into each block-level
-              tag)                          —>
-      <h3><em>About Us!</em></h3>
-    
-      <p><em>Synergy Corp is in the business of connecting people
-      with what they need. We provide the marketing and
-      business backbone to get you what you need here and now.
-      We make all efforts to ensure you can focus on what
-      matters most to you and your business — your
-      business!</em></p>
-    <!—</em>—>
-    
-    <h3>Employee Perspectives</h3>
-    
-    <!— this whole block is badly spaced, but
-         that’s not technically an error.  —>
-    <ul>
-      <li><strong>Alan Alda</strong>
-      <ul>
-        <li>CEO</li>
-        <li>MBA, Cornell</li>
-      </ul></li>
-      <li><strong>Loretta Swit</strong>
-      
-      <ul>
-        <li>Manager</li>
-        <li>AA, BCC</li>
-      </li></ul>
-      <li><strong>Gary Burghoff</strong>
-      <ul>
-        <li>He Who Makes the Coffee</li>
-        <li>PhD, UC Berkeley</li>
-      </ul>
-    </ul>
-    <!—</ul> (this is extra)—>
-    
-    </body>
-    </html>
+{% highlight html %}
+<html>
+<head>
+    <title>Synergy Corp. Home</title>
+</head>
+<body>
+
+<h1>Welcome to Synergy Corp.</h1>
+<h2>“Your Business, Our Passion”</h2>
+<p><img src=“image.gif” alt=“our logo” /></p>
+
+<h3>Menu:</h3>
+<ul>
+    <li><a href=”mission.html”>Mission Statement</a></li>
+    <li><a href=”our products.html”>Our Products</a></li>
+    <!— there’s also a problem with this file-name:
+          it shouldn’t have spaces in it.         —>
+    <li><a href=”contact.html”>Contact Us</a></li>
+    <li><a href=”Perspectives.html”>Company
+        Perspectives</a></li>
+</ul>
+
+<!—<em> (block-level tags cannot be within
+          inline tags, so this <em> must be
+          copy/pasted into each block-level
+          tag)                          —>
+  <h3><em>About Us!</em></h3>
+
+  <p><em>Synergy Corp is in the business of connecting people
+  with what they need. We provide the marketing and
+  business backbone to get you what you need here and now.
+  We make all efforts to ensure you can focus on what
+  matters most to you and your business — your
+  business!</em></p>
+<!—</em>—>
+
+<h3>Employee Perspectives</h3>
+
+<!— this whole block is badly spaced, but
+     that’s not technically an error.  —>
+<ul>
+  <li><strong>Alan Alda</strong>
+  <ul>
+    <li>CEO</li>
+    <li>MBA, Cornell</li>
+  </ul></li>
+  <li><strong>Loretta Swit</strong>
+  
+  <ul>
+    <li>Manager</li>
+    <li>AA, BCC</li>
+  </li></ul>
+  <li><strong>Gary Burghoff</strong>
+  <ul>
+    <li>He Who Makes the Coffee</li>
+    <li>PhD, UC Berkeley</li>
+  </ul>
+</ul>
+<!—</ul> (this is extra)—>
+
+</body>
+</html>
+{% endhighlight %}
 
 {/hidden}
 
@@ -220,14 +226,15 @@ to denote an entire region being directly quoted from another source. Since it
 defines a region of blocks, you must put all text inside the `<blockquote>`
 tag inside of a `<p>` tag. Here is an example:
 
-    {{lang:html}}
-    <blockquote>
-    <p>
-        It is a far, far better thing that I do, than I have
-        ever done; it is a far, far better rest that I go to,
-        than I have ever known.
-    </p>
-    </blockquote>
+{% highlight html %}
+<blockquote>
+<p>
+    It is a far, far better thing that I do, than I have
+    ever done; it is a far, far better rest that I go to,
+    than I have ever known.
+</p>
+</blockquote>
+{% endhighlight %}
 
 ...which would be rendered as
 
@@ -250,16 +257,16 @@ easier to read.
 
 So this code
 
-    {{lang:html}}
-    <pre><code>int *demux(int *j)
-    {
-        int i;
-        for ( i=0; i &lt; 10; i++ )
-            for ( j=i; *j &lt; i*i; i-- )
-                j = *j &gt;&gt; 2 &lt;&lt; i;
-        return *j;
-    }</code>
-    </pre>
+{% highlight html %}
+<pre><code>int *demux(int *j)
+{
+    int i;
+    for ( i=0; i &lt; 10; i++ )
+        for ( j=i; *j &lt; i*i; i-- )
+            j = *j &gt;&gt; 2 &lt;&lt; i;
+    return *j;
+}</code></pre>
+{% endhighlight %}
 
 is rendered like
 
@@ -381,122 +388,124 @@ My solution includes a bunch of XML stuff at the top of the document including
 a DOCTYPE, something we'll talk about in Day Two. No worries if you didn't put
 all that in there--just the standard
 
-    {{lang:html}}
-    <html>
-    <head>
-        <title></title>
-    </head>
-    <body>
+{% highlight html %}
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+{% endhighlight %}
 
 header would have been fine.
 
 At any rate, this is a solution:
 
-    {{lang:html}}
-    <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-    <head>
-      <title></title>
-    </head>
-    <body>
-        
-    <h1>HTML Review</h1>
+{% highlight html %}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title></title>
+</head>
+<body>
     
-    <p><strong>HTML</strong> stands for <em>Hypertext Markup Language</em>. It is
-    used throughout the web for <em>defining what content is</em>.</p>
-    
-    <p>We like to think of the various HTML tags as being like
-    different <em>highlighters</em>. We said at the beginning of
-    class that</p>
-    
-    <blockquote>
-      <p>HTML defines what content is much in the same way that
-      underlining and font/position changes in books tell us
-      that content is story text, chapter headers, page
-      nubmers, and items in the index.</p>
-    </blockquote>
-    
-    <h2>Tags</h2>
-    
-    <p>A basic tag looks like</p>
-    
-    <pre><code>&lt;tag attribute1="value1" attribute2="value2"&gt;Data&lt;/tag&gt;
-    </code></pre>
-    
-    <p>Be sure to note that</p>
-    
-    <ol>
-    <li><p><em>Attributes do not need to be repeated when you close
-    the tag</em>. Aside from this making HTML slightly easier
-    to type, can you think of a reason why this is? We'll
-    discuss this on HTML Day Two.  Also note that</p></li>
-    <li><p><em>Spacing is arbitrary</em>. So the following block of code
-    is equivalent to the above example:</p>
-    
-    <pre><code>&lt;tag attribute1="value1"
-         attribute2="value2"&gt;
-            Data
-    &lt;/tag&gt;
-    </code></pre>
-    
-    <p>It's is also equivalent to this block of code:</p>
-    
-    <pre><code>&lt;tag attribute1="value1" attribute2="value2"
-    &gt;Data
-    &lt;/tag&gt;
-    </code></pre>
-    
-    <p>The mnemonic is "white-space is white-space."  </p>
-    
-    <p>Also note that</p></li>
-    <li><p>There are three separate but equal types of tags:</p>
-    
-    <ul>
-    <li><p><strong>Block-Level</strong> tags--<code>&lt;p&gt;</code>, <code>&lt;h1&gt;</code>,
-    <code>&lt;div&gt;</code>, <code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>, <code>&lt;li&gt;</code>, etc.--expand
-    the entire width of their containing element.</p>
-    
-    <p>Block-level tags may contain any contain any kind
-    of tag (including other block-level tags) but they
-    may not be contained by any other kind of tag.</p></li>
-    <li><p><strong>Inline</strong> tags--<code>&lt;em&gt;</code>, <code>&lt;strong&gt;</code>, <code>&lt;a&gt;</code>,
-    etc.--take up only as much as width as the
-    content inside them takes up.</p>
-    
-    <p>Inline tags may contain other inline tags and may
-    contain element tags, but they cannot contain
-    block-level tags.</p></li>
-    <li><p><strong>Element</strong> tags (also called <em>replaced tags</em> or
-    <em>replaced elements</em>) <strong>represent external
-    content</strong>: things that can be highlighted by other
-    tags as opposed to tags that highlight other tags.
-    Examples include Images:</p>
-    
-    <pre><code>&lt;img src="./1.jpg" alt="first image" /&gt;
-    </code></pre>
-    
-    <p>and line-breaks:</p>
-    
-    <pre><code>&lt;br /&gt;
-    </code></pre>
-    
-    <p>Note that element tags do <em>not</em> have closing tags
-    (in that they are self-closing) and thus may not
-    contain any other kinds of tags.</p></li>
-    </ul></li>
-    </ol>
-    
-    <h2>Getting Help</h2>
-    
-    <p>If you're just not getting it, you should head to the
-    <a href="http://uwwebpub.com/">resources page</a> where you can find
-    links to, in particular, the <a href="http://uwwebpub.com/html">HTML resources page</a>
-    and links to the <a href="http://catalyst.washington.edu/help/web/html">HTML online curriculum</a>.</p>
-    
-    
-    </body>
-    </html>
+<h1>HTML Review</h1>
+
+<p><strong>HTML</strong> stands for <em>Hypertext Markup Language</em>. It is
+used throughout the web for <em>defining what content is</em>.</p>
+
+<p>We like to think of the various HTML tags as being like
+different <em>highlighters</em>. We said at the beginning of
+class that</p>
+
+<blockquote>
+  <p>HTML defines what content is much in the same way that
+  underlining and font/position changes in books tell us
+  that content is story text, chapter headers, page
+  nubmers, and items in the index.</p>
+</blockquote>
+
+<h2>Tags</h2>
+
+<p>A basic tag looks like</p>
+
+<pre><code>&lt;tag attribute1="value1" attribute2="value2"&gt;Data&lt;/tag&gt;
+</code></pre>
+
+<p>Be sure to note that</p>
+
+<ol>
+<li><p><em>Attributes do not need to be repeated when you close
+the tag</em>. Aside from this making HTML slightly easier
+to type, can you think of a reason why this is? We'll
+discuss this on HTML Day Two.  Also note that</p></li>
+<li><p><em>Spacing is arbitrary</em>. So the following block of code
+is equivalent to the above example:</p>
+
+<pre><code>&lt;tag attribute1="value1"
+     attribute2="value2"&gt;
+        Data
+&lt;/tag&gt;
+</code></pre>
+
+<p>It's is also equivalent to this block of code:</p>
+
+<pre><code>&lt;tag attribute1="value1" attribute2="value2"
+&gt;Data
+&lt;/tag&gt;
+</code></pre>
+
+<p>The mnemonic is "white-space is white-space."  </p>
+
+<p>Also note that</p></li>
+<li><p>There are three separate but equal types of tags:</p>
+
+<ul>
+<li><p><strong>Block-Level</strong> tags--<code>&lt;p&gt;</code>, <code>&lt;h1&gt;</code>,
+<code>&lt;div&gt;</code>, <code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>, <code>&lt;li&gt;</code>, etc.--expand
+the entire width of their containing element.</p>
+
+<p>Block-level tags may contain any contain any kind
+of tag (including other block-level tags) but they
+may not be contained by any other kind of tag.</p></li>
+<li><p><strong>Inline</strong> tags--<code>&lt;em&gt;</code>, <code>&lt;strong&gt;</code>, <code>&lt;a&gt;</code>,
+etc.--take up only as much as width as the
+content inside them takes up.</p>
+
+<p>Inline tags may contain other inline tags and may
+contain element tags, but they cannot contain
+block-level tags.</p></li>
+<li><p><strong>Element</strong> tags (also called <em>replaced tags</em> or
+<em>replaced elements</em>) <strong>represent external
+content</strong>: things that can be highlighted by other
+tags as opposed to tags that highlight other tags.
+Examples include Images:</p>
+
+<pre><code>&lt;img src="./1.jpg" alt="first image" /&gt;
+</code></pre>
+
+<p>and line-breaks:</p>
+
+<pre><code>&lt;br /&gt;
+</code></pre>
+
+<p>Note that element tags do <em>not</em> have closing tags
+(in that they are self-closing) and thus may not
+contain any other kinds of tags.</p></li>
+</ul></li>
+</ol>
+
+<h2>Getting Help</h2>
+
+<p>If you're just not getting it, you should head to the
+<a href="http://uwwebpub.com/">resources page</a> where you can find
+links to, in particular, the <a href="http://uwwebpub.com/html">HTML resources page</a>
+and links to the <a href="http://catalyst.washington.edu/help/web/html">HTML online curriculum</a>.</p>
+
+
+</body>
+</html>
+{% endhighlight %}
 
 {/hidden}
