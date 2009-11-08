@@ -10,7 +10,7 @@ So I had my first Google interview last week.  I submitted an online resume and 
 Here's a brief summary on how each of the interview sessions went.  It's a bit sloppy, but you can deal with that.
 
 
-## The First
+### The First
 
 Friendly software test guy.  Not super chatty but nice.
  
@@ -66,7 +66,7 @@ and cycles (`A->B->C->A`).  The interviewer was very happy with my answers.
 
 Important that you should think of other implementations:  this might have been implemented using a `Stack<Room>` or something of that sort, so giving a test case where that sort of thing might end in an infinite loop is wise.
 
-## The Second
+### The Second
 
 Really nice software engineer on the search team.
 
