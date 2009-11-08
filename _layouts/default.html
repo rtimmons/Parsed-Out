@@ -7,7 +7,8 @@ layout: nil
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />  
-  <link rel="alternate" type="application/rss+xml" title="{{site.titel}}" href="http://parsedout.com/rss.xml" />
+  <link rel="alternate" type="application/rss+xml" title="{{site.title}}"
+        href="http://parsedout.com/rss.xml" />
   <title>{{ site.title }} - {{ page.title }}</title>
   <style type="text/css">
   /*<![CDATA[*/
@@ -41,6 +42,18 @@ layout: nil
     </div><!--.meta.updated-->
 {% endif %}
 </div><!--#footer-->
+
+<div id="analytics">
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-11489436-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</div><!--#analytics-->
 
 </body>
 </html>

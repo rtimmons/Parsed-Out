@@ -1,4 +1,5 @@
 title:      ParsedOut.com
+baseurl:    http://parsedout.com
 auto:       false
 server:     false
 pygments:   true
