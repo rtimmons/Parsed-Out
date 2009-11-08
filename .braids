@@ -3,5 +3,5 @@ _vendor/docstyle:
   squashed: true
   url: http://svn.ganon.com/docstyle/trunk
   type: svn
-  revision: 54
+  revision: 55
   remote: braid/-vendor/docstyle

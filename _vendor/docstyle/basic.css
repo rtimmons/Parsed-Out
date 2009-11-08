@@ -28,6 +28,11 @@ body.dark a, body.dark a code {
     color: #ffff77;
 }
 
+p, ul, ol, dl { 
+    /* add spacing around most common page elements */
+    margin: 1em;
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-family: Georgia, serif;
     color: #19356d;
@@ -43,12 +48,18 @@ h1 {
 }
 
 h2, h3, h4, h5, h6 {
-    background-color: #dde0e4;
-    margin-left: -1.5em;
-    margin-right: -0.5em;
     padding: 0.1em 0.5em;
 }
 
+h2 {
+    background-color: #dde0e4;
+}
+
+h3, h4, h5, h6 {
+    border-bottom: 1px solid #19356d;
+}
+
+/* dark-body headers */
 body.dark h2, body.dark h3, body.dark h4, body.dark h5, body.dark h6 {
     background-color: #6a6a6a;
 }
@@ -59,7 +70,7 @@ p + h2, pre + h2, h1 + h2, h2 + h3, h3 + h4 {
 
 pre {
     overflow-x: auto;
-    margin-left: 3em;
+    margin-left: 2.5em;
     padding: 0.3em 0.5em;
     border: 1px dotted #162c58;
     font-family: PanicSans, monospace;
@@ -87,7 +98,7 @@ body.dark pre, body.dark code {
 
 blockquote {
     font-style: italic;
-    margin: 0 1em;
+    margin: 0 1.5em;
     padding-left: 1em;
     border-left: 1px solid #356e48;
 }
@@ -109,14 +120,7 @@ blockquote {
         padding: 0;
     }
     h1 {
-        margin-left: -1.5em;
         margin-bottom: 1em;
-    }
-    h2 {
-        margin-left: -1em;
-    }
-    h3 {
-        margin-left: -0.5em;
     }
     pre {
         font-size: 10pt;
