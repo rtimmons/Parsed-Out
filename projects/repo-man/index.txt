@@ -1,0 +1,162 @@
+---
+layout: project
+published: false
+category: project
+title: Repository-Based Project Management
+---
+
+Quotes:
+
+"If you don't use your process it can't help you; if your process doesn't help, you won't use it." <http://www.agile-process.org/process.html>
+
+
+Repository Layout
+------------------------
+
+    Depot/
+        Projects/
+            MyProject/
+                Readme.txt
+                Sprints/
+                    Current/
+                        Reamde.txt
+                        Use Cases/
+                        Bugs/
+                    Next/
+                        Readme.txt
+                        Use Cases/
+                        Bugs/
+                    Future/
+                        Use Cases/
+                        Bugs/
+                    Past/
+                        1 Model Scaffolding/
+                        2 UI Scaffolding/
+                        3 Controller Scaffolding/
+                Wiki/
+                    Media/
+                        UML Diagram.png
+                    Release Process.txt
+                    Code Conventions.txt
+                    User Model.txt
+                    Eclipse Setup.txt
+                    Codeline Policies.txt
+                    Branch Descriptions.txt
+                Codelines/
+                    Trunk/
+                        Readme.txt
+                        Code/
+                            pom.xml
+                            src/{main,test}/{java,resources}
+                            src/site
+                    Branches/
+                        Bug 001 Fix/
+                            Readme.txt
+                            Code/
+                                pom.xml
+                                src/{main,test}/{java,resources}
+                    Releases/
+                Vendor/
+                Target/
+                    Readme.txt
+        Users/
+            Ryan/
+                Contact.txt
+                Status Reports/
+                Projects/
+                    wiki2html/
+        Tools/
+            findroot/
+            wiki2html/
+            nextbugnumber/
+            htmljavadocs/
+
+
+Recommended Checkout
+-------------------------
+
+    //depot/MyProject/Sprints/...   //client/MyProject/Sprints/...
+    //depot/MyProject/Wiki/...      //client/MyProject/Wiki/...
+    //depot/MyProject/Vendor/...    //client/MyProject/Vendor/...
+    //depot/MyProject/Codelines/Trunk/Code/...   //client/MyProject/Trunk/...
+
+
+Tools
+-------------
+
+ +  [findroot](./findroot.txt)
+
+
+
+Sprints
+-----------------------
+
+Our "sprint" might be called a "milestone" or an "iteration" in other terms.  Typically a sprint will have the following things associated with it:
+
+ +  use cases to focus on
+ +  bugs to fix
+
+The "current heartbeat" of the project can be seen by looking at the current sprint in the repository (Sprints/Current).
+
+
+The Wiki
+------------------------
+
+The wiki should be in plain text, Markdown format.  The Wiki should not contain things like model descriptions or class descriptions:  those belong in the JavaDocs.
+
+"The creation of a document is an implicit agreement to keep it up to date or destroy it." <http://www.agile-process.org/proverbs.html>
+
+"Ideas move faster than documents." <http://www.agile-process.org/proverbs.html>
+
+
+Recommended wiki scripts:
+
+ +  wiki2html:  generates html output of the wiki:
+
+        #!/bin/bash
+        rm -r ../Target/Wiki
+        cd Wiki
+        for I in *.txt; do
+            basename="$(basename -s .txt "$I")"
+            Markdown.pl "$I" > "../Target/Wiki/$basename.html"
+        done
+        cp -r Media ../Target/Wiki/Media
+
+
+
+Bug and Task Tracking
+------------------------
+
+Here's what a bug creation might look like (assuming we have a shell function `nextbugnumber` that gets us the next bug number):
+
+    $ cat > Sprints/Future/Bugs/`nextbugnumber`.txt <<EOINPUT
+    Description: Users with birthday before 12/1/09 don't show up in list view
+
+    Estimated Time: 3 days
+
+    Developers: Ryan
+
+    Repro Steps:
+
+     1. Create a user in the UI
+     2. Change birthday to 11/30/09
+     3. Switch to list view
+
+    Test Information:
+    EOINPUT
+
+This should be written using Perforce form syntax for easy parsing.
+
+Recommended bug scripts:
+
+ *  nextbugnumber: gives next bug number
+
+
+Documentation
+---------------------
+
+Needed documentation:
+
+ +  API
+ +  Tutorials
+ +
