@@ -1,0 +1,22 @@
+---
+layout: project
+date: 01 Dec 2009
+published: true
+title: Projects
+---
+
+This page is a work in progress.
+
+<!-- TODO: write -->
+
+## List of Projects
+
+ *  [Repo-Man][]: Entirely repository-based software-project-management.
+    
+ *  [MVCLite][]: A very light-weight MVC framework designed to "bootstrap" a
+    database-driven web project.
+    
+
+[Repo-Man]: ./repo-man/
+[MVCLite]: ./mvclite/
+
