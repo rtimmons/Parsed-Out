@@ -18,6 +18,7 @@ Repository Layout
             MyProject/
                 Readme.txt
                 Sprints/
+                    Readme.txt
                     Current/
                         Reamde.txt
                         Use Cases/
@@ -35,28 +36,20 @@ Repository Layout
                         3 Controller Scaffolding/
                 Wiki/
                     Media/
-                        UML Diagram.png
-                    Release Process.txt
+                        User Model UML Diagram.png
                     Code Conventions.txt
-                    User Model.txt
-                    Eclipse Setup.txt
                     Codeline Policies.txt
-                    Branch Descriptions.txt
-                Codelines/
-                    Trunk/
-                        Readme.txt
-                        Code/
-                            pom.xml
-                            src/{main,test}/{java,resources}
-                            src/site
-                    Branches/
-                        Bug 001 Fix/
-                            Readme.txt
-                            Code/
-                                pom.xml
-                                src/{main,test}/{java,resources}
-                    Releases/
+                    Eclipse Setup.txt
+                    Release Process.txt
+                    Releases.txt
+                    User Model.txt
+                Code/
+                    Readme.txt
+                    pom.xml
+                    src/{main,test}/{java,resources}
+                    src/site
                 Vendor/
+                    Readme.txt
                 Target/
                     Readme.txt
         Users/
@@ -64,27 +57,27 @@ Repository Layout
                 Contact.txt
                 Status Reports/
                 Projects/
-                    wiki2html/
         Tools/
-            findroot/
-            wiki2html/
-            nextbugnumber/
-            htmljavadocs/
+            bin/
+                findroot.sh
+                wiki2html.sh
+                nextbugnumber.sh
+                htmljavadocs.sh
+            man/
+                
 
 
 Recommended Checkout
 -------------------------
 
-    //depot/MyProject/Sprints/...   //client/MyProject/Sprints/...
-    //depot/MyProject/Wiki/...      //client/MyProject/Wiki/...
-    //depot/MyProject/Vendor/...    //client/MyProject/Vendor/...
-    //depot/MyProject/Codelines/Trunk/Code/...   //client/MyProject/Trunk/...
+    //depot/Projects/MyProject/Sprints/... //client/Projects/MyProject/Sprints/...
+    //depot/Projects/MyProject/Wiki/...    //client/Projects/MyProject/Wiki/...
+    //depot/Projects/MyProject/Vendor/...  //client/Projects/MyProject/Vendor/...
+    //depot/Projects/MyProject/Code/...    //client/Projects/MyProject/Code/...
+    
+    //depot/Tools/...   //client/Tools/...
 
-
-Tools
--------------
-
- +  [findroot](./findroot.txt)
+Branches can be made in personal space (//depot/Users/$User) or managed with Git/mercurial/whatever on personal machines.
 
 
 
@@ -107,21 +100,6 @@ The wiki should be in plain text, Markdown format.  The Wiki should not contain 
 "The creation of a document is an implicit agreement to keep it up to date or destroy it." <http://www.agile-process.org/proverbs.html>
 
 "Ideas move faster than documents." <http://www.agile-process.org/proverbs.html>
-
-
-Recommended wiki scripts:
-
- +  wiki2html:  generates html output of the wiki:
-
-        #!/bin/bash
-        rm -r ../Target/Wiki
-        cd Wiki
-        for I in *.txt; do
-            basename="$(basename -s .txt "$I")"
-            Markdown.pl "$I" > "../Target/Wiki/$basename.html"
-        done
-        cp -r Media ../Target/Wiki/Media
-
 
 
 Bug and Task Tracking
@@ -147,9 +125,6 @@ Here's what a bug creation might look like (assuming we have a shell function `n
 
 This should be written using Perforce form syntax for easy parsing.
 
-Recommended bug scripts:
-
- *  nextbugnumber: gives next bug number
 
 
 Documentation

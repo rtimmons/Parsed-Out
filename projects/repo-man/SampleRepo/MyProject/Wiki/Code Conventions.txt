@@ -1,0 +1,49 @@
+Code Conventions
+=======================
+
+TODO: add more code conventions
+
+Tasks
+--------------
+
+Mark inline tasks with comments with the following special markers in all
+upper-case. I'm not using upper-case here because I don't want these to be
+found as tasks by automation scripts :).
+
+ +  **todo**
+    
+    Used for stubs and general "come back here"s.  These should get turned
+    into bugs or use cases.  These should not be bugs since those should be
+    indicated with 'fixme' or 'xxx' in all upper-case.
+
+    Generally, production code shouldn't have "todo"s in it except those for
+    features to be added in later sprints.
+
+ +  **fixme**
+
+    Used for bugs found while doing other coding. Example, you're working on a
+    bugfix and stumble across another possible bug. Mark it with a `//fixme`
+    (in all upper-case).  
+    
+    These should get turned into bugs.  Production code shouldn't be shipped
+    with "fixme"s unless they are accounted for in later sprints.
+
+ +  **xxx**
+    
+    Used for blocker bugs or bad, temporary hacks.
+
+    These should get turned into bugs.  Production code can't ship with "xxx"s
+    in it.
+
+After a task has been turned into a bug, you can annotate it with the bug or
+use case number. E.g.:
+
+    public class Foo {
+        // todo: fix up (Bug 85)
+        public static void main(String[] args) { }
+    }
+
+(The `todo` should be capitalized.). The bug or use-case annotation is
+free-form and isn't parsed by any scripts; it's just a handy reference to see
+that tasks are accounted for.
+
