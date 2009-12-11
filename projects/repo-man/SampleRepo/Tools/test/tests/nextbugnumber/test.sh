@@ -35,51 +35,25 @@ setup() {
     pushd "$tempdir" 1>/dev/null
     tempdir=$(pwd -P)
     popd 1>/dev/null
+
+    # make a fake bug outside the root
+    mkdir -p "$tempdir/Bugs"
+    touch "$tempdir/Bugs/001.txt"
     
-    # Make the mock bugs
-    
+    # Make the mock bugs dirs:
+    local ROOT="$tempdir/root"
+    mkdir -p "$ROOT/Sprints/"{Current,Future,Next,Past}/Bugs
 }
 
 
-myfindroot() {
-    # wraper around findroot.sh script
+mynextbugnumber() {
+    # wrapper around the nextbugnumber script
     
-    local rootsh="$thisdir/../../../bin/findroot.sh"
-    if [ ! -x "$rootsh" ]; then
-        echo "Not running $0 from proper dir or findroot.sh '$rootsh' is not in Tools/bin"
-        status=2
-        exit 2
-    fi
-    out=$("$rootsh" "$@")
-    echo "$out"
 }
-
-
-testdir() {
-    # Test that $1 reports correct root $2
-    local innerdir="$1"
-    local expected="$2"
-    
-    pushd "$innerdir" 1>/dev/null
-    local root=$(myfindroot)
-    if [ "$root" != "$expected" ]; then
-        echo "Root for '$innerdir' expected '$expected' but got '$root'"
-        status=2
-        exit 2
-    fi
-    popd 1>/dev/null
-}
-
 
 thetest() {
-    # tempdir by itself isn't in the mock project, so it shouldn't have a root
-    testdir "$tempdir"                  ""
-    testdir "/usr"                      ""
-    
-    testdir "$tempdir/root"             "$tempdir/root"
-    testdir "$tempdir/root/foo"         "$tempdir/root"
-    testdir "$tempdir/root/foo/bar"     "$tempdir/root"
-    testdir "$tempdir/root/foo/bar/baz" "$tempdir/root"
+    local ROOT="$tempdir/root"
+    touch "$ROOT"
 }
 
 
@@ -87,7 +61,7 @@ thetest() {
 
 
 main() {
-    echo -n "Running findroot tests: "
+    echo -n "Running nextbugnumber tests: "
     setup
     thetest
     cleanup

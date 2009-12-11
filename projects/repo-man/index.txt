@@ -35,19 +35,23 @@ Here are some key aspects:
 
 Here's what the default repo-man repository looks like:
 
-    .
+    Depot
     |-- MyProject
     |   |-- Code
-    |   |   `-- src
-    |   |       |-- main
-    |   |       |   |-- java
-    |   |       |   `-- resources
-    |   |       |-- site
-    |   |       `-- test
-    |   |           |-- java
-    |   |           |-- resources
-    |   |           `-- shell
-    |   |               `-- UseCase
+    |   |   |-- Branches
+    |   |   |-- Releases
+    |   |   |-- Testing
+    |   |   `-- Trunk
+    |   |       `-- src
+    |   |           |-- main
+    |   |           |   |-- java
+    |   |           |   `-- resources
+    |   |           |-- site
+    |   |           `-- test
+    |   |               |-- java
+    |   |               |-- resources
+    |   |               `-- shell
+    |   |                   `-- UseCase001.sh
     |   |-- Readme.txt
     |   |-- Sprints
     |   |   |-- Current
@@ -84,9 +88,7 @@ Here's what the default repo-man repository looks like:
         |   `-- wiki2html.sh
         |-- lib
         |   |-- Maven
-        |   |   `-- repo-man-plugin
         |   `-- Perl
-        |       `-- FormParser
         |-- man
         |   `-- man1
         `-- test
@@ -97,10 +99,6 @@ Here's what the default repo-man repository looks like:
                 |   `-- test.sh
                 `-- nextbugnumber
                     `-- test.sh
-
-    
-(The `[...]`s indicate that some children of the directory are omitted for
-brevity.)
 
 ## `Projects` Versus `Users` Versus `Tools` ##
 
@@ -181,7 +179,7 @@ The "current heartbeat" of the project can be seen by looking at the current spr
 
 All of the project's actual source code lives inside the project's *Code* directory.
 
-The example repository layout was designed for use with Peroforce but can very easily be modified to work with Subversion, Git, or whatever else. This example repo was also designed to be used with Apache Maven, but the only part that's apparent is inside the `Code` directory:  everything else described here works for any sort of project with any sort of build system (including `make` or what-have-you).
+The example repository layout was designed for use with Perforce but can very easily be modified to work with Subversion, Git, or whatever else. This example repo was also designed to be used with Apache Maven, but the only part that's apparent is inside the `Code` directory:  everything else described here works for any sort of project with any sort of build system (including `make` or what-have-you).
 
 
 ## The Wiki ##
@@ -195,9 +193,9 @@ The wiki should be in plain text, Markdown format.  The Wiki should not contain 
 
 ## Bug and Task Tracking ##
 
-Here's what a bug creation might look like (assuming we have a shell function `nextbugnumber` that gets us the next bug number):
+Here's what a bug creation might look like (assuming we have a shell function `nextbugnumber.sh` that gets us the next bug number):
 
-    $ cat > Sprints/Future/Bugs/`nextbugnumber`.txt <<EOINPUT
+    $ cat > Sprints/Future/Bugs/`nextbugnumber.sh`.txt <<EOINPUT
     Description
     ----------------
     Users with birthday before 12/1/09 don't show up in list view
@@ -212,7 +210,6 @@ Here's what a bug creation might look like (assuming we have a shell function `n
 
     Repro Steps
     ----------------
-
      1. Create a user in the UI
      2. Change birthday to 11/30/09
      3. Switch to list view
@@ -224,7 +221,9 @@ Here's what a bug creation might look like (assuming we have a shell function `n
 
 ## Scripts ##
 
-Each project may have its own set of scripts of course (recommended that they be )
+Each project may have its own set of scripts of course.  I recommend that a project's scripts be put inside the project's `scripts` directory (or `src/main/scripts` if they should be included in the built project).
+
+For example, a script that generates an IDE configuration for a project should be in `MyProject/scripts`, but a script that sets up the system's Apache configuration before the built project can be installed should go in `MyProject/src/main/scripts` since it needs to be packaged with the build and should be tested with a file in `src/test/scripts`.
 
 ## Setup ##
 
