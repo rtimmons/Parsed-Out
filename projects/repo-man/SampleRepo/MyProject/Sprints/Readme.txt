@@ -1,4 +1,0 @@
-Sprints
-====================
-
-TODO: sprints readme

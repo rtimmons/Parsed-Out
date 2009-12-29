@@ -1,0 +1,26 @@
+Here's what a bug creation might look like (assuming we have a shell function
+`nextbugnumber.sh` that gets us the next bug number):
+
+    $ cat > Sprints/Future/Bugs/`nextbugnumber.sh`.txt <<EOINPUT
+    Description
+    ----------------
+    Users with birthday before 12/1/09 don't show up in list view
+
+    Estimated Time
+    ----------------
+    3 days
+
+    Developers
+    ----------------
+    Ryan
+
+    Repro Steps
+    ----------------
+     1. Create a user in the UI
+     2. Change birthday to 11/30/09
+     3. Switch to list view
+
+    Test Information:
+    ----------------
+    There's a test for this in the src/test directory.
+    EOINPUT
