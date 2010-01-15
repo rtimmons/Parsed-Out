@@ -4,6 +4,8 @@ title: ScanSnap S510M on Snow Leopard
 published: true
 ---
 
+**Update**: Fujitsu has posted an update on their website that addresses this issue. I'l leave this here for posterity.
+
 For anyone looking to use the Fujitsu Scansnap S510M on Snow Leopard, you're probably tired of the error
 
 > The file blahblahblah.pdf is not created by ScanSnap.  FineReader for ScanSnap can only process PDF files created by ScanSnap.
@@ -15,6 +17,7 @@ But I have a fix.
 Go into Terminal (/Applications/Utilities/Terminal.app) and type the following commands:
 
     wget http://static.ganon.com/pdftk
+    sudo mkdir -p /usr/local/bin
     sudo mv pdftk /usr/local/bin/pdftk
     sudo chown root:wheel /usr/local/bin/pdftk
     sudo chmod a+x /usr/local/bin/pdftk
