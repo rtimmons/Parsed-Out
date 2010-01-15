@@ -8,7 +8,7 @@ cleanup() {
     [ -d "$tempdir" ] && rm -r "$tempdir"
 }
 
-trap 'cleanup; [ $status -ne 0 ] && echo Fail' INT TERM EXIT
+trap '[ $status -ne 0 ] && rm -rf "$tempdir" && echo Fail' INT TERM EXIT
 
 
 setup() {
@@ -48,12 +48,21 @@ setup() {
 
 mynextbugnumber() {
     # wrapper around the nextbugnumber script
-    
+    local bugsh="$thisdir/../../../bin/nextbugnumber.sh"
+    if [ ! -x "$bugsh" ]; then
+        echo "Not running $0 from proper dir or nextbugnumber.sh '$bugsh' is not in Tools/bin"
+        status=2
+        exit 2
+    fi
+    out=$("$rootsh" "$@")
+    echo "$out"
 }
 
 thetest() {
     local ROOT="$tempdir/root"
     touch "$ROOT"
+    echo "TODO: not implemented yet"
+    exit 2
 }
 
 

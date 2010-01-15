@@ -54,12 +54,14 @@ Quick Start
         cd $HOME/depot
         svn checkout Repository/Tools/Trunk Tools
 
- 3. Set this directory as your $REPOMANTOOlSDIR environment variable inside
+    (See below for the recommended checkout with Perforce.)
+
+ 3. Set this directory as your `$REPOMANTOOlSDIR` environment variable inside
     your shell profile:
 
         echo "export REPOMANTOOLSDIR='$HOME/depot/Tools'" >> ~/.bashrc
 
- 4. Add a line to source() the env.sh script to your shell profile:
+ 4. Add a line to source() the `env.sh` script to your shell profile:
 
         echo "source $REPOMANTOOLSDIR/bin/env.sh" >> ~/.bashrc
 
@@ -75,12 +77,12 @@ Recommended Checkout
 
 If you are using Perforce, the given layout should be checked out like this:
 
-    //depot/Projects/MyProject/Sprints/... //client/MyProject/Sprints/...
-    //depot/Projects/MyProject/Wiki/...    //client/MyProject/Wiki/...
-    //depot/Projects/MyProject/Vendor/...  //client/MyProject/Vendor/...
+    //depot/Projects/MyProject/Sprints/...    //client/MyProject/Sprints/...
+    //depot/Projects/MyProject/Wiki/...       //client/MyProject/Wiki/...
+    //depot/Projects/MyProject/Vendor/...     //client/MyProject/Vendor/...
     //depot/Projects/MyProject/Code/Trunk/... //client/MyProject/Code/...
-    //depot/Projects/MyProject/.repo-man   //client/MyProject/.repo-man
-    //depot/Tools/...   //client/Tools/...
+    //depot/Projects/MyProject/.repo-man      //client/MyProject/.repo-man
+    //depot/Tools/Trunk/...                   //client/Tools/...
 
 Branches can be made in personal space (`//depot/Users/$User`) or managed with
 Git/mercurial/whatever on personal machines.

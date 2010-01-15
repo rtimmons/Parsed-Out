@@ -1,0 +1,11 @@
+Sprint Procedure
+=========================
+
+Moving to the next Sprint:
+
+ 1. Move `Sprints/Current` to `Sprints/Past/XXX` (for some `XXX`)
+ 2. Move `Sprints/Next` to `Sprints/Current`
+
+What goes in a Sprint:
+
+ +  UseCases
