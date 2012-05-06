@@ -2,7 +2,7 @@
 .PHONY: clean_site site
 
 site: clean_site
-	rjekyll
+	jekyll
 
 clean_site:
 	rm -rf _site
