@@ -87,7 +87,7 @@ Using an anonymous inner class was deemed to be a good solution by my interviewe
 Here's a very basic outline of my solution:
 
 {% highlight java %}
-class ListOfList<T> implements Iterable {
+class ListOfList<T> implements Iterable<T> {
     
     private List<List<T>> data;
     
@@ -100,9 +100,11 @@ class ListOfList<T> implements Iterable {
             Iterator<T> inner = outer.next();
             
             public boolean hasNext() {
-                if ( ! outer.hasNext() )
+                if ( ! outer.hasNext() ) {
                     outer = outer.next().iterator();
-                return hasNext();
+                    return hasNext();
+                }
+                return inner.hasNext();
             }
             
             public T next() {

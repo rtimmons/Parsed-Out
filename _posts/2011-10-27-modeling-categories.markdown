@@ -18,15 +18,20 @@ Let's assume these are the full set of requirements so far, and we can build thi
 
 The easiest thing to model is the Book class:
 
-    class Book { }
+
+{% highlight java %}
+class Book { }
+{% endhighlight %}
 
 I'll have some discussion about possibly including category information in the book itself later.
 
 What's more complicated is the `Category` class.  Let's first note that a Category has a number (0 or more) books inside of it.  I.e., some `Collection` of books.  I would argue that a `List` is incorrect since (1) the order doesn't matter and (2) a book shouldn't be able to belong to a category twice.  These are natural consequences of point 1.  So then the association from categories to books is easy:
 
-    class Category {
-        Set<Book> books;
-    }
+{% highlight java %}
+class Category {
+    Set<Book> books;
+}
+{% endhighlight %}
 
 But now how do we represent subcategories?
 
