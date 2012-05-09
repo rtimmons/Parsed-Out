@@ -10,14 +10,9 @@ layout: nil
   <link rel="alternate" type="application/rss+xml" title="{{site.title}}"
         href="http://parsedout.com/rss.xml" />
   <title>{{ site.title }} - {{ page.title }}</title>
-  <style type="text/css">
-  /*<![CDATA[*/
+  <style type="text/css" media="screen">
     @import "/styles/basic.css";
-    @import "/styles/syntax.css";
-    @import "/styles/style.css";
-  /*]]>*/
   </style>
-  <script type="text/javascript" src="/scripts/script.js"></script>
 </head>
 {% if page.sidebar %}<body class="sidebar">{% else %}<body>{% endif %}
 
@@ -54,6 +49,14 @@ var pageTracker = _gat._getTracker("UA-11489436-1");
 pageTracker._trackPageview();
 } catch(err) {}</script>
 </div><!--#analytics-->
+
+<style type="text/css">
+  @import "/styles/syntax.css";
+  @import "/styles/style.css";
+</style>
+
+<script type="text/javascript" src="/scripts/script.js"></script>
+
 
 </body>
 </html>
