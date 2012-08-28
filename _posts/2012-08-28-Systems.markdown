@@ -1,0 +1,147 @@
+I'm going camping in October, and I don't really plan to spend much time outside.  
+
+
+## So here's the thing
+
+I use GTD, but that's a loose term.  I have a "system," and I have certain behaviors that ensure that certain kinds of commitments doesn't get lost, but I haven't felt like "captain and commander" for the last few months:
+
+1. I have 38 (thirty-eight!) perspectives in OmniFocus, yet I only use 3 or 4 regularly 
+2. similarly for contexts: I have 41 of them
+3. I haven't checked my "waiting for" context in like a month 
+4. I have 20 (twenty) "someday/maybe" single-action project lists 
+5. On those 20 lists, I have no fewer than 1059 (over one thousand and fifty-eight) someday/maybe tasks
+6. Needless to say, I avoid reviewing these someday/maybes like the plague
+7. I do "weekly reviews", but my process isn't formal, and there are many projects that I routinely either avoid or simply hurriedly mark "reviewed" without actually thinking about them.
+8. I have workable systems to keep track of information both physical and digital, but I feel friction occasionally about where to put certain bits of information -- especially the kind of information that's work-related and thus can't go on Dropbox, Evernote, or SimpleNote (I use all three for personal stuff).
+
+TODO: too many things in "read/review" folder
+
+In all, I've not felt like my work has been meaningful and purposeful and I always think that things will be different as soon as event X happens (graduating college, moving, getting a promotion, getting engaged, buying a new monitor).  But then event X happens and things are the same.
+
+These are just symptoms of underlying problems, of course.  Here's what I think the underlying problems are for me:
+
+1. 38 perspectives: Friction when determining what's available
+2. 41 contexts: Uncertainty about what things mean or what I really do with my time
+3. Not checking waiting for: no confidence that "waiting for" is up-to-date or important or that I'll be able to actually use the information
+4. 20 someday/maybe lists: no confidence that one list will receive enough regular review, so I just create more lists hoping I'll maybe start reviewing the new ones
+5. 1059 someday/maybe items:  I'm not judicious enough in saying 'no' or re-grouping.
+6. Not reviewing someday/maybe lists: no confidence that there is value to be had in reviewing it or that there are too many potential *actual* internal commitments in there.  I.e., the fear that I might find too many things that I should be working on or worrying about and that I won't have a good way of bringing them back into active focus.
+7. Lazy reviews: lack of certainty that my current projects and commitments represent what I'd like/want/need to be doing with my time.  Unclear priorities and lack of focus on long-term execution.
+
+Number 8 is an implementation detail that I may come back to later.
+
+Numbers 1 through 7 speak volumes: I don't have enough perspective.  I feel I've pretty squarely got the "10,000-foot" horizon, but I'm struggling above that.  I've gotten down the process of clearing inboxes and managing current commitments, but I struggle when it comes to picking priorities and deciding which projects I should work on next.
+
+
+## Failure has a name
+
+I've tried a lot of different things to help myself gain perspective:
+
+1. keeping a little "treasure map" that has little destinations on it that represent where I'd like to be along with a few steps between where I am and how to get there.
+2. writing abortive blog posts about how my system works--the theory that describing the road might help you get there (like how writing about jogging makes you thin and beautiful)
+3. going through and adding "effort points" and "reward points" to some of my current and someday/maybe projects.  The theory was that it would be like Scrum and would let me easily do the math of reward divided-by effort and do the biggest-bang-and-littlest-buck projects first
+4. trying to fix the symptoms by deleting my OmniFocus database and "starting fresh" with a clean projects list and treating the old database as a graveyard only useful for reference info
+
+The one that came closest to working was #4: starting fresh.  I've gone nuclear on my system two or three times, and the garbage starts to pile up after a month or two.  I re-built the deck, but I didn't learn how to use a saw.  I think it gave some results because starting fresh required me to re-think things like areas of focus and perspectives and contexts.  But it also required me to spend a lot of time re-entering and fiddling with your tasks when instead the value could come by triggering this thinking in some other way.  Plus it was also too focused on implementation ("how to build the deck") instead of solving the problem ("why do you want to stand outside your house?").
+
+The keen minds of David Allen and Merlin Mann point out that one's own GTD system is a canary in a coal-mine for feelings of control and perspective.  If your system is failing you, it likely means you don't have enough of one or the other.  The system can help you get control, but by definition your system has to be driven by perspective.
+
+These realizations are not new or profound.  I think The David actually goes into this in some length in his "Making It All Work" book.  But until recently I thought my problems were with my system.  I've had good success in using GTD that I falsely thought I'd mastered perspective and only needed to work on control.  Maybe the opposite is true.
+
+
+## The Horizon Ladder
+
+I like David Allen's altitudes model -- what he calls "horizons of focus".  What I'd like to do is think about what kinds of questions I can ask myself to engage the right kind of thinking at these levels.  Moreover, I'd like to do this in a way where the answers to the questions at one horizon become the questions at the next horizon.
+
+I'm calling this the "horizon ladder", but I think it's just an exercise in critical thinking.  I like to use it like a chinese menu.  I start at one column, pick one, and then move on to the next column.  Then once I'm at the last column I go back one column and see if it still makes sense (or if maybe other things make sense too).  
+
+Start at 10k feet and pick a question to answer.  Then move on to 20k feet and pick a question to answer.  Repeat until 50k feet.  Take your answer to a 50k feet question and apply it to a 40k foot question.  Repeat.  Go up and down the ladder until you're confident that you've identified enough information to make a workable system out of it.
+
+> 10k Feet:
+> 
+> - What's on my mind or in my inbox?  What can I do about something?
+> - What needs to get done?
+> - What are my current commitments?
+> 
+> 20k Feet:
+> 
+> - Why am I doing that?  What part of my life would suffer or benefit from this?
+> 
+> 30k Feet:
+> 
+> - What would happen if I didn't do it?
+> - By when will I do it?
+> - What other things can I do to ensure this is a success?
+> 
+> 40k Feet:
+> 
+> - Whose expectations do I need to meet?
+> - How will I know I'm doing a good job?
+> - What am I capable of doing with this?
+> - What do I want to do with this?
+> - What are my needs with this?
+> 
+> 50k Feet:
+> 
+> - How do I feel about this or why do I feel such a way?
+> - How might others do it, and what do I admire in others?
+> - What qualities in myself do I find uniquely contribute to my ability to do this?  I.e., how would somebody know it was me that did this and not somebody else?
+
+Example:
+
+Let's take an example and see how to go all the way up the ladder:
+
+> 10. What's on my mind or in my inbox?  
+> My inbox has notes from a phone call yesterday saying that my car is due for maintenance in November and then again every year or every 10k miles.  I need to schedule an appointment in November and make sure I schedule one every year or 10k miles after that.
+> 
+> 20. Why am I doing that?  
+> I have maintenance responsibilities that must be performed.
+> 
+> 30. What would happen if I didn't do it?  
+> My car isn't going to last a long time or repairs are going to be expensive or I might end up stranded in Newark New Jersey.
+> 
+> 40. How will I know I'm doing a good job?  
+> I have a clear list of all the appointments that I need to make, by when, and I have something in place that I will see to ensure that the appointments are made and that I attend the appointments.   My car is well-maintained and I'm confident that I'm not spending more time or money than I have to in order to get around.
+> 
+> 50. Why do I feel that way?  
+> Being responsible with my time and money is important to me.  I'm an adult and should be able to take care of myself and the things that I own.  I should not be wasteful with my money.
+
+Cool.  I now have some things to put into my chinese menu.  Let's work back down the ladder.
+
+> 50.  Why do I feel in such a way?  
+> I'm responsible with my time and money
+> 
+> 40. What am I capable of doing with this?  
+> I can live within my means and make sure that I'm never in a scenario where the money I'm making (or not) is more important than the job I'm doing.  I'd like to have a plan that outlines goals for finances at various ages/times.  E.g., within the next year I'd like to save $2k for new furniture; by the time I'm 30 I'd like to have $50,000 saved for a house, and by the time I'm 40 I'd like to have half of my retirement saved; by 50 I'd like to not have a mortgage, and I'd like to retire with ample money saved by the time I'm 60.  I can fill in more specifics as time goes on.
+> 
+> 30. By when will I do it?  
+> The basic plan can be completed within a month, although I need to speak with my financial advisor.
+> 
+> 20. What part of my life would suffer or benefit from this?  
+> My finances
+> 
+> 10. What can I do about this?  
+> To save $2k:  make sure I have the proper account set up.  Set up automatic transfers and set a calendar event or two to check that I'm meeting the goal.
+
+Some tips:
+
+1. I find that it really helps to go in order between columns; to not skip from 10k to 50k.  I sometimes have an idea for a 50k point while I'm thinking about 10k, but I make sure that I think through the other levels to see how I'm actually going to the 50k from the 10k.  This is difficult, but it gives me practice at thinking across horizons.
+
+2. Structure really helps here.  Resist just putting "train the dog" arbitrarily into a column.  See which question is best addressed by your answer (e.g. "What needs to get done?") and then work toward 10k or 50k as described.
+
+3. Delete ruthlessly.  If you cannot find a way to make an idea work, then you likely don't really have much of a commitment to doing it or a way to actually execute on it.  Such ideas can go on someday/maybes, I'm finding it best to just let them go or put them into a temporary inbox that I clear once my system is current again
+
+Format:
+
+This sort of information is easy to visualize but hard to structure.  Essentially you have 5 columns with items in each and lines between columns that indicate relationships and/or indicate which question the item answers.
+
+I've not found a good way to record this thinking electronically.  I played with Excel and with plain-text and with OmniGraffle, but I found myself fiddling with the tool or formatting instead of thinking.  So I question the value of the lines/relationships.  The point of the horizons is that they're supposed to represent truth for you, so why does it matter how buying stamps relates to your desire to live a healthy lifestyle?  If you get rid of the lines, then you end up with just 5 sheets of paper (or 5 text files) and lists of items on each. 
+
+## Back to Systems
+
+TODO
+
+## Control?
+
+Maybe none of this applies to you.  Maybe you know exactly what your current projects are, how they're related to each other, what goals they relate to, and how those goals fit in with your home and work life to summarize your *raison d'être*.  Maybe your only problem is lacking control: how to properly execute your energy to go exactly where you intend.
+
