@@ -1,5 +1,6 @@
-I'm going camping in October, and I don't really plan to spend much time outside.  
+<txmt://open?url=file:///Users/rtimmons/Projects/Parsed-Out/_posts/2012-08-28-Systems.markdown&line=1>
 
+TODO: maybe add some more narrative or background/context on things like GTD/OmniFocus/etc.
 
 ## So here's the thing
 
@@ -57,23 +58,28 @@ I'm calling this the "horizon ladder", but I think it's just an exercise in crit
 
 Start at 10k feet and pick a question to answer.  Then move on to 20k feet and pick a question to answer.  Repeat until 50k feet.  Take your answer to a 50k feet question and apply it to a 40k foot question.  Repeat.  Go up and down the ladder until you're confident that you've identified enough information to make a workable system out of it.
 
-> 10k Feet:
+> Runway (Next Actions):
 > 
 > - What's on my mind or in my inbox?  What can I do about something?
-> - What needs to get done?
+> 
+> 10k Feet (Projects):
+> 
+> - What needs to get done? By when will I do it?
 > - What are my current commitments?
+> - For what am I waiting to get started? (Do I have everything I need?)
 > 
-> 20k Feet:
+> 20k Feet (Areas of Focus):
 > 
-> - Why am I doing that?  What part of my life would suffer or benefit from this?
-> 
-> 30k Feet:
-> 
+> - Why am I doing that?  
+> - What part of my life would suffer or benefit from this?
 > - What would happen if I didn't do it?
-> - By when will I do it?
+> 
+> 30k Feet (Goals & Objectives):
+> 
+> - What is the larger outcome here?  What would I put on my resume or CV or tell my grandchildren about this?
 > - What other things can I do to ensure this is a success?
 > 
-> 40k Feet:
+> 40k Feet (Vision & Ideal Scenarios):
 > 
 > - Whose expectations do I need to meet?
 > - How will I know I'm doing a good job?
@@ -81,11 +87,30 @@ Start at 10k feet and pick a question to answer.  Then move on to 20k feet and p
 > - What do I want to do with this?
 > - What are my needs with this?
 > 
-> 50k Feet:
+> 50k Feet (Purpose & Core Values):
 > 
 > - How do I feel about this or why do I feel such a way?
 > - How might others do it, and what do I admire in others?
 > - What qualities in myself do I find uniquely contribute to my ability to do this?  I.e., how would somebody know it was me that did this and not somebody else?
+
+
+TODO
+---------------------------------------
+Questions to determine if it's really valuable:
+
+- Who would notice if it wasn't done?
+- If it were done, what could you do that you can't do now?
+- What kind of friction does this project reduce or eliminate?
+- When do I picture myself doing this?
+---------------------------------------
+
+TODO: address contexts
+
+TODO: address perspectives
+
+TODO: address someday/maybes
+
+
 
 Example:
 
@@ -129,17 +154,13 @@ Some tips:
 
 2. Structure really helps here.  Resist just putting "train the dog" arbitrarily into a column.  See which question is best addressed by your answer (e.g. "What needs to get done?") and then work toward 10k or 50k as described.
 
-3. Delete ruthlessly.  If you cannot find a way to make an idea work, then you likely don't really have much of a commitment to doing it or a way to actually execute on it.  Such ideas can go on someday/maybes, I'm finding it best to just let them go or put them into a temporary inbox that I clear once my system is current again
+3. Delete ruthlessly.  If you cannot find a way to make an idea work, then you likely don't really have much of a commitment to doing it or a way to actually execute on it.  Such ideas can go on someday/maybes, but I'm finding it best to just let them go or put them into a temporary inbox that I clear once my system is current again.
 
 Format:
 
 This sort of information is easy to visualize but hard to structure.  Essentially you have 5 columns with items in each and lines between columns that indicate relationships and/or indicate which question the item answers.
 
 I've not found a good way to record this thinking electronically.  I played with Excel and with plain-text and with OmniGraffle, but I found myself fiddling with the tool or formatting instead of thinking.  So I question the value of the lines/relationships.  The point of the horizons is that they're supposed to represent truth for you, so why does it matter how buying stamps relates to your desire to live a healthy lifestyle?  If you get rid of the lines, then you end up with just 5 sheets of paper (or 5 text files) and lists of items on each. 
-
-## Back to Systems
-
-TODO
 
 ## Control?
 
