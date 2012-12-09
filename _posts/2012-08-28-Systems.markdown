@@ -156,6 +156,8 @@ Some tips:
 
 3. Delete ruthlessly.  If you cannot find a way to make an idea work, then you likely don't really have much of a commitment to doing it or a way to actually execute on it.  Such ideas can go on someday/maybes, but I'm finding it best to just let them go or put them into a temporary inbox that I clear once my system is current again.
 
+4. I'm still tweaking the questions.  I've found I do well to keep the number of questions down but to continuously refine them.
+
 Format:
 
 This sort of information is easy to visualize but hard to structure.  Essentially you have 5 columns with items in each and lines between columns that indicate relationships and/or indicate which question the item answers.
