@@ -3,6 +3,7 @@ layout: post
 title: CSS Drop-Down Menus
 published: false
 category: problems
+date: 2011-01-01 12:00am Eastern
 ---
 
 Our goal in this writeup is to complete a simple horizontal pop-up

@@ -3,6 +3,7 @@ layout: post
 title: Sample Queries With MySQL
 published: true
 category: problems
+date: 2011-01-01 12:00am Eastern
 ---
 
 ## A Note on Terminology

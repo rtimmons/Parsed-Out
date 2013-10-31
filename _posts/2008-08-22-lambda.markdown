@@ -232,7 +232,7 @@ Also read:
 
 Enjoy.
 
- [1]: http://php.net
- [2]: http://www.php.net/archive/2008.php#id2008-08-01-1
- [3]: http://en.wikipedia.org/wiki/Currying
- [4]: http://wiki.php.net/rfc/closures
+[1]: http://php.net
+[2]: http://www.php.net/archive/2008.php#id2008-08-01-1
+[3]: http://en.wikipedia.org/wiki/Currying
+[4]: http://wiki.php.net/rfc/closures

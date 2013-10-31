@@ -3,6 +3,7 @@ layout: post
 title: HTML Take-Home Problems
 published: true
 category: problems
+date: 2011-01-01 12:00am Eastern
 ---
 
 If you have time between now and Day Two of HTML, you would benefit from

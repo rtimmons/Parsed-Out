@@ -1,1 +1,0 @@
-../_vendor/docstyle/script.js

@@ -11,9 +11,9 @@ time, so maybe don't take this as a guide so much as a few installation notes,
 but these are the spots that gave me the most trouble.
 
 This accompanies the Pubcookie Apache Module installation guide at
-<http://pubcookie.org/docs/install-mod_pubcookie-3.3.html> and the UW-specific
+(http://pubcookie.org/docs/install-mod_pubcookie-3.3.html) and the UW-specific
 guide notes at
-<http://www.washington.edu/computing/pubcookie/uwash-install.html>.
+(http://www.washington.edu/computing/pubcookie/uwash-install.html).
 
 (Of course following the convention that `$` are commands run as a limited
 user while `#` commands are run as root.)
@@ -25,15 +25,15 @@ user while `#` commands are run as root.)
 
 
 2.  Obtain Weblogin Server Registration for your hostname at
-    <https://server-reg.cac.washington.edu/pubcookie/>
+    (https://server-reg.cac.washington.edu/pubcookie/)
 
-3.  Get the UW Root Cert from <http://certs.cac.washington.edu/?req=svpem>
+3.  Get the UW Root Cert from (http://certs.cac.washington.edu/?req=svpem)
 
     I put this file at **/etc/apache2/ssl/server.pem**. This is the server's
     public key.
 
 4.  Get the CA Bundle from
-    <http://www.washington.edu/computing/pubcookie/ca-bundle.crt>
+    (http://www.washington.edu/computing/pubcookie/ca-bundle.crt)
 
     I put this file at **/etc/apache2/ssl/ca-bundle.crt**
 
@@ -45,7 +45,7 @@ user while `#` commands are run as root.)
     Information on how to generate a private key and a signature signing
     request are probably documented on whatever site is signing your
     certificate. The UW CA's Technical Information can be found at
-    <https://www.washington.edu/computing/ca/infra/>.
+    (https://www.washington.edu/computing/ca/infra/).
 
     Generating a request for the UW CA (and probably all other CAs as well) is
     simply a matter of:
@@ -185,7 +185,7 @@ user while `#` commands are run as root.)
         # apache2ctl -k start
 
 
-You now have the usual **.htaccess** directives at your disposal. E.g.:
+You now have the usual **.htaccess** directives at your disposal. E.g.:
 
     AuthType UWNetID
     Require valid-user

@@ -1,4 +1,10 @@
-<txmt://open?url=file:///Users/rtimmons/Projects/Parsed-Out/_posts/2012-08-28-Systems.markdown&line=1>
+---
+layout: post
+title: Systems
+category: gtd
+published: false
+---
+
 
 TODO: maybe add some more narrative or background/context on things like GTD/OmniFocus/etc.
 

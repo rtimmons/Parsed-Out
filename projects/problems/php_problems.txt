@@ -3,6 +3,7 @@ layout: post
 title: PHP Practice Problems
 published: true
 category: problems
+date: 2011-01-01 12:00am Eastern
 ---
 
 I've gone through and indicated the difficulty of each problem on a 5-&#x2605;

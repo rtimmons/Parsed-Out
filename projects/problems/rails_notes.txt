@@ -3,6 +3,7 @@ layout: post
 title: Ryan's Rails Notes
 published: true
 category: problems
+date: 2011-01-01 12:00am Eastern
 ---
 
 This is definitely a work-in-progress: please do not use it as a

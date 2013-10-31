@@ -3,6 +3,7 @@ layout: post
 title: Joining With PHP&colon; Doing the Job of MySQL
 published: true
 category: problems
+date: 2011-01-01 12:00am Eastern
 ---
 
 Here is a brief introduction to the topic of joining. For further explanation,

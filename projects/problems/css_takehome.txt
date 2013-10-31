@@ -3,6 +3,7 @@ layout: post
 title: CSS Take-Home Problems
 published: true
 category: problems
+date: 2011-01-01 12:00am Eastern
 ---
 
 This assignment is designed to test your comprehension of the basic CSS

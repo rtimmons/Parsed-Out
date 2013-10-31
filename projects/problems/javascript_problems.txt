@@ -3,6 +3,7 @@ layout: post
 title: JavaScript Problems
 published: false
 category: problems
+date: 2011-01-01 12:00am Eastern
 ---
 
 Remember that JavaScript and PHP (and Ruby and COBOL and Python and pretty
