@@ -44,4 +44,13 @@ Troubleshooting
 
 -   Restarting the shell is the new "restarting windows."
 
+Pow
+---
 
+Something like this to install *and* use pow:
+
+    curl get.pow.cx | sh
+    mkdir -p ~/.pow/parsedout
+    ln -s $PWD/site ~/.pow/parsedout/public
+
+This is a modern age in which we live, n'est-ce pas?
