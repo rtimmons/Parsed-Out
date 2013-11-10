@@ -51,6 +51,16 @@ Something like this to install *and* use pow:
 
     curl get.pow.cx | sh
     mkdir -p ~/.pow/parsedout
-    ln -s $PWD/site ~/.pow/parsedout/public
+    ln -s $PWD/_site ~/.pow/parsedout/public
+
+Now access the site locally: <http://parsedout.dev>.
 
 This is a modern age in which we live, n'est-ce pas?
+
+TODO
+----
+
+- Fix LaTeX output: the images are generated it seems but in the wrong place?
+- Fix grunt script/css processing
+- Reorganize posts and then preprocess before jekyll build.  I don't like that all posts are glommed together into one directory and then the date is embedded in the filename.  That's icky.
+
