@@ -1,6 +1,9 @@
 Parsed-Out
 ==========
 
+Setting Up And Building
+-----------------------
+
 (After getting this up and running I do indeed feel parsed-out.)
 
 I'm not an expert in any of these new-fangled technologies. But let's give this a go.
@@ -37,15 +40,14 @@ To get this site up and going:
         bower install
         grunt
 
-Troubleshooting
----------------
+### Troubleshooting
 
 -   For issues in running latex, try `rm -r images/latex`.  The `blahtex` output is "cached" even if it's incorrect.
 
 -   Restarting the shell is the new "restarting windows."
 
-Pow
----
+Using Pow
+---------
 
 Something like this to install *and* use pow:
 
