@@ -1,6 +1,12 @@
 Parsed-Out
 ==========
 
+I'VE MOVED MY BLOG TO CALEPIN:
+
+    http://ryan.calepin.co
+
+I may choose to move the parsedout.com domain there in the future as well.
+
 Setting Up And Building
 -----------------------
 
